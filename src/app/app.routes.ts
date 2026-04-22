@@ -1,18 +1,31 @@
 import { Routes } from '@angular/router';
-import { Layout } from './shared/presentation/components/layout/layout';
-import { LoginComponent } from './identity/presentation/views/login/login.component';
-import { RegisterComponent } from './identity/presentation/views/register/register.component';
-import { RegisterBussinesComponent } from './identity/presentation/views/register-bussines/register-bussines.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/login' }, // redirige raíz a login
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'register-bussines', component: RegisterBussinesComponent },
+  {
+    path: 'login',
+    loadComponent: () =>
+      import('./identity/presentation/views/login/login.component').then((m) => m.LoginComponent),
+  },
+  {
+    path: 'register',
+    loadComponent: () =>
+      import('./identity/presentation/views/register/register.component').then(
+        (m) => m.RegisterComponent
+      ),
+  },
+  {
+    path: 'register-bussines',
+    loadComponent: () =>
+      import('./identity/presentation/views/register-bussines/register-bussines.component').then(
+        (m) => m.RegisterBussinesComponent
+      ),
+  },
 
   {
     path: '',
-    component: Layout,
+    loadComponent: () =>
+      import('./shared/presentation/components/layout/layout').then((m) => m.Layout),
     // canActivate: [AuthGuard], // descomentar si tienes guard
     children: [
       {

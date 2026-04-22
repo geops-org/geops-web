@@ -97,8 +97,10 @@ export class Layout implements OnInit {
       this.userEmail = user.email || 'usuario@geops.com';
       this.isOwner.set(user.role === 'OWNER');
 
-      // Load notifications for authenticated user
-      this.notificationsStore.loadNotifications(user.id);
+      // Load notifications after first paint to keep startup responsive.
+      setTimeout(() => {
+        this.notificationsStore.loadNotifications(user.id);
+      }, 400);
     } else {
       console.warn('[Layout] No hay usuario autenticado');
     }

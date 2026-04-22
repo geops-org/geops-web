@@ -43,7 +43,9 @@
         {{ 'header.help' | translate }}
       </a>
 
-      <app-notifications-dropdown class="action-btn notification"></app-notifications-dropdown>
+      @defer (on idle) {
+        <app-notifications-dropdown class="action-btn notification"></app-notifications-dropdown>
+      }
 
       <button
         mat-button
@@ -99,7 +101,9 @@
 
     <!-- Mobile Actions (Icons Only) -->
     <div class="mobile-actions">
-      <app-notifications-dropdown class="action-btn notification mobile-only"></app-notifications-dropdown>
+      @defer (on idle) {
+        <app-notifications-dropdown class="action-btn notification mobile-only"></app-notifications-dropdown>
+      }
 
       <button
         mat-icon-button
@@ -163,7 +167,9 @@
 <app-footer-content></app-footer-content>
 
 <!-- Cart Sidebar -->
-<app-cart-sidebar *ngIf="!isOwner()"></app-cart-sidebar>
+@defer (on idle) {
+  <app-cart-sidebar *ngIf="!isOwner()"></app-cart-sidebar>
+}
 
 <!-- Navigation Loading Backdrop -->
 <app-navigation-backdrop></app-navigation-backdrop>
