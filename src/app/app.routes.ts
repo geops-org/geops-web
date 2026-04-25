@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './identity/infrastructure/guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/login' }, // redirige raíz a login
@@ -26,7 +27,8 @@ export const routes: Routes = [
     path: '',
     loadComponent: () =>
       import('./shared/presentation/components/layout/layout').then((m) => m.Layout),
-    // canActivate: [AuthGuard], // descomentar si tienes guard
+    canActivate: [authGuard],
+    canActivateChild: [authGuard],
     children: [
       {
         path: 'help/help-center',
