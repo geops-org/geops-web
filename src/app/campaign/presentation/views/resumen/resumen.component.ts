@@ -12,7 +12,6 @@ import { Campaign, CampaignStatus } from '../../../domain/model/campaign.entity'
 import { calculateCtr } from '../../../domain/utils/campaign-metrics.util';
 import { AuthService } from '../../../../identity/infrastructure/auth/auth.service';
 import { ConfirmDialogComponent } from '../../../../shared/presentation/components/confirm-dialog/confirm-dialog.component';
-import { WelcomeBannerComponent } from '../../../../subscriptions/presentation/components/welcome-banner/welcome-banner.component';
 
 type DialogAction = 'pause' | 'activate' | 'finalize' | 'delete';
 type NotificationKey = 'pauseSuccess' | 'activateSuccess' | 'finalizeSuccess' | 'deleteSuccess';
@@ -34,7 +33,6 @@ type NotificationKey = 'pauseSuccess' | 'activateSuccess' | 'finalizeSuccess' | 
     MatCardModule,
     MatDialogModule,
     MatSnackBarModule,
-    WelcomeBannerComponent
   ],
   templateUrl: './resumen.component.html',
   styleUrls: ['./resumen.component.css']

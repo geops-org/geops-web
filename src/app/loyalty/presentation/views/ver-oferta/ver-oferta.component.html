@@ -29,20 +29,6 @@
       </div>
 
       <div class="actions">
-        <button
-          class="btn-buy"
-          type="button"
-          (click)="buyNow()">
-          {{ 'offerDetail.buy' | translate }}
-        </button>
-
-        <button
-          class="btn-add"
-          type="button"
-          (click)="addToCart()">
-          {{ 'offerDetail.addToCart' | translate }}
-        </button>
-
         <button class="btn-fav" type="button" [class.active]="isFav" (click)="toggleFav()">
           {{ isFav ? '❤️' : '💜' }}
         </button>

@@ -83,19 +83,6 @@
         </button>
       </mat-menu>
 
-      <button
-        mat-raised-button
-        class="action-btn cart"
-        *ngIf="!isOwner()"
-        [attr.aria-label]="'header.cart' | translate"
-        [matBadge]="cartCount()"
-        [matBadgeHidden]="cartCount() === 0"
-        matBadgeColor="warn"
-        (click)="cartStore.openSidebar()">
-        <mat-icon>shopping_cart</mat-icon>
-        <span class="cart-text">{{ 'header.cart' | translate }}</span>
-      </button>
-
       <app-language-switcher/>
     </div>
 
@@ -105,17 +92,6 @@
         <app-notifications-dropdown class="action-btn notification mobile-only"></app-notifications-dropdown>
       }
 
-      <button
-        mat-icon-button
-        class="action-btn cart-mobile"
-        *ngIf="!isOwner()"
-        [attr.aria-label]="'header.cart' | translate"
-        [matBadge]="cartCount()"
-        [matBadgeHidden]="cartCount() === 0"
-        matBadgeColor="warn"
-        (click)="cartStore.openSidebar()">
-        <mat-icon>shopping_cart</mat-icon>
-      </button>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>
@@ -165,11 +141,6 @@
 </main>
 
 <app-footer-content></app-footer-content>
-
-<!-- Cart Sidebar -->
-@defer (on idle) {
-  <app-cart-sidebar *ngIf="!isOwner()"></app-cart-sidebar>
-}
 
 <!-- Navigation Loading Backdrop -->
 <app-navigation-backdrop></app-navigation-backdrop>
