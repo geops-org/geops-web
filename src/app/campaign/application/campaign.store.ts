@@ -4,7 +4,6 @@ import { Campaign } from '../domain/model/campaign.entity';
 import { CampaignOffer } from '../domain/model/offer.entity';
 import { calculateCtr } from '../domain/utils/campaign-metrics.util';
 import { CampaignApi } from '../infrastructure/campaign-api';
-import { CampaignCartOperations } from '../infrastructure/campaign-cart-operations';
 
 /**
  * Application service store for managing campaign state in the 'campaign' bounded context.
@@ -18,7 +17,6 @@ import { CampaignCartOperations } from '../infrastructure/campaign-cart-operatio
 })
 export class CampaignStore {
   private readonly api = inject(CampaignApi);
-  private readonly cartOperations = inject(CampaignCartOperations);
 
   // ==================== PRIVATE SIGNALS ====================
 
@@ -208,28 +206,7 @@ export class CampaignStore {
   updateCampaign(id: number, updates: Partial<Campaign>): void {
     this.loadingSignal.set(true);
     this.errorSignal.set(null);
-
-    // Check if status is changing to PAUSED or FINALIZED
-    const currentCampaign = this.campaigns().find(c => c.id === id);
-    const isStatusChangingToNonActive =
-      currentCampaign?.status === 'ACTIVE' &&
-      (updates.status === 'PAUSED' || updates.status === 'FINALIZED');
-
-    // If changing to non-active status, clean carts first
-    if (isStatusChangingToNonActive) {
-      this.cartOperations.removeOffersFromAllCarts(id).subscribe({
-        next: () => {
-          this.performCampaignUpdate(id, updates);
-        },
-        error: err => {
-          this.errorSignal.set(this.formatError(err, 'Failed to clean carts'));
-          this.loadingSignal.set(false);
-        }
-      });
-    } else {
-      // Otherwise, just update
-      this.performCampaignUpdate(id, updates);
-    }
+    this.performCampaignUpdate(id, updates);
   }
 
   /**
@@ -265,28 +242,18 @@ export class CampaignStore {
     this.loadingSignal.set(true);
     this.errorSignal.set(null);
 
-    // First, remove offers from all carts
-    this.cartOperations.removeOffersFromAllCarts(id).subscribe({
+    this.api.deleteCampaign(id).pipe(retry(2)).subscribe({
       next: () => {
-        // Then delete the campaign
-        this.api.deleteCampaign(id).pipe(retry(2)).subscribe({
-          next: () => {
-            this.campaignsSignal.update(campaigns =>
-              campaigns.filter(c => c.id !== id)
-            );
-            if (this.selectedCampaignSignal()?.id === id) {
-              this.selectedCampaignSignal.set(null);
-            }
-            this.loadingSignal.set(false);
-          },
-          error: err => {
-            this.errorSignal.set(this.formatError(err, 'Failed to delete campaign'));
-            this.loadingSignal.set(false);
-          }
-        });
+        this.campaignsSignal.update(campaigns =>
+          campaigns.filter(c => c.id !== id)
+        );
+        if (this.selectedCampaignSignal()?.id === id) {
+          this.selectedCampaignSignal.set(null);
+        }
+        this.loadingSignal.set(false);
       },
       error: err => {
-        this.errorSignal.set(this.formatError(err, 'Failed to clean carts before deletion'));
+        this.errorSignal.set(this.formatError(err, 'Failed to delete campaign'));
         this.loadingSignal.set(false);
       }
     });

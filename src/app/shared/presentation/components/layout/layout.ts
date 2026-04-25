@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatBadgeModule } from '@angular/material/badge';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatMenuModule } from '@angular/material/menu';
@@ -14,8 +13,6 @@ import { ConsumerToolbar } from '../../../../loyalty/presentation/components/con
 import { OwnerToolbarComponent } from '../../../../loyalty/presentation/components/owner-toolbar/owner-toolbar.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {LanguageSwitcher} from '../language-switcher/language-switcher';
-import { CartSidebarComponent } from '../../../../cart/presentation/components/cart-sidebar/cart-sidebar.component';
-import { CartStore } from '../../../../cart/application/cart.store';
 import {AuthService} from '../../../../identity/infrastructure/auth/auth.service';
 import {CommonModule} from '@angular/common';
 import { NavigationLoadingService } from '../../services/navigation-loading.service';
@@ -33,7 +30,6 @@ import { filter } from 'rxjs/operators';
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    MatBadgeModule,
     MatInputModule,
     MatFormFieldModule,
     MatMenuModule,
@@ -43,7 +39,6 @@ import { filter } from 'rxjs/operators';
     OwnerToolbarComponent,
     TranslateModule,
     LanguageSwitcher,
-    CartSidebarComponent,
     CommonModule,
     NavigationBackdropComponent,
     NotificationsDropdownComponent,
@@ -52,7 +47,6 @@ import { filter } from 'rxjs/operators';
   styleUrl: './layout.css'
 })
 export class Layout implements OnInit {
-  readonly cartStore = inject(CartStore);
   readonly notificationsStore = inject(NotificationsStore);
   private readonly navigationLoadingService = inject(NavigationLoadingService);
 
@@ -62,9 +56,6 @@ export class Layout implements OnInit {
   isMobileMenuOpen = signal(false);
   isSearchFocused = signal(false);
   isOwner = signal(false);
-
-  // Use cartStore's signals directly
-  cartCount = this.cartStore.totalItems;
 
   constructor(
     public authService: AuthService,

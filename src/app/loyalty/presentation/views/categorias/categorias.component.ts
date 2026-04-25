@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FavoritesApiEndpoint } from '../../../infrastructure/favorites/favorites-api-endpoint';
 import { TranslateModule } from '@ngx-translate/core';
-import { CartStore } from '../../../../cart/application/cart.store';
 import {AuthService} from '../../../../identity/infrastructure/auth/auth.service';
 import { OffersApiEndpoint } from '../../../infrastructure/offers/offers-api-endpoint';
 
@@ -31,8 +30,6 @@ type Offer = {
 })
 
 export class CategoriasComponent implements OnInit, OnDestroy {
-
-  private readonly cartStore = inject(CartStore);
 
   loading = false;
   all: Offer[] = [];
@@ -275,32 +272,6 @@ export class CategoriasComponent implements OnInit, OnDestroy {
         this.favSet.add((o.id));
       });
     }
-  }
-
-  /**
-   * adds an offer to the cart
-   * @param o - offer to add
-   */
-  addToCart(o: Offer) {
-    const offerTitle = o.title;
-    const offerImageUrl = this.imgFor(o);
-
-    this.offersApi.recordCampaignClick(o.campaignId);
-    this.cartStore.addItem(this.userId, o.id, offerTitle, o.price, offerImageUrl, 1);
-  }
-
-  /**
-   * proceeds to buy directly - adds to cart and opens the sidebar
-   * @param o - offer to buy
-   */
-  buyNow(o: Offer) {
-    const offerTitle = o.title;
-    const offerImageUrl = this.imgFor(o);
-
-    this.offersApi.recordCampaignClick(o.campaignId);
-    // Add to cart and open sidebar
-    this.cartStore.addItem(this.userId, o.id, offerTitle, o.price, offerImageUrl, 1);
-    this.cartStore.openSidebar();
   }
 
   onViewOffer(o: Offer) {

@@ -10,7 +10,6 @@ import { FavoritesApiEndpoint } from '../../../infrastructure/favorites/favorite
 import { ReviewsApiEndpoint } from '../../../infrastructure/reviews-api-endpoint';
 import {AuthService} from '../../../../identity/infrastructure/auth/auth.service';
 import { Review } from '../../../domain/model/review.entity';
-import { CartStore } from '../../../../cart/application/cart.store';
 import { Offer } from '../../../domain/model/offer.entity';
 
 @Component({
@@ -25,8 +24,6 @@ import { Offer } from '../../../domain/model/offer.entity';
  * offer detail screen
  */
 export class VerOfertaComponent implements OnInit {
-  private readonly cartStore = inject(CartStore);
-
   offer?: Offer;
   loading = false;
   isFav = false;
@@ -229,44 +226,6 @@ export class VerOfertaComponent implements OnInit {
   initialOf(name?: string, fallback: string = '?'): string {
     const n = (name ?? '').trim();
     return n ? n[0].toUpperCase() : fallback;
-  }
-
-  /**
-   * Añade una oferta al carrito
-   */
-  addToCart() {
-    if (!this.offer) return;
-
-    if (!this.userId) {
-      alert('Debes iniciar sesión para agregar al carrito');
-      return;
-    }
-
-    const offerTitle = this.offer.title;
-    const offerImageUrl = this.imgFor();
-
-    this.cartStore.addItem(this.userId, this.offer.id, offerTitle, this.offer.price, offerImageUrl, 1);
-    this.offersApi.recordCampaignClick(this.offer.campaignId);
-  }
-
-  /**
-   * Procede a comprar directamente - añade al carrito y abre el sidebar
-   */
-  buyNow() {
-    if (!this.offer) return;
-
-    if (!this.userId) {
-      alert('Debes iniciar sesión para comprar');
-      return;
-    }
-
-    const offerTitle = this.offer.title;
-    const offerImageUrl = this.imgFor();
-
-    // Add to cart and open sidebar
-    this.cartStore.addItem(this.userId, this.offer.id, offerTitle, this.offer.price, offerImageUrl, 1);
-    this.cartStore.openSidebar();
-    this.offersApi.recordCampaignClick(this.offer.campaignId);
   }
 
   protected readonly String = String;

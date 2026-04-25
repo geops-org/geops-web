@@ -1,11 +1,9 @@
 import {Component, inject, OnInit, signal, viewChild, computed} from '@angular/core';
 import {TranslatePipe} from '@ngx-translate/core';
-import { WelcomeBannerComponent } from '../../../../subscriptions/presentation/components/welcome-banner/welcome-banner.component';
 import {Offer} from '../../../../loyalty/domain/model/offer.entity';
 import {OffersApiEndpoint} from '../../../../loyalty/infrastructure/offers/offers-api-endpoint';
 import {DecimalPipe, NgForOf, NgIf} from '@angular/common';
 import {FavoritesApiEndpoint} from '../../../../loyalty/infrastructure/favorites/favorites-api-endpoint';
-import {CartStore} from '../../../../cart/application/cart.store';
 import {AuthService} from '../../../../identity/infrastructure/auth/auth.service';
 import {RouterLink} from '@angular/router';
 import {GoogleMap, MapAdvancedMarker, MapInfoWindow} from '@angular/google-maps';
@@ -29,7 +27,6 @@ interface CategoryMapping {
   selector: 'app-home',
   imports: [
     TranslatePipe,
-    WelcomeBannerComponent,
     DecimalPipe,
     NgForOf,
     RouterLink,
@@ -47,7 +44,6 @@ export class Home implements OnInit {
   private favSet = new Set<number>();
   private currentUserId: number | null = null;
   private userId: number = 1;
-  private readonly cartStore = inject(CartStore);
   private impressionsTracked = false;
 
   categories: CategoryMapping[] = [
@@ -379,25 +375,6 @@ export class Home implements OnInit {
       },
       error: () => this.favSet.clear(),
     });
-  }
-
-  buyNow(o: Offer) {
-    // Using hardcoded user ID for now - in real app would come from auth service
-    const offerTitle = o.title;
-    const offerImageUrl = this.imgFor(o);
-
-    this.offersApi.recordCampaignClick(o.campaignId);
-    // Add to cart and open sidebar
-    this.cartStore.addItem(this.userId, o.id, offerTitle, o.price, offerImageUrl, 1);
-    this.cartStore.openSidebar();
-  }
-
-  addToCart(o: Offer) {
-    const offerTitle = o.title;
-    const offerImageUrl = this.imgFor(o);
-
-    this.offersApi.recordCampaignClick(o.campaignId);
-    this.cartStore.addItem(this.userId, o.id, offerTitle, o.price, offerImageUrl, 1);
   }
 
   onViewOffer(offer: Offer) {

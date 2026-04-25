@@ -5,7 +5,6 @@ import { FavoritesApiEndpoint } from '../../../infrastructure/favorites/favorite
 import { OffersApiEndpoint } from '../../../infrastructure/offers/offers-api-endpoint';
 import { TranslateModule } from '@ngx-translate/core';
 import {AuthService} from '../../../../identity/infrastructure/auth/auth.service';
-import {CartStore} from '../../../../cart/application/cart.store';
 import { Offer } from '../../../domain/model/offer.entity';
 
 @Component({
@@ -20,8 +19,6 @@ import { Offer } from '../../../domain/model/offer.entity';
  * favorites screen
  */
 export class FavoritosComponent implements OnInit {
-  private readonly cartStore = inject(CartStore);
-
   loading = false;
   offers: Offer[] = [];
 
@@ -128,42 +125,6 @@ export class FavoritosComponent implements OnInit {
         console.error('[Favoritos] Error al eliminar favorito:', err);
       }
     });
-  }
-
-  /**
-   * Añade una oferta al carrito
-   * @param o - Oferta a añadir
-   */
-  addToCart(o: Offer) {
-    if (!this.currentUserId) {
-      console.warn('[Favoritos] No hay usuario autenticado para añadir al carrito');
-      return;
-    }
-
-    const offerTitle = o.title;
-    const offerImageUrl = this.imgFor(o);
-
-    this.offersApi.recordCampaignClick(o.campaignId);
-    this.cartStore.addItem(this.currentUserId, o.id, offerTitle, o.price, offerImageUrl, 1);
-  }
-
-  /**
-   * Procede a comprar directamente - añade al carrito y abre el sidebar
-   * @param o - Oferta a comprar
-   */
-  buyNow(o: Offer) {
-    if (!this.currentUserId) {
-      console.warn('[Favoritos] No hay usuario autenticado para comprar');
-      return;
-    }
-
-    const offerTitle = o.title;
-    const offerImageUrl = this.imgFor(o);
-
-    this.offersApi.recordCampaignClick(o.campaignId);
-    // Add to cart and open sidebar
-    this.cartStore.addItem(this.currentUserId, o.id, offerTitle, o.price, offerImageUrl, 1);
-    this.cartStore.openSidebar();
   }
 
   onViewOffer(o: Offer) {
