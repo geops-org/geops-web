@@ -28,6 +28,7 @@ export interface AuthenticationResource {
   phone: string;
   role: UserRole;
   plan: PlanType;
+  token?: string;
   message: string;
 }
 

@@ -20,14 +20,19 @@ export class AuthService {
    */
   private loadUserFromStorage(): void {
     const stored = localStorage.getItem('currentUser');
-    if (stored) {
+    const token = localStorage.getItem('auth_token');
+    if (stored && token) {
       try {
-        const user = JSON.parse(stored);
-        this.currentUserSubject.next(user);
+        this.currentUserSubject.next(JSON.parse(stored));
       } catch (e) {
         console.error('[AuthService] Error parsing user:', e);
         localStorage.removeItem('currentUser');
+        localStorage.removeItem('auth_token');
       }
+    } else {
+      localStorage.removeItem('currentUser');
+      localStorage.removeItem('auth_token');
+      this.currentUserSubject.next(null);
     }
   }
 
@@ -50,7 +55,7 @@ export class AuthService {
    * Checks if there is an authenticated user
    */
   isAuthenticated(): boolean {
-    return this.currentUserSubject.value !== null;
+    return this.currentUserSubject.value !== null && !!localStorage.getItem('auth_token');
   }
 
   /**
@@ -70,6 +75,9 @@ export class AuthService {
           plan: authResource.plan
         };
 
+        if (authResource.token) {
+          localStorage.setItem('auth_token', authResource.token);
+        }
         this.setCurrentUser(user);
         return user;
       }),
@@ -95,6 +103,9 @@ export class AuthService {
           plan: authResource.plan
         };
 
+        if (authResource.token) {
+          localStorage.setItem('auth_token', authResource.token);
+        }
         this.setCurrentUser(user);
         return user;
       }),
@@ -111,6 +122,7 @@ export class AuthService {
   logout(): void {
     this.currentUserSubject.next(null);
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('auth_token');
   }
 
   /**
