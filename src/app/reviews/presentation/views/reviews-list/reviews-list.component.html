@@ -42,10 +42,6 @@
           <div class="stat-value">{{ store.statistics().total }}</div>
           <div class="stat-label">{{ 'reviewsPage.statistics.totalReviews' | translate }}</div>
         </div>
-        <!-- <div class="stat-item">
-          <div class="stat-value">{{ store.statistics().totalLikes }}</div>
-          <div class="stat-label">{{ 'reviewsPage.statistics.totalLikes' | translate }}</div>
-        </div> -->
       </div>
       <mat-divider class="stat-divider"></mat-divider>
       <div class="rating-distribution">
@@ -114,7 +110,6 @@
           <mat-select [value]="sortBy()" (valueChange)="sortBy.set($event); onSortChange()">
             <mat-option value="date">{{ 'reviewsPage.filters.mostRecent' | translate }}</mat-option>
             <mat-option value="rating">{{ 'reviewsPage.filters.highestRating' | translate }}</mat-option>
-            <!-- <mat-option value="likes">{{ 'reviewsPage.filters.mostLikes' | translate }}</mat-option> -->
           </mat-select>
         </mat-form-field>
 
@@ -166,16 +161,6 @@
       <mat-card-content>
         <p class="review-text">{{ review.text }}</p>
       </mat-card-content>
-      <mat-card-actions>
-        <!-- <button mat-button (click)="onLike(review.id)">
-          <mat-icon>thumb_up</mat-icon>
-          {{ review.likes }}
-        </button>
-        <button mat-button color="warn" (click)="onDelete(review.id)" *ngIf="userId && review.userId === userId">
-          <mat-icon>delete</mat-icon>
-          {{ 'reviewsPage.actions.delete' | translate }}
-        </button> -->
-      </mat-card-actions>
     </mat-card>
   </div>
 </div>

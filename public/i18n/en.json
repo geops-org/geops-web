@@ -543,8 +543,11 @@
       "yourRating": "Your rating",
       "ariaRate": "Choose a rating from 1 to 5",
       "placeholder": "Tell us about your experience with this offer",
-      "publish": "Publish review"
-    }
+      "publish": "Publish review",
+      "alreadyReviewed": "You have already reviewed this offer"
+    },
+    "registerVisit": "Register Visit",
+    "visitRegistered": "Visit Registered"
   },
   "categoriesBar": {
     "cines": "Cinemas",
@@ -732,7 +735,6 @@
     "statistics": {
       "averageRating": "Average Rating",
       "totalReviews": "Total Reviews",
-      "totalLikes": "Total Likes",
       "distribution": "Rating Distribution"
     },
     "form": {
@@ -768,7 +770,6 @@
       "sortBy": "Sort by",
       "mostRecent": "Most Recent",
       "highestRating": "Highest Rating",
-      "mostLikes": "Most Likes",
       "filterByRating": "Filter by rating",
       "all": "All",
       "stars": "stars"

@@ -543,8 +543,11 @@
       "yourRating": "Tu calificación",
       "ariaRate": "Elige una calificación del 1 al 5",
       "placeholder": "Cuéntanos tu experiencia con esta oferta",
-      "publish": "Publicar reseña"
-    }
+      "publish": "Publicar reseña",
+      "alreadyReviewed": "Ya comentaste esta oferta"
+    },
+    "registerVisit": "Registrar Visita",
+    "visitRegistered": "Visita Registrada"
   },
   "proveedor": {
     "stats": {
@@ -724,7 +727,6 @@
     "statistics": {
       "averageRating": "Rating Promedio",
       "totalReviews": "Total Reseñas",
-      "totalLikes": "Total Likes",
       "distribution": "Distribución de Calificaciones"
     },
     "form": {
@@ -760,7 +762,6 @@
       "sortBy": "Ordenar por",
       "mostRecent": "Más Recientes",
       "highestRating": "Mayor Calificación",
-      "mostLikes": "Más Likes",
       "filterByRating": "Filtrar por calificación",
       "all": "Todas",
       "stars": "estrellas"

@@ -8,7 +8,6 @@ export interface ReviewResource {
   userId: number;
   rating: number;
   text: string;
-  likes: number;
   createdAt: string;
 }
 

@@ -9,6 +9,5 @@ export interface Review extends BaseEntity {
   userName?: string;
   rating: number;
   text: string;
-  likes: number;
   createdAt: string;
 }
