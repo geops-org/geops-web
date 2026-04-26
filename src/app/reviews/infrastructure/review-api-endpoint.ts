@@ -78,7 +78,9 @@ export class ReviewApiEndpoint extends BaseApiEndpoint<
         }
 
         // Step 2: Get all offers for each campaign
-        const offerRequests = campaigns.map((campaign) =>
+        const offerRequests = campaigns
+          .filter((campaign) => campaign.id != null)
+          .map((campaign) =>
           this.http.get<any[]>(
             `${environment.platformProviderApiBaseUrl}/offers/campaign/${campaign.id}`
           ).pipe(
