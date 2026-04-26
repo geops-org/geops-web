@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,7 +8,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { CampaignStore } from '../../../application/campaign.store';
-import { Campaign } from '../../../domain/model/campaign.entity';
 import { calculateCtr } from '../../../domain/utils/campaign-metrics.util';
 import { AuthService } from '../../../../identity/infrastructure/auth/auth.service';
 
@@ -30,30 +29,18 @@ export class ReportesComponent implements OnInit {
   private readonly authService = inject(AuthService);
 
   campaigns = this.store.campaigns;
-  filterStatus: string = 'ALL';
-  reportFormat: 'json' | 'csv' = 'json';
+  filterStatus = signal<string>('ALL');
+  reportFormat = signal<'json' | 'csv'>('json');
 
-  ngOnInit(): void {
-    this.loadCampaigns();
-  }
-
-  loadCampaigns(): void {
-    const userId = this.authService.getCurrentUserId();
-    if (userId) {
-      this.store.loadCampaignsByUserId(userId);
-    }
-  }
-
-  get filteredCampaigns(): Campaign[] {
+  readonly filteredCampaigns = computed(() => {
     const campaigns = this.campaigns();
-    if (this.filterStatus === 'ALL') {
-      return campaigns;
-    }
-    return campaigns.filter(c => c.status === this.filterStatus);
-  }
+    const status = this.filterStatus();
+    if (status === 'ALL') return campaigns;
+    return campaigns.filter(c => c.status === status);
+  });
 
-  get reportData(): any {
-    const campaigns = this.filteredCampaigns;
+  readonly reportData = computed(() => {
+    const campaigns = this.filteredCampaigns();
     const totalImpressions = campaigns.reduce((sum, c) => sum + c.totalImpressions, 0);
     const totalClicks = campaigns.reduce((sum, c) => sum + c.totalClicks, 0);
     const totalBudget = campaigns.reduce((sum, c) => sum + c.estimatedBudget, 0);
@@ -95,14 +82,12 @@ export class ReportesComponent implements OnInit {
         updatedAt: c.updatedAt
       }))
     };
-  }
+  });
 
-  get jsonData(): string {
-    return JSON.stringify(this.reportData, null, 2);
-  }
+  readonly jsonData = computed(() => JSON.stringify(this.reportData(), null, 2));
 
-  get csvData(): string {
-    const campaigns = this.filteredCampaigns;
+  readonly csvData = computed(() => {
+    const campaigns = this.filteredCampaigns();
     const headers = ['ID', 'Nombre', 'Estado', 'Fecha Inicio', 'Fecha Fin', 'Presupuesto', 'Impresiones', 'Clicks', 'CTR (%)'];
     const rows = campaigns.map((c) => {
       const ctr = calculateCtr(c.totalClicks, c.totalImpressions);
@@ -123,16 +108,27 @@ export class ReportesComponent implements OnInit {
       headers.join(','),
       ...rows.map(row => row.join(','))
     ].join('\n');
+  });
+
+  ngOnInit(): void {
+    this.loadCampaigns();
+  }
+
+  loadCampaigns(): void {
+    const userId = this.authService.getCurrentUserId();
+    if (userId) {
+      this.store.loadCampaignsByUserId(userId);
+    }
   }
 
   exportReport(): void {
     const timestamp = new Date().getTime();
     const filename = `campaign-report-${timestamp}`;
 
-    if (this.reportFormat === 'json') {
-      this.downloadFile(this.jsonData, `${filename}.json`, 'application/json');
+    if (this.reportFormat() === 'json') {
+      this.downloadFile(this.jsonData(), `${filename}.json`, 'application/json');
     } else {
-      this.downloadFile(this.csvData, `${filename}.csv`, 'text/csv');
+      this.downloadFile(this.csvData(), `${filename}.csv`, 'text/csv');
     }
   }
 

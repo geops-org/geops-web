@@ -12,7 +12,7 @@
       <div class="report-options">
         <mat-form-field>
           <mat-label>{{ 'campaigns.reports.filterByStatus' | translate }}</mat-label>
-          <mat-select [(ngModel)]="filterStatus">
+          <mat-select [ngModel]="filterStatus()" (ngModelChange)="filterStatus.set($event)">
             <mat-option value="ALL">{{ 'campaigns.reports.allCampaigns' | translate }}</mat-option>
             <mat-option value="ACTIVE">{{ 'campaigns.tabs.active' | translate }}</mat-option>
             <mat-option value="PAUSED">{{ 'campaigns.tabs.paused' | translate }}</mat-option>
@@ -22,7 +22,7 @@
 
         <mat-form-field>
           <mat-label>{{ 'campaigns.reports.exportFormat' | translate }}</mat-label>
-          <mat-select [(ngModel)]="reportFormat">
+          <mat-select [ngModel]="reportFormat()" (ngModelChange)="reportFormat.set($event)">
             <mat-option value="json">JSON</mat-option>
             <mat-option value="csv">CSV</mat-option>
           </mat-select>
@@ -35,23 +35,23 @@
         <div class="summary-grid">
           <div class="summary-item">
             <span class="summary-label">{{ 'campaigns.stats.totalCampaigns' | translate }}</span>
-            <span class="summary-value">{{ reportData.summary.totalCampaigns }}</span>
+            <span class="summary-value">{{ reportData().summary.totalCampaigns }}</span>
           </div>
           <div class="summary-item">
             <span class="summary-label">{{ 'campaigns.stats.totalImpressions' | translate }}</span>
-            <span class="summary-value">{{ reportData.summary.totalImpressions | number }}</span>
+            <span class="summary-value">{{ reportData().summary.totalImpressions | number }}</span>
           </div>
           <div class="summary-item">
             <span class="summary-label">{{ 'campaigns.stats.totalClicks' | translate }}</span>
-            <span class="summary-value">{{ reportData.summary.totalClicks | number }}</span>
+            <span class="summary-value">{{ reportData().summary.totalClicks | number }}</span>
           </div>
           <div class="summary-item">
             <span class="summary-label">{{ 'campaigns.stats.totalBudget' | translate }}</span>
-            <span class="summary-value">S/ {{ reportData.summary.totalBudget | number:'1.2-2' }}</span>
+            <span class="summary-value">S/ {{ reportData().summary.totalBudget | number:'1.2-2' }}</span>
           </div>
           <div class="summary-item">
             <span class="summary-label">{{ 'campaigns.stats.averageCTR' | translate }}</span>
-            <span class="summary-value">{{ reportData.summary.averageCTR | number:'1.1-1' }}%</span>
+            <span class="summary-value">{{ reportData().summary.averageCTR | number:'1.1-1' }}%</span>
           </div>
         </div>
 
@@ -60,15 +60,15 @@
           <div class="status-grid">
             <div class="status-item active">
               <span class="status-label">{{ 'campaigns.tabs.active' | translate }}</span>
-              <span class="status-count">{{ reportData.summary.byStatus.active }}</span>
+              <span class="status-count">{{ reportData().summary.byStatus.active }}</span>
             </div>
             <div class="status-item paused">
               <span class="status-label">{{ 'campaigns.tabs.paused' | translate }}</span>
-              <span class="status-count">{{ reportData.summary.byStatus.paused }}</span>
+              <span class="status-count">{{ reportData().summary.byStatus.paused }}</span>
             </div>
             <div class="status-item finalized">
               <span class="status-label">{{ 'campaigns.tabs.finalized' | translate }}</span>
-              <span class="status-count">{{ reportData.summary.byStatus.finalized }}</span>
+              <span class="status-count">{{ reportData().summary.byStatus.finalized }}</span>
             </div>
           </div>
         </div>
@@ -76,9 +76,9 @@
 
       <!-- Preview Section -->
       <div class="report-preview">
-        <h3>{{ 'campaigns.reports.preview' | translate }} ({{ reportFormat === 'json' ? 'JSON' : 'CSV' }})</h3>
-        <pre *ngIf="reportFormat === 'json'">{{ jsonData }}</pre>
-        <pre *ngIf="reportFormat === 'csv'">{{ csvData }}</pre>
+        <h3>{{ 'campaigns.reports.preview' | translate }} ({{ reportFormat() === 'json' ? 'JSON' : 'CSV' }})</h3>
+        <pre *ngIf="reportFormat() === 'json'">{{ jsonData() }}</pre>
+        <pre *ngIf="reportFormat() === 'csv'">{{ csvData() }}</pre>
       </div>
 
       <!-- Actions -->

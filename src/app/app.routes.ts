@@ -83,14 +83,6 @@ export const routes: Routes = [
         title: 'GeoPs - Favoritos',
       },
       {
-        path: 'mis-cupones',
-        loadComponent: () =>
-          import('./loyalty/presentation/views/mis-cupones/mis-cupones.component').then(
-            (m) => m.MisCuponesComponent
-          ),
-        title: 'GeoPs - Mis Cupones',
-      },
-      {
         path: 'profile',
         loadComponent: () =>
           import('./identity/presentation/views/profile/profiles.component').then(

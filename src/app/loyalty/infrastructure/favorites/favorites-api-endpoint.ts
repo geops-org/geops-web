@@ -4,7 +4,7 @@ import { BaseApiEndpoint } from '../../../shared/infrastructure/base-api-endpoin
 import { FavoriteRow } from './favorites-assembler';
 import { FavoriteRowResource, FavoriteRowsResponse } from './favorites-response';
 import { FavoritesAssembler } from './favorites-assembler';
-import { catchError, map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
@@ -60,10 +60,7 @@ export class FavoritesApiEndpoint extends BaseApiEndpoint<
           const list = Array.isArray(response) ? response : (response.content || response.data || []);
           return list.map((r: FavoriteRowResource) => this.assembler.toEntityFromResource(r));
         }),
-        catchError(error => {
-          console.error('[FavoritesAPI] Error finding favorite:', error.status, error.message);
-          return of([]);
-        })
+        catchError(err => err.status === 404 ? of([]) : throwError(() => err))
       );
   }
 

@@ -296,6 +296,9 @@ export class CampaignStore {
    * @param campaignId - The ID of the campaign
    */
   loadOffersByCampaignId(campaignId: number): void {
+    if (!campaignId || !Number.isFinite(campaignId)) {
+      return;
+    }
     this.loadingSignal.set(true);
     this.errorSignal.set(null);
 
