@@ -16,7 +16,6 @@ export class ReviewsAssembler
       offerId: Number(r.offerId),
       userId: Number(r.userId),
       rating: Number(r.rating),
-      likes: Number(r.likes),
     };
   }
 

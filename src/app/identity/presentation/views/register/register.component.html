@@ -37,12 +37,6 @@
       <option value="CONSUMER">{{ 'register.consumer' | translate }}</option>
     </select>
 
-    <!-- Plan selection -->
-    <label class="register-label">{{ 'register.plan' | translate }}</label>
-    <select class="register-input" name="plan" [(ngModel)]="model.plan" required>
-      <option value="BASIC">{{ 'register.basic' | translate }}</option>
-      <option value="PREMIUM">{{ 'register.premium' | translate }}</option>
-    </select>
 
     <!-- Submit button, disabled if registering or form is invalid -->
     <button class="register-btn" type="submit" [disabled]="registering || !registerForm.form.valid">

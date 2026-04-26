@@ -56,7 +56,7 @@ export class ReviewsListComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   // Local UI state signals
-  sortBy = signal<'date' | 'rating' | 'likes'>('date');
+  sortBy = signal<'date' | 'rating'>('date');
   filterRating = signal<number>(0);
   showForm = signal<boolean>(false);
 
@@ -146,15 +146,6 @@ export class ReviewsListComponent implements OnInit, OnDestroy {
     } else {
       this.snackBar.open('Error al crear reseña: ' + this.store.error(), 'Cerrar', { duration: 5000 });
     }
-  }
-
-  onLike(reviewId: number): void {
-    // Simplified: just reload reviews after like
-    this.snackBar.open('Funcionalidad de likes no disponible', 'Cerrar', { duration: 2000 });
-  }
-
-  onDelete(reviewId: number): void {
-    this.snackBar.open('Funcionalidad de eliminar no disponible', 'Cerrar', { duration: 2000 });
   }
 
   onSortChange(): void {

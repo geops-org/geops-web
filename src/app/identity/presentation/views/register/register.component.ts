@@ -127,8 +127,7 @@ export class RegisterComponent {
       email: this.model.email,
       phone: this.model.phone,
       password: this.model.password,
-      role: 'CONSUMER',
-      plan: 'BASIC'
+      role: 'CONSUMER'
     };
 
     this.authService.register(payload).subscribe({

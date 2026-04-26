@@ -38,10 +38,9 @@ export class ReviewsApiEndpoint extends BaseApiEndpoint<
    * create a new review for an offer
    * @param review
    */
-  add(review: Omit<Review, 'id' | 'likes' | 'createdAt'>): Observable<Review> {
+  add(review: Omit<Review, 'id' | 'createdAt'>): Observable<Review> {
     const body: ReviewResource = {
       ...review,
-      likes: 0,
       createdAt: new Date().toISOString(),
     } as any;
 
@@ -50,14 +49,4 @@ export class ReviewsApiEndpoint extends BaseApiEndpoint<
       .pipe(map(r => this.assembler.toEntityFromResource(r)));
   }
 
-  /**
-   * update the number of likes on a review
-   * @param id - reviewID
-   * @param nextLikes - new likes value
-   */
-  like(id: number, nextLikes: number): Observable<Review> {
-    return this.http
-      .patch<ReviewResource>(`${this.endpointUrl}/${id}`, { likes: nextLikes })
-      .pipe(map(r => this.assembler.toEntityFromResource(r)));
-  }
 }
