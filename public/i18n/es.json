@@ -724,8 +724,7 @@
       "deleteSuccess": "Reseña eliminada",
       "likeSuccess": "¡Gracias por tu opinión!",
       "error": "Ocurrió un error. Por favor, intenta de nuevo."
-    }
-  },
+    },
   "coupons": {
     "title": "Mis Cupones",
     "loading": "Cargando cupones...",

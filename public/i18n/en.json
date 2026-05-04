@@ -753,8 +753,8 @@
     "messages": {
       "likeSuccess": "Thanks for your feedback!",
       "error": "An error occurred. Please try again."
-    }
-  },
+    },
+    
   "coupons": {
     "title": "My Coupons",
     "loading": "Loading coupons...",
