@@ -7,10 +7,8 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { OffersApiEndpoint } from '../../../infrastructure/offers/offers-api-endpoint';
 import { FavoritesApiEndpoint } from '../../../infrastructure/favorites/favorites-api-endpoint';
-import { ReviewsApiEndpoint } from '../../../infrastructure/reviews-api-endpoint';
 import { ConsumptionsApiEndpoint } from '../../../infrastructure/consumptions/consumptions-api-endpoint';
 import {AuthService} from '../../../../identity/infrastructure/auth/auth.service';
-import { Review } from '../../../domain/model/review.entity';
 import { Offer } from '../../../domain/model/offer.entity';
 
 @Component({
@@ -29,13 +27,10 @@ export class VerOfertaComponent implements OnInit {
   loading = false;
   isFav = false;
 
-  reviews: Review[] = [];
   avgRating = 0;
-  reviewsCount = 0;
   myRating = 5;
   myText = '';
   visitRegistered = false;
-  userAlreadyReviewed = false;
 
   private userId: number | null = null;
 
@@ -52,7 +47,6 @@ export class VerOfertaComponent implements OnInit {
    * @param location
    * @param offersApi
    * @param favsApi
-   * @param reviewsApi
    * @param auth
    */
   constructor(
@@ -61,7 +55,6 @@ export class VerOfertaComponent implements OnInit {
     private location: Location,
     private offersApi: OffersApiEndpoint,
     private favsApi: FavoritesApiEndpoint,
-    private reviewsApi: ReviewsApiEndpoint,
     private consumptionsApi: ConsumptionsApiEndpoint,
     private auth: AuthService
   ) {}
@@ -80,29 +73,6 @@ export class VerOfertaComponent implements OnInit {
 
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.loading = true;
-
-    this.offersApi.getByIds([id]).subscribe({
-      next: (offers) => {
-        this.offer = offers[0];
-        this.loading = false;
-        if (!this.offer) return;
-
-        if (this.userId) {
-          this.favsApi
-            .findRow(this.userId, this.offer.id)
-            .subscribe((rows) => (this.isFav = rows.length > 0));
-
-          this.consumptionsApi.getByUserId(this.userId).subscribe({
-            next: (consumptions) => {
-              this.visitRegistered = consumptions.some(c => c.offerId === this.offer!.id);
-            },
-          });
-        }
-
-        this.loadReviews(this.offer.id);
-      },
-      error: () => (this.loading = false),
-    });
   }
 
   /**
@@ -175,22 +145,6 @@ export class VerOfertaComponent implements OnInit {
   }
 
   /**
-   * load the offer reviews and calculate average/quantity
-   * @param offerId
-   * @private
-   */
-  private loadReviews(offerId: number) {
-    this.reviewsApi.listByOffer(offerId).subscribe((list) => {
-      this.reviews = list;
-      this.reviewsCount = list.length;
-      this.avgRating = list.length
-        ? +(list.reduce((s, r) => s + r.rating, 0) / list.length).toFixed(1)
-        : 0;
-      this.userAlreadyReviewed = !!this.userId && list.some(r => r.userId === this.userId);
-    });
-  }
-
-  /**
    * registers a visit (consumption) for the current user on this offer
    */
   registerVisit(): void {
@@ -200,44 +154,6 @@ export class VerOfertaComponent implements OnInit {
       next: () => (this.visitRegistered = true),
       error: (err) => console.error('[VerOferta] Error registering visit:', err),
     });
-  }
-
-  /**
-   * post a current user review for this offer
-   */
-  publishReview() {
-    if (!this.userId || !this.offer || !this.myText.trim()) return;
-
-    const me = this.auth.getCurrentUser();
-
-    this.reviewsApi
-      .add({
-        offerId: this.offer.id,
-        userId: this.userId,
-        userName: me?.name ?? '',
-        rating: this.myRating,
-        text: this.myText.trim(),
-      })
-      .subscribe((r) => {
-        this.reviews = [r, ...this.reviews];
-        this.reviewsCount++;
-        this.avgRating = +(
-          this.reviews.reduce((s, x) => s + x.rating, 0) / this.reviews.length
-        ).toFixed(1);
-        this.myText = '';
-        this.myRating = 5;
-        this.userAlreadyReviewed = true;
-      });
-  }
-
-  /**
-   * returns the capital initial to display on the avatar to be displayed in reviews
-   * @param name - username
-   * @param fallback
-   */
-  initialOf(name?: string, fallback: string = '?'): string {
-    const n = (name ?? '').trim();
-    return n ? n[0].toUpperCase() : fallback;
   }
 
   protected readonly String = String;

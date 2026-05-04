@@ -537,15 +537,7 @@
       "business": "Negocio: {{partner}}.",
       "redeem": "Se puede canjear como medio de pago hasta el monto indicado."
     },
-    "reviews": {
-      "title": "Comentarios",
-      "count": "{{count}} reseñas",
-      "yourRating": "Tu calificación",
-      "ariaRate": "Elige una calificación del 1 al 5",
-      "placeholder": "Cuéntanos tu experiencia con esta oferta",
-      "publish": "Publicar reseña",
-      "alreadyReviewed": "Ya comentaste esta oferta"
-    },
+
     "registerVisit": "Registrar Visita",
     "visitRegistered": "Visita Registrada"
   },
@@ -717,47 +709,7 @@
       "error": "Ocurrió un error. Por favor, intenta de nuevo."
     }
   },
-  "reviewsPage": {
-    "title": "Comentarios y Reseñas",
-    "addReview": "Agregar Reseña",
-    "cancel": "Cancelar",
-    "loading": "Cargando reseñas...",
-    "error": "Error al cargar reseñas",
-    "retry": "Reintentar",
-    "statistics": {
-      "averageRating": "Rating Promedio",
-      "totalReviews": "Total Reseñas",
-      "distribution": "Distribución de Calificaciones"
-    },
-    "form": {
-      "newReview": "Nueva Reseña",
-      "rating": "Calificación",
-      "ratingRequired": "La calificación es requerida",
-      "excellent": "Excelente",
-      "veryGood": "Muy Bueno",
-      "good": "Bueno",
-      "fair": "Regular",
-      "poor": "Malo",
-      "comment": "Comentario",
-      "commentPlaceholder": "Escribe tu reseña aquí (mínimo 10 caracteres)",
-      "commentRequired": "El comentario es requerido",
-      "commentMinLength": "Mínimo 10 caracteres",
-      "commentMaxLength": "El comentario no debe exceder 500 caracteres",
-      "submit": "Publicar Reseña",
-      "submitting": "Publicando..."
-    },
-    "actions": {
-      "addReview": "Agregar Reseña",
-      "cancel": "Cancelar",
-      "publish": "Publicar Reseña",
-      "retry": "Reintentar",
-      "like": "Me gusta",
-      "unlike": "Quitar me gusta",
-      "reply": "Responder",
-      "edit": "Editar",
-      "delete": "Eliminar",
-      "report": "Reportar"
-    },
+
     "filters": {
       "sortBy": "Ordenar por",
       "mostRecent": "Más Recientes",
@@ -765,10 +717,6 @@
       "filterByRating": "Filtrar por calificación",
       "all": "Todas",
       "stars": "estrellas"
-    },
-    "empty": {
-      "noReviews": "No hay reseñas disponibles",
-      "beFirst": "Sé el primero en opinar"
     },
     "messages": {
       "createSuccess": "Reseña publicada exitosamente",
