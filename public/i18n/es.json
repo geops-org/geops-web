@@ -148,8 +148,7 @@
     "summary": "Resumen",
     "campaigns": "Campañas",
     "create": "Crear",
-    "reports": "Reportes",
-    "comments": "Comentarios"
+    "reports": "Reportes"
   },
   "campaign": {
     "addOfferForm": {
