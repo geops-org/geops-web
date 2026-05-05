@@ -3,7 +3,6 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {Offer} from '../../../../loyalty/domain/model/offer.entity';
 import {OffersApiEndpoint} from '../../../../loyalty/infrastructure/offers/offers-api-endpoint';
 import {DecimalPipe, NgForOf, NgIf} from '@angular/common';
-import {FavoritesApiEndpoint} from '../../../../loyalty/infrastructure/favorites/favorites-api-endpoint';
 import {AuthService} from '../../../../identity/infrastructure/auth/auth.service';
 import {RouterLink} from '@angular/router';
 import {GoogleMap, MapAdvancedMarker, MapInfoWindow} from '@angular/google-maps';
@@ -41,7 +40,6 @@ interface CategoryMapping {
 })
 export class Home implements OnInit {
 
-  private favSet = new Set<number>();
   private currentUserId: number | null = null;
   private userId: number = 1;
   private impressionsTracked = false;
@@ -206,10 +204,8 @@ export class Home implements OnInit {
 
   constructor(
     private offersApi: OffersApiEndpoint,
-    private favoritesApi: FavoritesApiEndpoint,
     private authService: AuthService
-  )
-  {}
+  ) {}
 
   ngOnInit(): void {
     this.checkPermissionsOnLoad().then();
@@ -229,7 +225,6 @@ export class Home implements OnInit {
 
     // Cargar todas las ofertas de una vez
     this.loadAllOffers();
-    this.fetchFavs();
   }
 
   /**
@@ -336,45 +331,6 @@ export class Home implements OnInit {
    */
   imgFor(o: Offer | null): string {
     return !o ? '' : (o.imageUrl ?? `assets/offers/${o.id}.jpg`);
-  }
-
-  isFav(id: number) { return this.favSet.has(id); }
-
-  toggleFav(o: Offer) {
-    if (!this.currentUserId) {
-      console.warn('[Ofertas] You have to log-in to add favorites');
-      alert('Debes iniciar sesión para agregar favoritos');
-      return;
-    }
-
-    if (this.favSet.has(o.id)) {
-      // Eliminar favorito usando el endpoint directo
-      this.favoritesApi.removeByUserAndOffer(this.currentUserId, o.id).subscribe({
-        next: () => {
-          this.favSet.delete(o.id);
-        },
-        error: (err) => {
-          console.error('[Ofertas] Error al eliminar favorito:', err);
-        }
-      });
-    } else {
-      this.favoritesApi.add(this.currentUserId, o.id).subscribe(() => {
-        this.favSet.add(o.id);
-      });
-    }
-  }
-
-  private fetchFavs() {
-    if (!this.currentUserId) {
-      this.favSet.clear();
-      return;
-    }
-    this.favoritesApi.getByUser(this.currentUserId).subscribe({
-      next: (rows) => {
-        this.favSet = new Set<number>(rows.map((r) => r.offerId));
-      },
-      error: () => this.favSet.clear(),
-    });
   }
 
   onViewOffer(offer: Offer) {

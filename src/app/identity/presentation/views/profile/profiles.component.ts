@@ -5,7 +5,6 @@ import { AuthService } from '../../../infrastructure/auth/auth.service';
 import { User } from '../../../domain/model/user.entity';
 import { DetailsConsumer } from '../../../domain/model/details-consumer.entity';
 import { DetailsConsumerService } from '../../../infrastructure/users/details-consumer.service';
-import { FavoritesApiEndpoint } from '../../../../loyalty/infrastructure/favorites/favorites-api-endpoint';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -23,8 +22,7 @@ import { TranslateModule } from '@ngx-translate/core';
 export class ProfilesComponent implements OnInit {
   user: User | null = null;
   consumerDetails: DetailsConsumer | null = null;
-  favoriteCount: number = 0;
-  browserLocationPermission: string = 'ASK'; // Track browser permission state
+  browserLocationPermission: string = 'ASK';
 
   /**
    * Initializes ProfilesComponent with AuthService and FavoritesApiEndpoint.
@@ -34,7 +32,6 @@ export class ProfilesComponent implements OnInit {
    */
   constructor(
     private authService: AuthService,
-    private favoritesApi: FavoritesApiEndpoint,
     private detailsConsumerService: DetailsConsumerService
   ) {}
 
@@ -46,18 +43,6 @@ export class ProfilesComponent implements OnInit {
     this.user = this.authService.getCurrentUser();
 
     if (this.user?.id) {
-      // Load favorites count
-      this.favoritesApi.getByUser(this.user.id).subscribe({
-        next: (favoriteRows) => {
-          this.favoriteCount = favoriteRows.length;
-        },
-        error: (err) => {
-          console.error('Error fetching favorites:', err);
-          this.favoriteCount = 0;
-        }
-      });
-
-      // Load consumer details if user is a consumer
       if (this.user.role === 'CONSUMER') {
         this.detailsConsumerService.getByUserId(this.user.id).subscribe({
           next: (details) => {

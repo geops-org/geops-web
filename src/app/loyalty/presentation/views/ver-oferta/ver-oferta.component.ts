@@ -1,84 +1,70 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { OffersApiEndpoint } from '../../../infrastructure/offers/offers-api-endpoint';
-import { FavoritesApiEndpoint } from '../../../infrastructure/favorites/favorites-api-endpoint';
 import { ConsumptionsApiEndpoint } from '../../../infrastructure/consumptions/consumptions-api-endpoint';
-import {AuthService} from '../../../../identity/infrastructure/auth/auth.service';
+import { AuthService } from '../../../../identity/infrastructure/auth/auth.service';
 import { Offer } from '../../../domain/model/offer.entity';
 
 @Component({
   selector: 'app-ver-oferta',
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslateModule],
+  imports: [DecimalPipe, TranslateModule],
   templateUrl: './ver-oferta.component.html',
   styleUrls: ['./ver-oferta.component.css'],
 })
-
-/**
- * offer detail screen
- */
 export class VerOfertaComponent implements OnInit {
   offer?: Offer;
   loading = false;
-  isFav = false;
-
-  avgRating = 0;
-  myRating = 5;
-  myText = '';
   visitRegistered = false;
 
   private userId: number | null = null;
 
-  get canPublish(): boolean {
-    return !!this.userId && !!this.myText.trim();
-  }
-
   from: 'offers' | 'favorites' | null = null;
 
-  /**
-   * creates an instance of the 'viewOfferComponent' component
-   * @param route
-   * @param router
-   * @param location
-   * @param offersApi
-   * @param favsApi
-   * @param auth
-   */
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
     private offersApi: OffersApiEndpoint,
-    private favsApi: FavoritesApiEndpoint,
     private consumptionsApi: ConsumptionsApiEndpoint,
     private auth: AuthService
   ) {}
 
-  /**
-   * initialize the page
-   */
   ngOnInit(): void {
     window.scrollTo({ top: 0 });
 
     const user = this.auth.getCurrentUser();
     this.userId = user ? user.id : null;
 
-    this.from =
-      (this.route.snapshot.queryParamMap.get('from') as any) ?? history.state?.from ?? null;
+    const raw = this.route.snapshot.queryParamMap.get('from') ?? history.state?.from ?? null;
+    this.from = raw === 'offers' || raw === 'favorites' ? raw : null;
 
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.loading = true;
+
+    this.offersApi.getByIds([id]).subscribe({
+      next: (offers) => {
+        this.offer = offers[0];
+        this.loading = false;
+        if (!this.offer) return;
+
+        if (this.userId) {
+          this.consumptionsApi.getByUserId(this.userId).subscribe({
+            next: (consumptions) => {
+              this.visitRegistered = consumptions.some((c) => c.offerId === this.offer!.id);
+            },
+          });
+        }
+      },
+      error: () => (this.loading = false),
+    });
   }
 
-  /**
-   * checks if a location is a district and should not be translated
-   * @param location - location name
-   */
+  // checks if a location is a district and should not be translated
   isDistrict(location: string): boolean {
     const districts = [
       'Surco',
@@ -100,16 +86,11 @@ export class VerOfertaComponent implements OnInit {
       'San Isidro',
       'Tiendas seleccionadas',
     ];
-    // Divide la ubicación por comas y elimina espacios
     const locationParts = location.split(',').map((part) => part.trim());
-    // Verifica si alguna parte es un distrito
     return locationParts.some((part) => districts.includes(part));
   }
 
-  /**
-   * if there's history, use `location.back()`
-   * if not, navigate to the source (favorites / offers)
-   */
+  // navigates back — uses browser history if available, otherwise falls back to source route
   goBack() {
     if (window.history.length > 1) {
       this.location.back();
@@ -119,34 +100,10 @@ export class VerOfertaComponent implements OnInit {
     this.router.navigate([url]);
   }
 
-  /**
-   * returns the URL of the offer image
-   */
   imgFor(): string {
     return this.offer?.imageUrl ?? `assets/offers/${this.offer?.id}.jpg`;
   }
 
-  /**
-   * toggles the offers favorite for the current user
-   * if it's already a favorite, remove it
-   * if not, add it
-   */
-  toggleFav(): void {
-    if (!this.userId || !this.offer) return;
-
-    if (this.isFav) {
-      this.favsApi.findRow(this.userId, this.offer.id).subscribe((rows) => {
-        if (!rows.length) return;
-        this.favsApi.removeRow(rows[0].id!).subscribe(() => (this.isFav = false));
-      });
-    } else {
-      this.favsApi.add(this.userId, this.offer.id).subscribe(() => (this.isFav = true));
-    }
-  }
-
-  /**
-   * registers a visit (consumption) for the current user on this offer
-   */
   registerVisit(): void {
     if (!this.userId || !this.offer || this.visitRegistered) return;
 

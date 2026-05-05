@@ -4,7 +4,8 @@
     {{ 'offerDetail.back' | translate }}
   </button>
 
-  <div class="offer-grid" *ngIf="offer as o">
+  @if (offer; as o) {
+  <div class="offer-grid">
     <img class="offer-hero" [src]="imgFor()" [alt]="o.title">
 
     <section class="summary">
@@ -13,10 +14,11 @@
 
       <div class="meta">
         <span class="pin" aria-hidden="true">📍</span>
-        <span *ngIf="isDistrict(o.location); else translatedLocation">{{ o.location }}</span>
-        <ng-template #translatedLocation>
+        @if (isDistrict(o.location)) {
+          <span>{{ o.location }}</span>
+        } @else {
           <span>{{ 'offersData.locations.' + o.location | translate }}</span>
-        </ng-template>
+        }
 
         <span class="dot">•</span>
         <span class="rating">{{ o.rating | number:'1.1-1' }}</span>
@@ -28,13 +30,6 @@
         <span class="amount">{{ o.price | number:'1.2-2' }}</span>
       </div>
 
-      <div class="actions">
-        <button class="btn-fav" type="button" [class.active]="isFav" (click)="toggleFav()">
-          {{ isFav ? '❤️' : '💜' }}
-        </button>
-      </div>
-
-
       <ul class="bullets">
         <li>{{ 'offerDetail.bullets.valid' | translate:{ partner: o.partner } }}</li>
         <li>{{ 'offerDetail.bullets.business' | translate:{ partner: o.partner } }}</li>
@@ -42,6 +37,7 @@
       </ul>
     </section>
   </div>
+  }
 
   @if (offer) {
     <div class="visit-action">

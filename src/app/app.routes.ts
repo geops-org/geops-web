@@ -75,14 +75,6 @@ export const routes: Routes = [
         title: 'GeoPs - Categorías',
       },
       {
-        path: 'favoritos',
-        loadComponent: () =>
-          import('./loyalty/presentation/views/favoritos/favoritos.component').then(
-            (m) => m.FavoritosComponent
-          ),
-        title: 'GeoPs - Favoritos',
-      },
-      {
         path: 'profile',
         loadComponent: () =>
           import('./identity/presentation/views/profile/profiles.component').then(
@@ -145,7 +137,7 @@ export const routes: Routes = [
             (m) => m.ReportesComponent
           ),
         title: 'GeoPs - Reportes',
-      },
+      }
     ],
   },
 

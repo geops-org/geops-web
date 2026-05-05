@@ -19,7 +19,6 @@
     "home": "Home",
     "offers": "Offers",
     "categorias": "Categories",
-    "favorites": "Favorites",
     "coupons": "My Coupons"
   },
   "offersPage": {
@@ -97,13 +96,6 @@
       "Tiendas seleccionadas": "Selected stores",
       "Online y tiendas": "Online & stores"
     }
-  },
-  "favoritesPage": {
-    "title": "Favorites",
-    "loading": "Loading…",
-    "empty": "You don't have favorites yet.",
-    "view": "View",
-    "remove": "Remove"
   },
   "home": {
     "welcome": "Welcome",
@@ -367,7 +359,6 @@
     "edit": "Edit",
     "email": "Email",
     "phone": "Phone",
-    "favorites": "Saved offers",
     "location": "Location",
     "locationAlways": "Always",
     "locationAsk": "Ask",
@@ -417,7 +408,6 @@
     },
     "home": "Home",
     "work": "Work",
-    "favorites": "Favorite Category",
     "security": "Security",
     "passwordCurrent": "Current password",
     "passwordNew": "New password",
@@ -432,8 +422,7 @@
       "locationPermission": "Allow location access",
       "homeAddress": "Home address",
       "workAddress": "Work address",
-      "universityAddress": "University address",
-      "favorites": "Favorite categories"
+      "universityAddress": "University address"
     },
     "preferences": {
       "title": "Preferences",
@@ -537,7 +526,6 @@
       "business": "Business: {{partner}}.",
       "redeem": "It can be redeemed as a means of payment up to the indicated amount."
     },
-
     "registerVisit": "Register Visit",
     "visitRegistered": "Visit Registered"
   },
@@ -717,44 +705,6 @@
       "error": "An error occurred. Please try again."
     }
   },
-
-    "form": {
-      "rating": "Rating",
-      "ratingRequired": "Rating is required",
-      "excellent": "Excellent",
-      "veryGood": "Very Good",
-      "good": "Good",
-      "fair": "Fair",
-      "poor": "Poor",
-      "comment": "Comment",
-      "commentRequired": "Comment is required",
-      "commentMinLength": "Minimum 10 characters",
-      "commentMaxLength": "Comment must not exceed 500 characters",
-      "submitting": "Publishing..."
-    },
-    "actions": {
-      "cancel": "Cancel",
-      "retry": "Retry",
-      "like": "Like",
-      "unlike": "Unlike",
-      "reply": "Reply",
-      "edit": "Edit",
-      "delete": "Delete",
-      "report": "Report"
-    },
-    "filters": {
-      "sortBy": "Sort by",
-      "mostRecent": "Most Recent",
-      "highestRating": "Highest Rating",
-      "filterByRating": "Filter by rating",
-      "all": "All",
-      "stars": "stars"
-    },
-    "messages": {
-      "likeSuccess": "Thanks for your feedback!",
-      "error": "An error occurred. Please try again."
-    },
-    
   "coupons": {
     "title": "My Coupons",
     "loading": "Loading coupons...",

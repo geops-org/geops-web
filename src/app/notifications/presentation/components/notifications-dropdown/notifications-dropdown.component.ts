@@ -68,8 +68,7 @@ export class NotificationsDropdownComponent {
       'PAYMENT': 'payment',
       'PREMIUM_UPGRADE': 'workspace_premium',
       'PROFILE_UPDATE': 'person',
-      'FAVORITE': 'favorite',
-      'COUPON_EXPIRATION': 'schedule',
+      'COUPON_EXPIRATION': 'schedule'
     };
     return iconMap[type] || 'notifications';
   }
