@@ -6,7 +6,6 @@ export type NotificationType =
   | 'PROFILE_UPDATE'
   | 'FAVORITE'
   | 'COUPON_EXPIRATION'
-  | 'REVIEW_COMMENT';
 
 export interface Notification extends BaseEntity {
   userId: number;

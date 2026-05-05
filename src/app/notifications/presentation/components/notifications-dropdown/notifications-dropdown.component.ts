@@ -70,7 +70,6 @@ export class NotificationsDropdownComponent {
       'PROFILE_UPDATE': 'person',
       'FAVORITE': 'favorite',
       'COUPON_EXPIRATION': 'schedule',
-      'REVIEW_COMMENT': 'comment'
     };
     return iconMap[type] || 'notifications';
   }

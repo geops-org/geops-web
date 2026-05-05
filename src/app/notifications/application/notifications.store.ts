@@ -57,9 +57,6 @@ export class NotificationsStore {
   readonly couponNotifications = computed(() =>
     this.notifications().filter(n => n.type === 'COUPON_EXPIRATION')
   );
-  readonly reviewNotifications = computed(() =>
-    this.notifications().filter(n => n.type === 'REVIEW_COMMENT')
-  );
 
   /**
    * Load notifications for a specific user

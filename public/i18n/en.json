@@ -537,15 +537,7 @@
       "business": "Business: {{partner}}.",
       "redeem": "It can be redeemed as a means of payment up to the indicated amount."
     },
-    "reviews": {
-      "title": "Comments",
-      "count": "{{count}} reviews",
-      "yourRating": "Your rating",
-      "ariaRate": "Choose a rating from 1 to 5",
-      "placeholder": "Tell us about your experience with this offer",
-      "publish": "Publish review",
-      "alreadyReviewed": "You have already reviewed this offer"
-    },
+
     "registerVisit": "Register Visit",
     "visitRegistered": "Visit Registered"
   },
@@ -725,20 +717,8 @@
       "error": "An error occurred. Please try again."
     }
   },
-  "reviewsPage": {
-    "title": "Comments and Reviews",
-    "addReview": "Add Review",
-    "cancel": "Cancel",
-    "loading": "Loading reviews...",
-    "error": "Error loading reviews",
-    "retry": "Retry",
-    "statistics": {
-      "averageRating": "Average Rating",
-      "totalReviews": "Total Reviews",
-      "distribution": "Rating Distribution"
-    },
+
     "form": {
-      "newReview": "New Review",
       "rating": "Rating",
       "ratingRequired": "Rating is required",
       "excellent": "Excellent",
@@ -747,17 +727,13 @@
       "fair": "Fair",
       "poor": "Poor",
       "comment": "Comment",
-      "commentPlaceholder": "Write your review here (minimum 10 characters)",
       "commentRequired": "Comment is required",
       "commentMinLength": "Minimum 10 characters",
       "commentMaxLength": "Comment must not exceed 500 characters",
-      "submit": "Publish Review",
       "submitting": "Publishing..."
     },
     "actions": {
-      "addReview": "Add Review",
       "cancel": "Cancel",
-      "publish": "Publish Review",
       "retry": "Retry",
       "like": "Like",
       "unlike": "Unlike",
@@ -774,18 +750,11 @@
       "all": "All",
       "stars": "stars"
     },
-    "empty": {
-      "noReviews": "No reviews available",
-      "beFirst": "Be the first to review"
-    },
     "messages": {
-      "createSuccess": "Review published successfully",
-      "updateSuccess": "Review updated successfully",
-      "deleteSuccess": "Review deleted",
       "likeSuccess": "Thanks for your feedback!",
       "error": "An error occurred. Please try again."
-    }
-  },
+    },
+    
   "coupons": {
     "title": "My Coupons",
     "loading": "Loading coupons...",
