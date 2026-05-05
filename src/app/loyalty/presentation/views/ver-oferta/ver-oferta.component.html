@@ -39,16 +39,4 @@
   </div>
   }
 
-  @if (offer) {
-    <div class="visit-action">
-      <button
-        class="btn-visit"
-        type="button"
-        [disabled]="visitRegistered"
-        (click)="registerVisit()">
-        {{ visitRegistered ? ('offerDetail.visitRegistered' | translate) : ('offerDetail.registerVisit' | translate) }}
-      </button>
-    </div>
-  }
-
 </div>

@@ -5,8 +5,6 @@ import { Location } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { OffersApiEndpoint } from '../../../infrastructure/offers/offers-api-endpoint';
-import { ConsumptionsApiEndpoint } from '../../../infrastructure/consumptions/consumptions-api-endpoint';
-import { AuthService } from '../../../../identity/infrastructure/auth/auth.service';
 import { Offer } from '../../../domain/model/offer.entity';
 
 @Component({
@@ -19,9 +17,6 @@ import { Offer } from '../../../domain/model/offer.entity';
 export class VerOfertaComponent implements OnInit {
   offer?: Offer;
   loading = false;
-  visitRegistered = false;
-
-  private userId: number | null = null;
 
   from: 'offers' | 'favorites' | null = null;
 
@@ -29,16 +24,11 @@ export class VerOfertaComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
-    private offersApi: OffersApiEndpoint,
-    private consumptionsApi: ConsumptionsApiEndpoint,
-    private auth: AuthService
+    private offersApi: OffersApiEndpoint
   ) {}
 
   ngOnInit(): void {
     window.scrollTo({ top: 0 });
-
-    const user = this.auth.getCurrentUser();
-    this.userId = user ? user.id : null;
 
     const raw = this.route.snapshot.queryParamMap.get('from') ?? history.state?.from ?? null;
     this.from = raw === 'offers' || raw === 'favorites' ? raw : null;
@@ -50,15 +40,6 @@ export class VerOfertaComponent implements OnInit {
       next: (offers) => {
         this.offer = offers[0];
         this.loading = false;
-        if (!this.offer) return;
-
-        if (this.userId) {
-          this.consumptionsApi.getByUserId(this.userId).subscribe({
-            next: (consumptions) => {
-              this.visitRegistered = consumptions.some((c) => c.offerId === this.offer!.id);
-            },
-          });
-        }
       },
       error: () => (this.loading = false),
     });
@@ -102,15 +83,6 @@ export class VerOfertaComponent implements OnInit {
 
   imgFor(): string {
     return this.offer?.imageUrl ?? `assets/offers/${this.offer?.id}.jpg`;
-  }
-
-  registerVisit(): void {
-    if (!this.userId || !this.offer || this.visitRegistered) return;
-
-    this.consumptionsApi.registerVisit(this.userId, this.offer.id).subscribe({
-      next: () => (this.visitRegistered = true),
-      error: (err) => console.error('[VerOferta] Error registering visit:', err),
-    });
   }
 
   protected readonly String = String;
