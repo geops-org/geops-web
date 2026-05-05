@@ -85,22 +85,6 @@
 
         <div class="settings-row preference-row">
           <div class="preference-label-container">
-            <mat-icon class="preference-icon">notifications</mat-icon>
-            <div class="preference-text">
-              <label class="preference-label">{{ 'settings.preferences.notifications' | translate }}</label>
-              <small class="preference-help">{{ 'settings.preferences.notificationsHelp' | translate }}</small>
-            </div>
-          </div>
-          <mat-slide-toggle
-            [(ngModel)]="consumerDetails.recibirNotificaciones"
-            (change)="onNotificationsToggle($event)"
-            name="notifications"
-            color="primary">
-          </mat-slide-toggle>
-        </div>
-
-        <div class="settings-row preference-row">
-          <div class="preference-label-container">
             <mat-icon class="preference-icon">location_on</mat-icon>
             <div class="preference-text">
               <label class="preference-label">{{ 'settings.preferences.locationPermission' | translate }}</label>

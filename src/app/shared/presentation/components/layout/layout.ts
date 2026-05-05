@@ -17,8 +17,6 @@ import {AuthService} from '../../../../identity/infrastructure/auth/auth.service
 import {CommonModule} from '@angular/common';
 import { NavigationLoadingService } from '../../services/navigation-loading.service';
 import { NavigationBackdropComponent } from '../navigation-backdrop/navigation-backdrop.component';
-import { NotificationsDropdownComponent } from '../../../../notifications/presentation/components/notifications-dropdown/notifications-dropdown.component';
-import { NotificationsStore } from '../../../../notifications/application/notifications.store';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -41,13 +39,11 @@ import { filter } from 'rxjs/operators';
     LanguageSwitcher,
     CommonModule,
     NavigationBackdropComponent,
-    NotificationsDropdownComponent,
   ],
   templateUrl: './layout.html',
   styleUrl: './layout.css'
 })
 export class Layout implements OnInit {
-  readonly notificationsStore = inject(NotificationsStore);
   private readonly navigationLoadingService = inject(NavigationLoadingService);
 
   q = '';
@@ -87,11 +83,6 @@ export class Layout implements OnInit {
       this.userName = user.name;
       this.userEmail = user.email || 'usuario@geops.com';
       this.isOwner.set(user.role === 'OWNER');
-
-      // Load notifications after first paint to keep startup responsive.
-      setTimeout(() => {
-        this.notificationsStore.loadNotifications(user.id);
-      }, 400);
     } else {
       console.warn('[Layout] No hay usuario autenticado');
     }

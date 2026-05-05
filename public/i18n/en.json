@@ -5,7 +5,6 @@
       "placeholder": "Search and find the best offers"
     },
     "help": "Help",
-    "notifications": "Notifications",
     "cart": "Cart",
     "profile": {
       "menu": {
@@ -417,7 +416,6 @@
     "rights": "© 2025 All rights reserved",
     "consumer": {
       "title": "Consumer Details",
-      "notifications": "Receive notifications",
       "locationPermission": "Allow location access",
       "homeAddress": "Home address",
       "workAddress": "Work address",
@@ -425,8 +423,6 @@
     },
     "preferences": {
       "title": "Preferences",
-      "notifications": "Receive notifications",
-      "notificationsHelp": "Enable to receive notifications about new offers and promotions",
       "locationPermission": "Allow location access",
       "locationPermissionHelp": "Allow sharing your location to see nearby offers"
     },
@@ -614,12 +610,6 @@
         "message": "Are you sure you want to delete the campaign \"{{name}}\"? This action cannot be undone.",
         "confirm": "Delete"
       }
-    },
-    "notifications": {
-      "pauseSuccess": "Campaign paused successfully",
-      "activateSuccess": "Campaign activated successfully",
-      "finalizeSuccess": "Campaign finalized successfully",
-      "deleteSuccess": "Campaign deleted successfully"
     },
     "form": {
       "createTitle": "Create New Campaign",

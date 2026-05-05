@@ -5,7 +5,6 @@
       "placeholder": "Buscar y encuentra las mejores ofertas"
     },
     "help": "Ayuda",
-    "notifications": "Notificaciones",
     "cart": "Carrito",
     "profile": {
       "menu": {
@@ -417,7 +416,6 @@
     "rights": "© 2025 Todos los derechos reservados",
     "consumer": {
       "title": "Detalles de Consumidor",
-      "notifications": "Recibir notificaciones",
       "locationPermission": "Permitir acceso a ubicación",
       "homeAddress": "Dirección de casa",
       "workAddress": "Dirección de trabajo",
@@ -425,8 +423,6 @@
     },
     "preferences": {
       "title": "Preferencias",
-      "notifications": "Recibir notificaciones",
-      "notificationsHelp": "Activa para recibir notificaciones sobre nuevas ofertas y promociones",
       "locationPermission": "Permitir acceso a ubicación",
       "locationPermissionHelp": "Permite compartir tu ubicación para ver ofertas cercanas"
     },
@@ -606,12 +602,6 @@
         "message": "¿Estás seguro de que deseas eliminar la campaña \"{{name}}\"? Esta acción no se puede deshacer.",
         "confirm": "Eliminar"
       }
-    },
-    "notifications": {
-      "pauseSuccess": "Campaña pausada exitosamente",
-      "activateSuccess": "Campaña activada exitosamente",
-      "finalizeSuccess": "Campaña finalizada exitosamente",
-      "deleteSuccess": "Campaña eliminada exitosamente"
     },
     "form": {
       "createTitle": "Crear Nueva Campaña",
