@@ -30,12 +30,6 @@
         <span class="amount">{{ o.price | number:'1.2-2' }}</span>
       </div>
 
-      <div class="actions">
-        <button class="btn-fav" type="button" [class.active]="isFav" (click)="toggleFav()">
-          {{ isFav ? '❤️' : '💜' }}
-        </button>
-      </div>
-
       <ul class="bullets">
         <li>{{ 'offerDetail.bullets.valid' | translate:{ partner: o.partner } }}</li>
         <li>{{ 'offerDetail.bullets.business' | translate:{ partner: o.partner } }}</li>

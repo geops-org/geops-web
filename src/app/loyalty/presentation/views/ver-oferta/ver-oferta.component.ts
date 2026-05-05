@@ -5,7 +5,6 @@ import { Location } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { OffersApiEndpoint } from '../../../infrastructure/offers/offers-api-endpoint';
-import { FavoritesApiEndpoint } from '../../../infrastructure/favorites/favorites-api-endpoint';
 import { ConsumptionsApiEndpoint } from '../../../infrastructure/consumptions/consumptions-api-endpoint';
 import { AuthService } from '../../../../identity/infrastructure/auth/auth.service';
 import { Offer } from '../../../domain/model/offer.entity';
@@ -20,7 +19,6 @@ import { Offer } from '../../../domain/model/offer.entity';
 export class VerOfertaComponent implements OnInit {
   offer?: Offer;
   loading = false;
-  isFav = false;
   visitRegistered = false;
 
   private userId: number | null = null;
@@ -32,7 +30,6 @@ export class VerOfertaComponent implements OnInit {
     private router: Router,
     private location: Location,
     private offersApi: OffersApiEndpoint,
-    private favsApi: FavoritesApiEndpoint,
     private consumptionsApi: ConsumptionsApiEndpoint,
     private auth: AuthService
   ) {}
@@ -56,10 +53,6 @@ export class VerOfertaComponent implements OnInit {
         if (!this.offer) return;
 
         if (this.userId) {
-          this.favsApi
-            .findRow(this.userId, this.offer.id)
-            .subscribe((rows) => (this.isFav = rows.length > 0));
-
           this.consumptionsApi.getByUserId(this.userId).subscribe({
             next: (consumptions) => {
               this.visitRegistered = consumptions.some((c) => c.offerId === this.offer!.id);
@@ -109,19 +102,6 @@ export class VerOfertaComponent implements OnInit {
 
   imgFor(): string {
     return this.offer?.imageUrl ?? `assets/offers/${this.offer?.id}.jpg`;
-  }
-
-  toggleFav(): void {
-    if (!this.userId || !this.offer) return;
-
-    if (this.isFav) {
-      this.favsApi.findRow(this.userId, this.offer.id).subscribe((rows) => {
-        if (!rows.length) return;
-        this.favsApi.removeRow(rows[0].id!).subscribe(() => (this.isFav = false));
-      });
-    } else {
-      this.favsApi.add(this.userId, this.offer.id).subscribe(() => (this.isFav = true));
-    }
   }
 
   registerVisit(): void {

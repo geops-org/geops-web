@@ -19,7 +19,6 @@
     "home": "Inicio",
     "offers": "Ofertas",
     "categorias": "Categorías",
-    "favorites": "Favoritos",
     "coupons": "Mis cupones"
   },
   "offersPage": {
@@ -97,13 +96,6 @@
       "Tiendas seleccionadas": "Tiendas seleccionadas",
       "Online y tiendas": "Online y tiendas"
     }
-  },
-  "favoritesPage": {
-    "title": "Favoritos",
-    "loading": "Cargando…",
-    "empty": "Aún no tienes favoritos.",
-    "view": "Ver",
-    "remove": "Eliminar"
   },
   "home": {
     "welcome": "Bienvenido",
@@ -367,7 +359,6 @@
     "edit": "Editar",
     "email": "Correo electrónico",
     "phone": "Teléfono",
-    "favorites": "Ofertas guardadas",
     "location": "Ubicación",
     "locationAlways": "Siempre",
     "locationAsk": "Preguntar",
@@ -417,7 +408,6 @@
     },
     "home": "Casa",
     "work": "Trabajo",
-    "favorites": "Categoría favorita",
     "security": "Seguridad",
     "passwordCurrent": "Contraseña actual",
     "passwordNew": "Nueva contraseña",
@@ -432,8 +422,7 @@
       "locationPermission": "Permitir acceso a ubicación",
       "homeAddress": "Dirección de casa",
       "workAddress": "Dirección de trabajo",
-      "universityAddress": "Dirección de universidad",
-      "favorites": "Categorías favoritas"
+      "universityAddress": "Dirección de universidad"
     },
     "preferences": {
       "title": "Preferencias",

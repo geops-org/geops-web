@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FavoritesApiEndpoint } from '../../../infrastructure/favorites/favorites-api-endpoint';
 import { TranslateModule } from '@ngx-translate/core';
 import {AuthService} from '../../../../identity/infrastructure/auth/auth.service';
 import { OffersApiEndpoint } from '../../../infrastructure/offers/offers-api-endpoint';
@@ -53,7 +52,6 @@ export class CategoriasComponent implements OnInit, OnDestroy {
     sort: 'relevance' as 'relevance' | 'priceAsc' | 'priceDesc' | 'ratingDesc',
   };
 
-  private favSet = new Set<number>();
   private dataLoaded = false;
   private currentUserId: number | null = null;
   private impressionsTracked = false;
@@ -65,7 +63,6 @@ export class CategoriasComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private offersApi: OffersApiEndpoint,
-    private favoritesApi: FavoritesApiEndpoint,
     private authService: AuthService
   ) {}
 
@@ -111,8 +108,6 @@ export class CategoriasComponent implements OnInit, OnDestroy {
       },
       error: () => (this.loading = false),
     });
-
-    this.fetchFavs();
   }
 
   /**
@@ -219,59 +214,6 @@ export class CategoriasComponent implements OnInit, OnDestroy {
   clearFilters() {
     this.filters = { q: '', category: 'all', location: 'all', sort: 'relevance' };
     this.applyFilters();
-  }
-
-  /**
-   * fetches the current user's favorites from the API
-   * @private
-   */
-  private fetchFavs() {
-    if (!this.currentUserId) {
-      this.favSet.clear();
-      return;
-    }
-    this.favoritesApi.getByUser(this.currentUserId).subscribe({
-      next: (rows) => {
-        this.favSet = new Set(rows.map((r) => r.offerId));
-      },
-      error: () => this.favSet.clear(),
-    });
-  }
-
-  /**
-   * checks if an offer is marked as favorite
-   * @param id
-   */
-  isFav(id: number) { return this.favSet.has((id)); }
-
-  /**
-   * basically updates the favorite state of an offer
-   * if it's already marked, it removes it from favorites, otherwise it adds it
-   * @param o
-   */
-  toggleFav(o: Offer) {
-    if (!this.currentUserId) {
-      console.warn('[Ofertas] Debes iniciar sesión para agregar favoritos');
-      alert('Debes iniciar sesión para agregar favoritos');
-      return;
-    }
-
-    if (this.favSet.has((o.id))) {
-      // REMOVE favorite using the direct endpoint
-      this.favoritesApi.removeByUserAndOffer(this.currentUserId, o.id).subscribe({
-        next: () => {
-          this.favSet.delete((o.id));
-        },
-        error: (err) => {
-          console.error('[Ofertas] Error al eliminar favorito:', err);
-        }
-      });
-    } else {
-      // ADD favorite
-      this.favoritesApi.add(this.currentUserId, o.id).subscribe(() => {
-        this.favSet.add((o.id));
-      });
-    }
   }
 
   onViewOffer(o: Offer) {

@@ -4,9 +4,7 @@ export type NotificationType =
   | 'PAYMENT'
   | 'PREMIUM_UPGRADE'
   | 'PROFILE_UPDATE'
-  | 'FAVORITE'
-  | 'COUPON_EXPIRATION'
-  | 'REVIEW_COMMENT';
+  | 'COUPON_EXPIRATION';
 
 export interface Notification extends BaseEntity {
   userId: number;

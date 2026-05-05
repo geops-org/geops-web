@@ -51,14 +51,8 @@ export class NotificationsStore {
   readonly profileNotifications = computed(() =>
     this.notifications().filter(n => n.type === 'PROFILE_UPDATE')
   );
-  readonly favoriteNotifications = computed(() =>
-    this.notifications().filter(n => n.type === 'FAVORITE')
-  );
   readonly couponNotifications = computed(() =>
     this.notifications().filter(n => n.type === 'COUPON_EXPIRATION')
-  );
-  readonly reviewNotifications = computed(() =>
-    this.notifications().filter(n => n.type === 'REVIEW_COMMENT')
   );
 
   /**
