@@ -102,9 +102,6 @@
     margin-right: 0;
   }
 
-  .reviews-card {
-    margin-top: 40px;
-  }
 }
 
 /* 768px - Tablet Portrait */
@@ -179,29 +176,7 @@
     margin-bottom: 6px;
   }
 
-  .reviews-card {
-    padding: 24px 20px;
-    margin-top: 32px;
-    border-radius: 12px;
-  }
 
-  .reviews-card__head h3 {
-    font-size: 16px;
-  }
-
-  .reviews-card__meta .score {
-    font-size: 18px;
-  }
-
-  .reviews-card__ratebox textarea {
-    min-height: 100px;
-  }
-
-  .review-item {
-    grid-template-columns: 36px 1fr auto;
-    gap: 10px;
-    padding: 12px 0;
-  }
 
   .avatar {
     width: 36px;
@@ -292,28 +267,8 @@
     font-size: 13px;
   }
 
-  .reviews-card {
-    padding: 20px 16px;
-    margin-top: 24px;
-  }
 
-  .reviews-card__head {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
 
-  .reviews-card__meta {
-    gap: 8px;
-  }
-
-  .reviews-card__meta .count {
-    font-size: 14px;
-  }
-
-  .reviews-card__ratebox {
-    padding: 12px;
-  }
 
   .rate-stars {
     gap: 4px;
@@ -323,24 +278,10 @@
     font-size: 18px;
   }
 
-  .reviews-card__ratebox textarea {
-    min-height: 90px;
-    padding: 8px;
-  }
-
-  .reviews-card__actions {
-    margin-top: 20px;
-  }
-
   .btn-publish {
     width: 120px;
     height: 28px;
     font-size: 12px;
-  }
-
-  .review-item {
-    grid-template-columns: 32px 1fr auto;
-    gap: 8px;
   }
 
   .avatar {
@@ -429,27 +370,6 @@
     font-size: 12px;
   }
 
-  .reviews-card {
-    padding: 16px 12px;
-    margin-top: 20px;
-  }
-
-  .reviews-card__head h3 {
-    font-size: 15px;
-  }
-
-  .reviews-card__meta .score {
-    font-size: 16px;
-  }
-
-  .reviews-card__ratebox {
-    padding: 10px;
-  }
-
-  .reviews-card__ratebox textarea {
-    min-height: 80px;
-    font-size: 13px;
-  }
 
   .btn-publish {
     width: 110px;
@@ -457,10 +377,6 @@
     font-size: 11px;
   }
 
-  .review-item {
-    grid-template-columns: 28px 1fr;
-    gap: 6px;
-  }
 
   .avatar {
     width: 28px;
@@ -709,57 +625,6 @@
   margin-bottom: 4px;
 }
 
-.reviews-card{
-  margin-top:48px;
-  margin-bottom: 48px;
-  background:#fff;
-  border-radius:16px;
-  box-shadow: 0 4px 25px rgba(0,0,0,0.25);
-  padding:32px;
-}
-
-@media (max-width: 768px){
-  .reviews-card{
-    padding: 20px;
-    margin-top: 32px;
-    margin-bottom: 32px;
-  }
-}
-
-.reviews-card__head{
-  display:flex; justify-content:space-between; align-items:center; gap:16px;
-  margin-bottom:12px;
-  flex-wrap: wrap;
-}
-.reviews-card__head h3{
-  font-size:18px; font-weight:500; margin:0; /* Poppins Medium 18 */
-}
-
-@media (max-width: 480px){
-  .reviews-card__head{
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-.reviews-card__meta{
-  display:flex; align-items:center; gap:10px;
-}
-.reviews-card__meta .score{
-  font-size:20px; font-weight:400; color: rgba(64,64,64,0.7125);
-}
-.reviews-card__meta .stars{
-  color:#E1C91E; letter-spacing:1px;
-}
-.reviews-card__meta .count{
-  font-size:16px; color: rgba(64,64,64,0.7125);
-}
-
-.reviews-card__ratebox{
-  border:1px solid rgba(44,44,44,0.51);
-  border-radius:12px;
-  padding:14px;
-  margin-top:8px;
-}
 .ratebox__label{
   display:block; font-weight:600; margin-bottom:6px;
 }
@@ -775,20 +640,6 @@
 .rate-stars button.active{ color:#E1C91E; }
 .rate-stars button:active{ transform: scale(.95); }
 
-.reviews-card__ratebox textarea{
-  width:100%;
-  min-height:120px;
-  border-radius:10px;
-  border:1px solid #000;
-  padding:10px;
-  resize:vertical;
-  font-family:inherit;
-}
-
-.reviews-card__actions{
-  display:flex; justify-content:flex-end;
-  margin-top:30px;
-}
 .btn-publish{
   width:140px; height:31px;
   font-weight:600; font-size:13px;
@@ -796,22 +647,6 @@
   border:0; border-radius:8px; cursor:pointer;
 }
 .btn-publish:disabled{ opacity:.5; cursor:not-allowed; }
-
-.review-item{
-  display:grid; grid-template-columns: 40px 1fr auto;
-  gap:12px; align-items:flex-start;
-  padding:14px 0; border-top:1px solid #EDEDED;
-}
-.review-item:first-of-type{ border-top:0; }
-.avatar{
-  width:40px; height:40px; border-radius:50%;
-  background:#A751D4; color:#fff; display:grid; place-items:center;
-  font-weight:700; text-transform:uppercase;
-}
-.review-item .row{ display:flex; gap:10px; align-items:center; }
-.inline-stars{ color:#E1C91E; font-size:14px; }
-.muted{ color:#6B7280; font-size:12px; }
-.text{ margin:.25rem 0 0; }
 
 .chip{
   height:28px; padding:0 10px; border-radius:999px; background:#fff;
