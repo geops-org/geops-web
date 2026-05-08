@@ -39,6 +39,14 @@ export class AddOfferFormComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly translate = inject(TranslateService);
 
+  readonly minValidUntil = this.startOfDay(new Date());
+  readonly maxValidUntil = this.addMonths(this.minValidUntil, 1);
+  readonly validUntilFilter = (date: Date | null): boolean => {
+    if (!date) return false;
+    const day = this.startOfDay(date);
+    return day >= this.minValidUntil && day <= this.maxValidUntil;
+  };
+
   readonly districtOptions: { name: string; lat: number; lng: number }[] = [
     { name: 'San Borja',    lat: -12.0976, lng: -76.9952 },
     { name: 'Lince',        lat: -12.0858, lng: -77.0357 },
@@ -48,16 +56,13 @@ export class AddOfferFormComponent implements OnInit {
   readonly categoryOptions: string[] = [
     'Entretenimiento',
     'Belleza',
-    'Gastronomía',
-    'Gift Card',
-    'Educación',
-    'Salud',
+    'Comida China',
+    'Comida Coreana',
+    'Comida Japonesa',
+    'Mangas',
     'Tecnología',
     'Moda',
     'Hogar',
-    'Deportes',
-    'Viajes',
-    'Automotriz',
     'Servicios',
     'Otros'
   ];
@@ -74,9 +79,9 @@ export class AddOfferFormComponent implements OnInit {
 
   constructor() {
     this.offerForm = this.fb.group({
-      title: ['', [Validators.required, Validators.minLength(3)]],
-      partner: ['', [Validators.required, Validators.minLength(3)]],
-      price: [0, [Validators.required, Validators.min(0)]],
+      title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(40)]],
+      partner: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(40)]],
+      price: [0, [Validators.required, Validators.min(0), Validators.max(500)]],
       originalPrice: [0, Validators.min(0)],
       description: [''],
       category: ['', Validators.required],
@@ -84,8 +89,7 @@ export class AddOfferFormComponent implements OnInit {
       latitude: [null],
       longitude: [null],
       imageUrl: [''],
-      validUntil: [null, Validators.required],
-      codePrefix: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]]
+      validUntil: [null, [Validators.required, this.dateWithinRangeValidator(this.minValidUntil, this.maxValidUntil)]]
     });
   }
 
@@ -109,8 +113,7 @@ export class AddOfferFormComponent implements OnInit {
       latitude: offer.latitude,
       longitude: offer.longitude,
       imageUrl: offer.imageUrl,
-      validUntil: offer.validUntil ? new Date(offer.validUntil) : null,
-      codePrefix: offer.codePrefix
+      validUntil: offer.validUntil ? new Date(offer.validUntil) : null
     });
   }
 
@@ -153,7 +156,8 @@ export class AddOfferFormComponent implements OnInit {
   private normalizeDateInput(value: Date | string | null | undefined): string | null {
     if (!value) return null;
     if (value instanceof Date) {
-      return value.toISOString().split('T')[0];
+      const normalized = this.startOfDay(value);
+      return normalized.toISOString().split('T')[0];
     }
     return value;
   }
@@ -170,9 +174,31 @@ export class AddOfferFormComponent implements OnInit {
       latitude: null,
       longitude: null,
       imageUrl: '',
-      validUntil: null,
-      codePrefix: ''
+      validUntil: null
     });
+  }
+
+  private dateWithinRangeValidator(minDate: Date, maxDate: Date) {
+    return (control: { value: Date | string | null }): { dateOutOfRange: true } | null => {
+      const value = control.value;
+      if (!value) return null;
+      const dateValue = value instanceof Date ? this.startOfDay(value) : this.startOfDay(new Date(value));
+      if (Number.isNaN(dateValue.getTime())) return { dateOutOfRange: true };
+      if (dateValue < minDate || dateValue > maxDate) return { dateOutOfRange: true };
+      return null;
+    };
+  }
+
+  private startOfDay(date: Date): Date {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  }
+
+  private addMonths(date: Date, months: number): Date {
+    const next = new Date(date.getFullYear(), date.getMonth() + months, date.getDate());
+    if (next.getMonth() !== (date.getMonth() + months) % 12) {
+      return new Date(date.getFullYear(), date.getMonth() + months + 1, 0);
+    }
+    return next;
   }
 
   getErrorMessage(fieldName: string): string {
@@ -192,6 +218,13 @@ export class AddOfferFormComponent implements OnInit {
     }
     if (control.hasError('min')) {
       return this.translate.instant('campaign.addOfferForm.errors.minValue');
+    }
+    if (control.hasError('max')) {
+      const maxValue = control.errors?.['max'].max;
+      return this.translate.instant('campaign.addOfferForm.errors.maxValue', { value: maxValue });
+    }
+    if (control.hasError('dateOutOfRange')) {
+      return this.translate.instant('campaign.addOfferForm.errors.dateOutOfRange');
     }
 
     return '';

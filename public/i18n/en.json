@@ -78,6 +78,10 @@
       "Entretenimiento": "Entertainment",
       "Belleza": "Beauty",
       "Gastronomía": "Dining",
+      "Comida China": "Chinese Food",
+      "Comida Coreana": "Korean Food",
+      "Comida Japonesa": "Japanese Food",
+      "Mangas": "Manga",
       "Gift Card": "Gift Card",
       "Educación": "Education",
       "Salud": "Health",
@@ -197,7 +201,9 @@
         "required": "This field is required",
         "minLength": "Must be at least {{value}} characters",
         "maxLength": "Must not exceed {{value}} characters",
-        "minValue": "Value must be greater than or equal to 0"
+        "minValue": "Value must be greater than or equal to 0",
+        "maxValue": "Maximum allowed value is {{value}}",
+        "dateOutOfRange": "Date must be between today and 1 month from now"
       }
     },
     "offersList": {
@@ -723,6 +729,10 @@
     "Gastronomía": "Buffets",
     "Belleza": "Beauty",
     "Gift Card": "Gift Card",
+    "Comida China": "Chinese Food",
+    "Comida Coreana": "Korean Food",
+    "Comida Japonesa": "Japanese Food",
+    "Mangas": "Manga",
     "title": "Categories",
     "Educación": "Education",
     "Salud": "Health",
