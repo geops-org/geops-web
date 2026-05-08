@@ -1,37 +1,6 @@
 <div class="layout">
   <section class="map-container">
 
-    <div class="map-top-bar">
-      <div class="map-top-bar-left">
-        <label class="map-label">{{'home.map.places' | translate}}</label>
-        <button *ngIf="!locationAllowed()" class="map-top-bar-left-btn-main" (click)="getLocation(true)">
-          📍 {{'home.map.use-my-location' | translate}}
-        </button>
-        <span *ngIf="locationAllowed()" class="location-active">
-          ✅ {{'home.map.location-active' | translate}}
-        </span>
-      </div>
-
-      <div class="map-top-bar-right">
-        <label class="map-label">{{'home.map.radius' | translate}}:</label>
-        <select class="map-select" [(ngModel)]="maxDistanceKm" (ngModelChange)="updateDistanceRange($event)">
-          <option [value]="1.5">1.5 km</option>
-          <option [value]="2.5">2.5 km</option>
-          <option [value]="3.5">3.5 km</option>
-          <option [value]="5">5 km</option>
-          <option [value]="7.5">7.5 km</option>
-        </select>
-
-        <label class="map-label">{{'home.map.zoom' | translate}}:</label>
-        <select class="map-select" [(ngModel)]="zoomSignal">
-          <option [value]="12">12</option>
-          <option [value]="13">13</option>
-          <option [value]="14">14</option>
-          <option [value]="15">15</option>
-        </select>
-      </div>
-    </div>
-
     <div class="map-categories">
       @for (cat of categories; track cat.key) {
         <button
@@ -46,72 +15,32 @@
     <div class="map">
       <div class="map-card">
         <div class="map-image">
-          @if(locationAllowed()){
-            <google-map
-              mapId="53c43d6499ceb7c05e795dff"
-              height="500px"
-              width="100%"
-              [center]="center()"
-              [zoom]="+zoomSignal()"
-            >
-              @for(location of filteredMapOffers(); track location.offer.id)
-              {
-                <map-advanced-marker
-                  #marker="mapAdvancedMarker"
-                  [position]="{lat: location.lat, lng: location.lng}"
-                  (mapClick)="openInfoWindow(location, marker)"
-                />
-              }
-              <map-info-window/>
-            </google-map>
-          }
-          @else{
-            <div class="map-overlay">
-              <div class="map-overlay-header">
-                <p class="map-title">{{'home.map.real-time' | translate}}</p>
-                <h2 class="map-subtitle">{{'home.map.places-near-you' | translate}}</h2>
-              </div>
-              <div class="location-box">
-                <div class="location-box-text">
-                  <strong>{{'home.map.activate-location' | translate}}</strong><br>
-                  {{ 'home.map.desc' | translate }}
-                </div>
-                <button class="btn-use" (click)="getLocation(true)">
-                  📍 {{ 'home.map.use-my-location' | translate }}
-                </button>
-              </div>
-            </div>
-          }
+          <div #mapEl class="map-leaflet"></div>
         </div>
       </div>
 
       <div class="info-card">
-        @if(locationAllowed()) {
-          <div class="info-card-header">
-            <h3 class="info-card-title">{{'home.map.nearby-offers' | translate}}</h3>
-            <span class="info-card-count">{{filteredMapOffers().length}} {{'home.map.results' | translate}}</span>
-          </div>
-          <div class="offer-map-list">
-            @for(location of filteredMapOffers(); track location.offer.id) {
-              <div class="offer-loc-item" [routerLink]="['/ofertas', location.offer.id]" (click)="onViewOffer(location.offer)">
-                <div class="offer-loc-info">
-                  <h4 class="offer-loc-title">{{location.offer.title}}</h4>
-                  <p class="offer-loc-partner">{{ location.offer.title }} | {{ ('offersData.titles.' + location.offer.id) | translate }}</p>
-                  <p class="offer-loc-location">📍 {{location.offer.location}}</p>
-                </div>
-                <div class="offer-loc-price">
-                  <span class="offer-loc-currency">S/</span>
-                  <span class="offer-loc-amount">{{location.offer.price | number:'1.2-2'}}</span>
-                </div>
+        <div class="info-card-header">
+          <h3 class="info-card-title">{{'home.map.nearby-offers' | translate}}</h3>
+          <span class="info-card-count">{{filteredDisplayOffers().length}} {{'home.map.results' | translate}}</span>
+        </div>
+        <div class="offer-map-list">
+          @for(offer of filteredDisplayOffers(); track offer.id) {
+            <div class="offer-loc-item"
+                 [routerLink]="['/ofertas', offer.id]"
+                 (click)="onViewOffer(offer)">
+              <div class="offer-loc-info">
+                <h4 class="offer-loc-title">{{offer.title}}</h4>
+                <p class="offer-loc-partner">{{offer.partner}}</p>
+                <p class="offer-loc-location">📍 {{offer.location}}</p>
               </div>
-            }
-          </div>
-        } @else {
-          <div class="info-card-empty">
-            <div class="info-card-pin">📍</div>
-            <p class="info-card-message">{{'home.map.right-map' | translate}}</p>
-          </div>
-        }
+              <div class="offer-loc-price">
+                <span class="offer-loc-currency">S/</span>
+                <span class="offer-loc-amount">{{offer.price | number:'1.2-2'}}</span>
+              </div>
+            </div>
+          }
+        </div>
       </div>
     </div>
 
@@ -125,15 +54,9 @@
       </div>
       <div class="offer-cards">
         @for(offer of cinemaOffers(); track offer.id) {
-          <div class="offer-card">
+          <div class="offer-card" [id]="'offer-card-' + offer.id" [class.highlighted]="highlightedOfferId() === offer.id">
             <div class="img-box" tabindex="0">
               <img [src]="imgFor(offer)" [alt]="offer.title || (('offersData.titles.' + offer.id) | translate)" />
-              <button class="fav" type="button"
-                      [class.active]="this.isFav(offer.id)"
-                      (click)="this.toggleFav(offer)">
-                <span class="heart">{{ this.isFav(offer.id) ? '❤️' : '💜' }}</span>
-              </button>
-
               <span class="scrim" aria-hidden="true"></span>
 
               <button
@@ -189,15 +112,9 @@
 
       <div class="offer-cards">
         @for(offer of buffetOffers(); track offer.id) {
-          <div class="offer-card">
+          <div class="offer-card" [id]="'offer-card-' + offer.id" [class.highlighted]="highlightedOfferId() === offer.id">
             <div class="img-box" tabindex="0">
               <img [src]="imgFor(offer)" [alt]="offer.title || (('offersData.titles.' + offer.id) | translate)" />
-              <button class="fav" type="button"
-                      [class.active]="this.isFav(offer.id)"
-                      (click)="this.toggleFav(offer)">
-                <span class="heart">{{ this.isFav(offer.id) ? '❤️' : '💜' }}</span>
-              </button>
-
               <span class="scrim" aria-hidden="true"></span>
 
               <button
@@ -213,7 +130,6 @@
             </div>
 
             <div class="card-body">
-              <!-- título traducido -->
               <h3 class="ttl">{{ offer.title || (('offersData.titles.' + offer.id) | translate) }}</h3>
               <div class="pname">{{ offer.partner }}</div>
 
@@ -253,15 +169,9 @@
       </div>
       <div class="offer-cards">
         @for(offer of parkOffers(); track offer.id) {
-          <div class="offer-card">
+          <div class="offer-card" [id]="'offer-card-' + offer.id" [class.highlighted]="highlightedOfferId() === offer.id">
             <div class="img-box" tabindex="0">
               <img [src]="imgFor(offer)" [alt]="offer.title || (('offersData.titles.' + offer.id) | translate)" />
-              <button class="fav" type="button"
-                      [class.active]="this.isFav(offer.id)"
-                      (click)="this.toggleFav(offer)">
-                <span class="heart">{{ this.isFav(offer.id) ? '❤️' : '💜' }}</span>
-              </button>
-
               <span class="scrim" aria-hidden="true"></span>
 
               <button
@@ -312,15 +222,9 @@
       </div>
       <div class="offer-cards">
         @for(offer of mechGamesOffers(); track offer.id) {
-          <div class="offer-card">
+          <div class="offer-card" [id]="'offer-card-' + offer.id" [class.highlighted]="highlightedOfferId() === offer.id">
             <div class="img-box" tabindex="0">
               <img [src]="imgFor(offer)" [alt]="offer.title || (('offersData.titles.' + offer.id) | translate)" />
-              <button class="fav" type="button"
-                      [class.active]="this.isFav(offer.id)"
-                      (click)="this.toggleFav(offer)">
-                <span class="heart">{{ this.isFav(offer.id) ? '❤️' : '💜' }}</span>
-              </button>
-
               <span class="scrim" aria-hidden="true"></span>
 
               <button
@@ -374,15 +278,9 @@
       </div>
       <div class="offer-cards">
         @for(offer of makisOffers(); track offer.id) {
-          <div class="offer-card">
+          <div class="offer-card" [id]="'offer-card-' + offer.id" [class.highlighted]="highlightedOfferId() === offer.id">
             <div class="img-box" tabindex="0">
               <img [src]="imgFor(offer)" [alt]="offer.title || (('offersData.titles.' + offer.id) | translate)" />
-              <button class="fav" type="button"
-                      [class.active]="this.isFav(offer.id)"
-                      (click)="this.toggleFav(offer)">
-                <span class="heart">{{ this.isFav(offer.id) ? '❤️' : '💜' }}</span>
-              </button>
-
               <span class="scrim" aria-hidden="true"></span>
 
               <button
@@ -397,7 +295,6 @@
             </div>
 
             <div class="card-body">
-              <!-- título traducido -->
               <h3 class="ttl">{{ ('offersData.titles.' + offer.id) | translate }}</h3>
               <div class="pname">{{ offer.partner }}</div>
 
@@ -437,15 +334,9 @@
       </div>
       <div class="offer-cards">
         @for(offer of beautyOffers(); track offer.id) {
-          <div class="offer-card">
+          <div class="offer-card" [id]="'offer-card-' + offer.id" [class.highlighted]="highlightedOfferId() === offer.id">
           <div class="img-box" tabindex="0">
             <img [src]="imgFor(offer)" [alt]="offer.title || (('offersData.titles.' + offer.id) | translate)" />
-            <button class="fav" type="button"
-                    [class.active]="this.isFav(offer.id)"
-                    (click)="this.toggleFav(offer)">
-              <span class="heart">{{ this.isFav(offer.id) ? '❤️' : '💜' }}</span>
-            </button>
-
             <span class="scrim" aria-hidden="true"></span>
 
             <button
@@ -459,7 +350,6 @@
           </div>
 
           <div class="card-body">
-            <!-- título traducido -->
             <h3 class="ttl">{{ offer.title || (('offersData.titles.' + offer.id) | translate) }}</h3>
             <div class="pname">{{ offer.partner }}</div>
 

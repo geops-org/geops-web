@@ -39,6 +39,12 @@ export class AddOfferFormComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly translate = inject(TranslateService);
 
+  readonly districtOptions: { name: string; lat: number; lng: number }[] = [
+    { name: 'San Borja',    lat: -12.0976, lng: -76.9952 },
+    { name: 'Lince',        lat: -12.0858, lng: -77.0357 },
+    { name: 'Barrio Chino', lat: -12.0509, lng: -77.0257 },
+  ];
+
   readonly categoryOptions: string[] = [
     'Entretenimiento',
     'Belleza',
@@ -129,6 +135,13 @@ export class AddOfferFormComponent implements OnInit {
       if (!this.isEditMode) {
         this.resetForm();
       }
+    }
+  }
+
+  onLocationChange(districtName: string): void {
+    const district = this.districtOptions.find((d) => d.name === districtName);
+    if (district) {
+      this.offerForm.patchValue({ latitude: district.lat, longitude: district.lng });
     }
   }
 

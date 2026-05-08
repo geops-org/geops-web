@@ -23,7 +23,6 @@ export class OwnerToolbarComponent {
     { labelKey: 'ownerToolbar.campaigns', route: '/campañas', icon: 'campaign' },
     { labelKey: 'ownerToolbar.create', route: '/crear-campañas', icon: 'add_circle' },
     { labelKey: 'ownerToolbar.reports', route: '/reportes', icon: 'assessment' },
-    { labelKey: 'ownerToolbar.comments', route: '/comentarios', icon: 'comment' }
   ];
 
   activeRoute = '/owner-dashboard';

@@ -103,11 +103,14 @@
     <div class="form-row">
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>{{ 'campaign.addOfferForm.fields.location.label' | translate }}</mat-label>
-        <input
-          matInput
-          formControlName="location"
-          [placeholder]="'campaign.addOfferForm.fields.location.placeholder' | translate"
-        >
+        <mat-select formControlName="location" (selectionChange)="onLocationChange($event.value)">
+          <mat-option value="" disabled>
+            {{ 'campaign.addOfferForm.fields.location.placeholder' | translate }}
+          </mat-option>
+          <mat-option *ngFor="let district of districtOptions" [value]="district.name">
+            {{ district.name }}
+          </mat-option>
+        </mat-select>
         <mat-icon matPrefix>location_on</mat-icon>
         <mat-error *ngIf="offerForm.get('location')?.invalid">
           {{ getErrorMessage('location') }}

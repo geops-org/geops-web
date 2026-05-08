@@ -5,7 +5,6 @@
       "placeholder": "Search and find the best offers"
     },
     "help": "Help",
-    "notifications": "Notifications",
     "cart": "Cart",
     "profile": {
       "menu": {
@@ -19,7 +18,6 @@
     "home": "Home",
     "offers": "Offers",
     "categorias": "Categories",
-    "favorites": "Favorites",
     "coupons": "My Coupons"
   },
   "offersPage": {
@@ -98,13 +96,6 @@
       "Online y tiendas": "Online & stores"
     }
   },
-  "favoritesPage": {
-    "title": "Favorites",
-    "loading": "Loading…",
-    "empty": "You don't have favorites yet.",
-    "view": "View",
-    "remove": "Remove"
-  },
   "home": {
     "welcome": "Welcome",
     "hi": "Hi",
@@ -156,8 +147,7 @@
     "summary": "Overview",
     "campaigns": "Campaigns",
     "create": "Create",
-    "reports": "Reports",
-    "comments": "Comments"
+    "reports": "Reports"
   },
   "campaign": {
     "addOfferForm": {
@@ -367,7 +357,6 @@
     "edit": "Edit",
     "email": "Email",
     "phone": "Phone",
-    "favorites": "Saved offers",
     "location": "Location",
     "locationAlways": "Always",
     "locationAsk": "Ask",
@@ -417,7 +406,6 @@
     },
     "home": "Home",
     "work": "Work",
-    "favorites": "Favorite Category",
     "security": "Security",
     "passwordCurrent": "Current password",
     "passwordNew": "New password",
@@ -428,17 +416,13 @@
     "rights": "© 2025 All rights reserved",
     "consumer": {
       "title": "Consumer Details",
-      "notifications": "Receive notifications",
       "locationPermission": "Allow location access",
       "homeAddress": "Home address",
       "workAddress": "Work address",
-      "universityAddress": "University address",
-      "favorites": "Favorite categories"
+      "universityAddress": "University address"
     },
     "preferences": {
       "title": "Preferences",
-      "notifications": "Receive notifications",
-      "notificationsHelp": "Enable to receive notifications about new offers and promotions",
       "locationPermission": "Allow location access",
       "locationPermissionHelp": "Allow sharing your location to see nearby offers"
     },
@@ -537,15 +521,6 @@
       "business": "Business: {{partner}}.",
       "redeem": "It can be redeemed as a means of payment up to the indicated amount."
     },
-    "reviews": {
-      "title": "Comments",
-      "count": "{{count}} reviews",
-      "yourRating": "Your rating",
-      "ariaRate": "Choose a rating from 1 to 5",
-      "placeholder": "Tell us about your experience with this offer",
-      "publish": "Publish review",
-      "alreadyReviewed": "You have already reviewed this offer"
-    },
     "registerVisit": "Register Visit",
     "visitRegistered": "Visit Registered"
   },
@@ -636,12 +611,6 @@
         "confirm": "Delete"
       }
     },
-    "notifications": {
-      "pauseSuccess": "Campaign paused successfully",
-      "activateSuccess": "Campaign activated successfully",
-      "finalizeSuccess": "Campaign finalized successfully",
-      "deleteSuccess": "Campaign deleted successfully"
-    },
     "form": {
       "createTitle": "Create New Campaign",
       "editTitle": "Edit Campaign",
@@ -722,67 +691,6 @@
       "resumeSuccess": "Campaign resumed",
       "finalizeSuccess": "Campaign finalized",
       "deleteSuccess": "Campaign deleted",
-      "error": "An error occurred. Please try again."
-    }
-  },
-  "reviewsPage": {
-    "title": "Comments and Reviews",
-    "addReview": "Add Review",
-    "cancel": "Cancel",
-    "loading": "Loading reviews...",
-    "error": "Error loading reviews",
-    "retry": "Retry",
-    "statistics": {
-      "averageRating": "Average Rating",
-      "totalReviews": "Total Reviews",
-      "distribution": "Rating Distribution"
-    },
-    "form": {
-      "newReview": "New Review",
-      "rating": "Rating",
-      "ratingRequired": "Rating is required",
-      "excellent": "Excellent",
-      "veryGood": "Very Good",
-      "good": "Good",
-      "fair": "Fair",
-      "poor": "Poor",
-      "comment": "Comment",
-      "commentPlaceholder": "Write your review here (minimum 10 characters)",
-      "commentRequired": "Comment is required",
-      "commentMinLength": "Minimum 10 characters",
-      "commentMaxLength": "Comment must not exceed 500 characters",
-      "submit": "Publish Review",
-      "submitting": "Publishing..."
-    },
-    "actions": {
-      "addReview": "Add Review",
-      "cancel": "Cancel",
-      "publish": "Publish Review",
-      "retry": "Retry",
-      "like": "Like",
-      "unlike": "Unlike",
-      "reply": "Reply",
-      "edit": "Edit",
-      "delete": "Delete",
-      "report": "Report"
-    },
-    "filters": {
-      "sortBy": "Sort by",
-      "mostRecent": "Most Recent",
-      "highestRating": "Highest Rating",
-      "filterByRating": "Filter by rating",
-      "all": "All",
-      "stars": "stars"
-    },
-    "empty": {
-      "noReviews": "No reviews available",
-      "beFirst": "Be the first to review"
-    },
-    "messages": {
-      "createSuccess": "Review published successfully",
-      "updateSuccess": "Review updated successfully",
-      "deleteSuccess": "Review deleted",
-      "likeSuccess": "Thanks for your feedback!",
       "error": "An error occurred. Please try again."
     }
   },

@@ -6,7 +6,6 @@ export interface DetailsConsumerResource {
   id: number;
   userId: number;
   categoriasFavoritas?: string;
-  recibirNotificaciones: boolean;
   permisoUbicacion: boolean;
   direccionCasa?: string;
   direccionTrabajo?: string;
@@ -20,7 +19,6 @@ export interface DetailsConsumerResource {
  */
 export interface CreateDetailsConsumerResource {
   categoriasFavoritas?: string;
-  recibirNotificaciones?: boolean;
   permisoUbicacion?: boolean;
   direccionCasa?: string;
   direccionTrabajo?: string;

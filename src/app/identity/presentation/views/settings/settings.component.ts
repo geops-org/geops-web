@@ -99,17 +99,6 @@ export class SettingsComponent implements OnInit {
     setTimeout(async () => {
       if (!this.consumerDetails) return;
 
-      // Check notification permission
-      if ('Notification' in window) {
-        const notificationPermission = Notification.permission;
-
-        if (notificationPermission === 'granted') {
-          this.consumerDetails.recibirNotificaciones = true;
-        } else if (notificationPermission === 'denied') {
-          this.consumerDetails.recibirNotificaciones = false;
-        }
-      }
-
       // Check geolocation permission (requires API check)
       if ('permissions' in navigator) {
         try {
@@ -174,7 +163,6 @@ export class SettingsComponent implements OnInit {
       id: this.user!.id,
       userId: this.user!.id,
       categoriasFavoritas: '',
-      recibirNotificaciones: false,
       permisoUbicacion: false,
       direccionCasa: '',
       direccionTrabajo: '',
@@ -280,75 +268,6 @@ export class SettingsComponent implements OnInit {
   }
 
   /**
-   * Handles notification permission toggle
-   * Requests browser notification permission when enabled
-   */
-  async onNotificationsToggle(event: any): Promise<void> {
-    if (!this.consumerDetails) return;
-
-    const isEnabled = event.checked;
-
-    if (isEnabled) {
-      // Request notification permission from browser
-      if ('Notification' in window) {
-        try {
-          // Check if already granted
-          if (Notification.permission === 'granted') {
-            this.consumerDetails.recibirNotificaciones = true;
-
-            // Show a test notification
-            new Notification('GeOps', {
-              body: 'Las notificaciones están activas',
-              icon: '/favicon.ico'
-            });
-
-            this.mensaje = 'Notificaciones activadas correctamente';
-            setTimeout(() => (this.mensaje = ''), 3000);
-            return;
-          }
-
-          // Request permission
-          const permission = await Notification.requestPermission();
-
-          if (permission === 'granted') {
-            this.consumerDetails.recibirNotificaciones = true;
-
-            // Show a test notification
-            new Notification('GeOps', {
-              body: 'Las notificaciones han sido activadas correctamente',
-              icon: '/favicon.ico'
-            });
-
-            this.mensaje = 'Notificaciones activadas correctamente';
-            setTimeout(() => (this.mensaje = ''), 3000);
-          } else {
-            // Permission denied, revert toggle
-            this.consumerDetails.recibirNotificaciones = false;
-            this.mensaje = 'Permiso de notificaciones denegado. Por favor, activa los permisos en tu navegador.';
-            setTimeout(() => (this.mensaje = ''), 4000);
-          }
-        } catch (error) {
-          console.error('[SettingsComponent] Error requesting notification permission:', error);
-          this.consumerDetails.recibirNotificaciones = false;
-          this.mensaje = 'Error al solicitar permisos de notificaciones';
-          setTimeout(() => (this.mensaje = ''), 3000);
-        }
-      } else {
-        // Browser doesn't support notifications
-        this.consumerDetails.recibirNotificaciones = false;
-        this.mensaje = 'Tu navegador no soporta notificaciones';
-        setTimeout(() => (this.mensaje = ''), 3000);
-        console.warn('[SettingsComponent] Notifications not supported in this browser');
-      }
-    } else {
-      // User is disabling notifications
-      this.consumerDetails.recibirNotificaciones = false;
-      this.mensaje = 'Notificaciones desactivadas';
-      setTimeout(() => (this.mensaje = ''), 2000);
-    }
-  }
-
-  /**
    * Handles location permission toggle
    * Requests browser geolocation permission when enabled
    */
@@ -435,7 +354,6 @@ export class SettingsComponent implements OnInit {
     if (this.user.role === 'CONSUMER' && this.consumerDetails) {
       const consumerResource = {
         categoriasFavoritas: this.consumerDetails.categoriasFavoritas || '',
-        recibirNotificaciones: this.consumerDetails.recibirNotificaciones,
         permisoUbicacion: this.consumerDetails.permisoUbicacion,
         direccionCasa: this.consumerDetails.direccionCasa || '',
         direccionTrabajo: this.consumerDetails.direccionTrabajo || '',
