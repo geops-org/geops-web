@@ -492,9 +492,10 @@
     "buy": "Buy",
     "addToCart": "Add to cart",
     "bullets": {
-      "valid": "Valid online and at {{partner}} physical stores.",
-      "business": "Business: {{partner}}.",
-      "redeem": "It can be redeemed as a means of payment up to the indicated amount."
+      "visit": "Visit the physical store of {{partner}} to redeem this offer.",
+      "validUntil": "Valid until: {{date}}.",
+      "location": "Location: {{location}}.",
+      "category": "Category: {{category}}."
     },
     "registerVisit": "Register Visit",
     "visitRegistered": "Visit Registered"

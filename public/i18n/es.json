@@ -492,9 +492,10 @@
     "buy": "Comprar",
     "addToCart": "Agregar al carrito",
     "bullets": {
-      "valid": "Válido online y en tiendas físicas de {{partner}}.",
-      "business": "Negocio: {{partner}}.",
-      "redeem": "Se puede canjear como medio de pago hasta el monto indicado."
+      "visit": "Visita el local físico de {{partner}} para canjear esta oferta.",
+      "validUntil": "Válido hasta: {{date}}.",
+      "location": "Ubicación: {{location}}.",
+      "category": "Categoría: {{category}}."
     },
     "registerVisit": "Registrar Visita",
     "visitRegistered": "Visita Registrada"
