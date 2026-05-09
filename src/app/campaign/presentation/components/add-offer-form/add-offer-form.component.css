@@ -87,6 +87,15 @@ mat-form-field {
   border-radius: 4px !important;
 }
 
+::ng-deep .mat-calendar-body-disabled .mat-calendar-body-cell-content {
+  color: #b0b0b0 !important;
+  background: rgba(0, 0, 0, 0.04) !important;
+}
+
+::ng-deep .mat-calendar-body-disabled:hover .mat-calendar-body-cell-content {
+  background: rgba(0, 0, 0, 0.04) !important;
+}
+
 /* Custom styles for mat-mdc-select-panel */
 ::ng-deep .mat-mdc-select-panel {
   background: #fff !important;
@@ -114,9 +123,33 @@ mat-form-field {
   color: #8B3CC7;
 }
 
+.image-preview-container {
+  justify-content: center;
+}
+
+.image-preview {
+  max-width: 100%;
+  max-height: 160px;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.currency-prefix {
+  font-weight: 600;
+  color: #555;
+  margin-right: 4px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .form-row.two-columns {
     grid-template-columns: 1fr;
   }
+}
+
+/* Ocultar el tooltip de navegación del calendario */
+::ng-deep .mat-calendar .mat-mdc-tooltip,
+::ng-deep .mat-calendar .mat-mdc-tooltip-panel {
+  display: none !important;
 }

@@ -78,6 +78,10 @@
       "Entretenimiento": "Entretenimiento",
       "Belleza": "Belleza",
       "Gastronomía": "Gastronomía",
+      "Comida China": "Comida China",
+      "Comida Coreana": "Comida Coreana",
+      "Comida Japonesa": "Comida Japonesa",
+      "Mangas": "Mangas",
       "Gift Card": "Tarjeta de regalo",
       "Educación": "Educación",
       "Salud": "Salud",
@@ -182,7 +186,8 @@
         },
         "imageUrl": {
           "label": "URL de la Imagen",
-          "placeholder": "https://ejemplo.com/imagen.jpg"
+          "placeholder": "https://ejemplo.com/imagen.jpg",
+          "error": "La URL debe comenzar con https://"
         },
         "validUntil": {
           "label": "Válido Hasta"
@@ -197,7 +202,9 @@
         "required": "Este campo es requerido",
         "minLength": "Debe tener al menos {{value}} caracteres",
         "maxLength": "No debe exceder {{value}} caracteres",
-        "minValue": "El valor debe ser mayor o igual a 0"
+        "minValue": "El valor debe ser mayor o igual a 0",
+        "maxValue": "El valor máximo permitido es {{value}}",
+        "dateOutOfRange": "La fecha debe ser entre hoy y 1 mes desde ahora"
       }
     },
     "offersList": {
@@ -715,6 +722,10 @@
     "Gastronomía": "Gastronomía",
     "Belleza": "Belleza",
     "Gift Card": "Gift Card",
+    "Comida China": "Comida China",
+    "Comida Coreana": "Comida Coreana",
+    "Comida Japonesa": "Comida Japonesa",
+    "Mangas": "Mangas",
     "title": "Categorias",
     "Educación": "Educación",
     "Salud": "Salud",
