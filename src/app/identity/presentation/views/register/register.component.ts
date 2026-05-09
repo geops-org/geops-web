@@ -47,12 +47,21 @@ export class RegisterComponent {
   ) {}
 
   /**
+   * Validates name format
+   * @param name Name to validate
+   */
+  private isValidName(name: string): boolean {
+    const regex = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/;
+    return regex.test(name);
+  }
+
+  /**
    * Validates email format
    * @param email Email to validate
    * @returns true if email is valid, false otherwise
    */
   private isValidEmail(email: string): boolean {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const regex = /^[^\s@]+@[^\s@]+\.[a-z]+(\.[a-z]+)?$/i;
     return regex.test(email);
   }
 
@@ -62,7 +71,7 @@ export class RegisterComponent {
    * @returns true if phone is valid, false otherwise
    */
   private isValidPhone(phone: string): boolean {
-    const regex = /^[0-9]{7,15}$/;
+    const regex = /^9[0-9]{8}$/;
     return regex.test(phone.replace(/\D/g, ''));
   }
 
@@ -79,6 +88,13 @@ export class RegisterComponent {
       return;
     }
 
+    // Validación de formato de nombre
+    if (!this.isValidName(this.model.name)) {
+      this.errorMessage = 'El nombre solo debe contener letras';
+      this.registering = false;
+      return;
+    }
+
     // Validación de formato de email
     if (!this.isValidEmail(this.model.email)) {
       this.errorMessage = 'Email inválido. Por favor verifica el formato';
@@ -88,7 +104,7 @@ export class RegisterComponent {
 
     // Validación de formato de teléfono
     if (!this.isValidPhone(this.model.phone)) {
-      this.errorMessage = 'Teléfono inválido. Debe tener entre 7 y 15 dígitos';
+      this.errorMessage = 'Teléfono inválido. Debe tener 9 dígitos';
       this.registering = false;
       return;
     }

@@ -69,23 +69,48 @@ export class RegisterBussinesComponent implements OnInit {
    * @returns true if valid, false otherwise
    */
   private validateBusinessData(): boolean {
-    if (!this.business.businessName || this.business.businessName.trim().length === 0) {
-      this.errorMessage = 'El nombre del negocio es requerido';
-      return false;
-    }
+      // Regex para solo letras y espacios (permite tildes y ñ)
+      const businessNameRegex = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/;
 
-    if (!this.business.businessType || this.business.businessType.trim().length === 0) {
-      this.errorMessage = 'El tipo de negocio es requerido';
-      return false;
-    }
+      // 1. Validación de Business Name
+      if (!this.business.businessName || this.business.businessName.trim().length === 0) {
+        this.errorMessage = 'El nombre del negocio es requerido';
+        return false;
+      }
+      if (!businessNameRegex.test(this.business.businessName)) {
+        this.errorMessage = 'El nombre del negocio solo debe contener letras';
+        return false;
+      }
 
-    if (!this.business.taxId || this.business.taxId.trim().length === 0) {
-      this.errorMessage = 'El RUC/NIT es requerido';
-      return false;
-    }
+      // 2. Validación de Business Type
+      if (!this.business.businessType) {
+        this.errorMessage = 'El tipo de empresa es requerido (1 Instant Food, 2 Snacks & Bebidas)';
+        return false;
+      }
 
-    return true;
-  }
+      // Validamos que sea exactamente "1" o "2"
+      const valoresPermitidos = ['1', '2'];
+      if (!valoresPermitidos.includes(this.business.businessType.toString().trim())) {
+        this.errorMessage = 'Tipo de empresa inválido. Ingrese 1 Instant Food o 2 Snacks & Bebidas';
+        return false;
+      }
+
+      // 3. Validación de Tax ID (RUC)
+      if (!this.business.taxId || this.business.taxId.trim().length === 0) {
+        this.errorMessage = 'El RUC es requerido';
+        return false;
+      }
+
+      // Regex que valida: 11 dígitos Y que empiece por 10 o 20
+      const taxIdRegex = /^(10|20)\d{9}$/;
+
+      if (!taxIdRegex.test(this.business.taxId)) {
+        this.errorMessage = 'El RUC debe tener 11 dígitos y empezar con 10 o 20';
+        return false;
+      }
+
+      return true;
+    }
 
   /**
    * Handles business registration form submission.
@@ -182,8 +207,8 @@ export class RegisterBussinesComponent implements OnInit {
         console.error('[RegisterBussines] ❌ Error creando detalles de propietario:', err);
 
         // Mensajes específicos según el código de error
-        if (err?.status === 404) {
-          this.errorMessage = 'Usuario no encontrado. Por favor intenta registrarse de nuevo.';
+        if (err?.status === 409) {
+          this.errorMessage = err.error?.message || 'El RUC o el Nombre del negocio ya están registrados.';
         } else if (err?.status === 400) {
           this.errorMessage = 'Datos de negocio inválidos. Por favor verifica todos los campos.';
         } else if (err?.status === 0) {
