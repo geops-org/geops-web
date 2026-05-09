@@ -18,14 +18,6 @@ import { RouterLink } from '@angular/router';
 import * as L from 'leaflet';
 
 
-interface CategoryMapping {
-  key: string;
-  label: string;
-  categories: string[];
-  titleKeywords: string[];
-  excludeKeywords?: string[];
-}
-
 const LIMA_CENTER: [number, number] = [-12.0432, -77.0282];
 
 @Component({
@@ -49,61 +41,21 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
     'barrio chino': [-12.0509, -77.0257],
   };
 
-  categories: CategoryMapping[] = [
-    { key: 'all', label: 'home.map.all', categories: [], titleKeywords: [] },
-    {
-      key: 'cinemas',
-      label: 'home.map.cinemas',
-      categories: ['Entretenimiento'],
-      titleKeywords: ['cine', 'cinemark', 'cineplanet', 'película', 'pelicula', 'entradas'],
-      excludeKeywords: ['buffet', 'park', 'jungle', 'inflable', 'kids', 'niños', 'juego'],
-    },
-    {
-      key: 'buffets',
-      label: 'home.map.buffets',
-      categories: ['Gastronomía'],
-      titleKeywords: ['buffet', 'almuerzo', 'cena', 'bailable'],
-      excludeKeywords: ['maki', 'makis', 'sushi', 'nikkei', 'ramen'],
-    },
-    {
-      key: 'parks',
-      label: 'home.map.parks',
-      categories: ['Entretenimiento'],
-      titleKeywords: ['park', 'parque', 'inflable', 'jungle', 'aquatica', 'infinity'],
-      excludeKeywords: ['cine', 'buffet', 'maki'],
-    },
-    {
-      key: 'children',
-      label: 'home.map.for-children',
-      categories: ['Entretenimiento'],
-      titleKeywords: ['kids', 'niños', 'niñ', 'playland', 'mundo kids', 'infantil', 'coney'],
-      excludeKeywords: ['buffet', 'maki'],
-    },
-    {
-      key: 'makis',
-      label: 'home.map.makis',
-      categories: ['Gastronomía'],
-      titleKeywords: ['maki', 'makis', 'sushi', 'nikkei', 'ramen', 'shimaya', 'sakura', 'barra libre'],
-      excludeKeywords: ['buffet', 'cine'],
-    },
-    {
-      key: 'beauty',
-      label: 'home.map.beauty',
-      categories: ['Belleza', 'Gift Card'],
-      titleKeywords: ['belleza', 'facial', 'beauty', 'kabuki', 'minna', 'dbs', 'aruma', 'skin', 'cuidado'],
-      excludeKeywords: [],
-    },
-  ];
-
-  selectedCategories = signal<string[]>(['all']);
+  selectedDistricts = signal<string[]>(['all']);
   allOffers = signal<Offer[]>([]);
   highlightedOfferId = signal<number | null>(null);
 
   filteredDisplayOffers = computed(() => {
-    const selected = this.selectedCategories();
+    const selected = this.selectedDistricts();
     const offers = this.allOffers();
     if (selected.includes('all')) return offers;
-    return offers.filter((offer) => selected.some((catKey) => this.offerMatchesCategory(offer, catKey)));
+    return offers.filter((o) => {
+      const coords = this.resolveCoords(o.location);
+      return selected.some((districtKey) => {
+        const dc = this.DISTRICTS[districtKey];
+        return dc !== undefined && coords[0] === dc[0] && coords[1] === dc[1];
+      });
+    });
   });
 
   constructor() {
@@ -176,39 +128,19 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  selectCategory(catKey: string) {
-    if (catKey === 'all') {
-      this.selectedCategories.set(['all']);
-    } else {
-      const current = this.selectedCategories();
-      let updated = current.filter((c) => c !== 'all');
-      if (updated.includes(catKey)) {
-        updated = updated.filter((c) => c !== catKey);
-      } else {
-        updated.push(catKey);
-      }
-      if (updated.length === 0) updated = ['all'];
-      this.selectedCategories.set(updated);
+  selectDistrict(districtKey: string): void {
+    if (districtKey === 'all') {
+      this.selectedDistricts.set(['all']);
+      return;
     }
+    const current = this.selectedDistricts().filter((k) => k !== 'all');
+    const idx = current.indexOf(districtKey);
+    const next = idx >= 0 ? current.filter((k) => k !== districtKey) : [...current, districtKey];
+    this.selectedDistricts.set(next.length === 0 ? ['all'] : next);
   }
 
-  isCategoryActive(catKey: string): boolean {
-    return this.selectedCategories().includes(catKey);
-  }
-
-  private offerMatchesCategory(offer: Offer, categoryKey: string): boolean {
-    const category = this.categories.find((cat) => cat.key === categoryKey);
-    if (!category) return false;
-
-    const titleLower = offer.title.toLowerCase();
-    const categoryLower = offer.category.toLowerCase();
-
-    const categoryMatch = category.categories.some((cat) => categoryLower.includes(cat.toLowerCase()));
-    const titleMatch = category.titleKeywords.some((keyword) => titleLower.includes(keyword.toLowerCase()));
-    const hasExcludedKeyword =
-      category.excludeKeywords?.some((keyword) => titleLower.includes(keyword.toLowerCase())) || false;
-
-    return (categoryMatch || titleMatch) && !hasExcludedKeyword;
+  isDistrictActive(districtKey: string): boolean {
+    return this.selectedDistricts().includes(districtKey);
   }
 
   onViewOffer(offer: Offer) {
