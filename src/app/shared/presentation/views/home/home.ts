@@ -13,10 +13,8 @@ import {
 import { TranslatePipe } from '@ngx-translate/core';
 import { Offer } from '../../../../loyalty/domain/model/offer.entity';
 import { OffersApiEndpoint } from '../../../../loyalty/infrastructure/offers/offers-api-endpoint';
-import { DecimalPipe, NgForOf, NgIf } from '@angular/common';
-import { AuthService } from '../../../../identity/infrastructure/auth/auth.service';
+import { DecimalPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 import * as L from 'leaflet';
 
 
@@ -32,16 +30,13 @@ const LIMA_CENTER: [number, number] = [-12.0432, -77.0282];
 
 @Component({
   selector: 'app-home',
-  imports: [TranslatePipe, DecimalPipe, NgForOf, RouterLink, NgIf, FormsModule],
+  imports: [TranslatePipe, DecimalPipe, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 export class Home implements OnInit, AfterViewInit, OnDestroy {
   private readonly offersApi = inject(OffersApiEndpoint);
-  private readonly authService = inject(AuthService);
 
-  private currentUserId: number | null = null;
-  private userId: number = 1;
   private impressionsTracked = false;
   private map: L.Map | null = null;
   private markers: L.Marker[] = [];
@@ -111,48 +106,6 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
     return offers.filter((offer) => selected.some((catKey) => this.offerMatchesCategory(offer, catKey)));
   });
 
-  cinemaOffers = computed(() => {
-    const filtered = this.filteredDisplayOffers();
-    const selected = this.selectedCategories();
-    if (!selected.includes('all') && !selected.includes('cinemas')) return [];
-    return filtered.filter((o) => this.offerMatchesCategory(o, 'cinemas'));
-  });
-
-  buffetOffers = computed(() => {
-    const filtered = this.filteredDisplayOffers();
-    const selected = this.selectedCategories();
-    if (!selected.includes('all') && !selected.includes('buffets')) return [];
-    return filtered.filter((o) => this.offerMatchesCategory(o, 'buffets'));
-  });
-
-  parkOffers = computed(() => {
-    const filtered = this.filteredDisplayOffers();
-    const selected = this.selectedCategories();
-    if (!selected.includes('all') && !selected.includes('parks')) return [];
-    return filtered.filter((o) => this.offerMatchesCategory(o, 'parks'));
-  });
-
-  mechGamesOffers = computed(() => {
-    const filtered = this.filteredDisplayOffers();
-    const selected = this.selectedCategories();
-    if (!selected.includes('all') && !selected.includes('children')) return [];
-    return filtered.filter((o) => this.offerMatchesCategory(o, 'children'));
-  });
-
-  makisOffers = computed(() => {
-    const filtered = this.filteredDisplayOffers();
-    const selected = this.selectedCategories();
-    if (!selected.includes('all') && !selected.includes('makis')) return [];
-    return filtered.filter((o) => this.offerMatchesCategory(o, 'makis'));
-  });
-
-  beautyOffers = computed(() => {
-    const filtered = this.filteredDisplayOffers();
-    const selected = this.selectedCategories();
-    if (!selected.includes('all') && !selected.includes('beauty')) return [];
-    return filtered.filter((o) => this.offerMatchesCategory(o, 'beauty'));
-  });
-
   constructor() {
     effect(() => {
       const offers = this.filteredDisplayOffers();
@@ -163,11 +116,6 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const user = this.authService.getCurrentUser();
-    if (user) {
-      this.userId = user.id;
-    }
-    this.currentUserId = this.authService.getCurrentUserId();
     this.loadAllOffers();
   }
 
@@ -228,16 +176,6 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  isDistrict(location: string): boolean {
-    const districts = [
-      'Surco', 'San Miguel', 'San Borja', 'Chorrillos', 'Santa Marina', 'Trujillo',
-      'Arequipa', 'Ica', 'Ate', 'Breña', 'Comas', 'Barranco', 'Los Olivos', 'Magdalena',
-      'Miraflores', 'Pueblo Libre', 'San Isidro', 'Tiendas seleccionadas',
-    ];
-    const locationParts = location.split(',').map((part) => part.trim());
-    return locationParts.some((part) => districts.includes(part));
-  }
-
   selectCategory(catKey: string) {
     if (catKey === 'all') {
       this.selectedCategories.set(['all']);
@@ -271,10 +209,6 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
       category.excludeKeywords?.some((keyword) => titleLower.includes(keyword.toLowerCase())) || false;
 
     return (categoryMatch || titleMatch) && !hasExcludedKeyword;
-  }
-
-  imgFor(o: Offer | null): string {
-    return !o ? '' : (o.imageUrl ?? `assets/offers/${o.id}.jpg`);
   }
 
   onViewOffer(offer: Offer) {
