@@ -13,8 +13,8 @@ import { calculateCtr } from '../../../domain/utils/campaign-metrics.util';
 import { AuthService } from '../../../../identity/infrastructure/auth/auth.service';
 import { ConfirmDialogComponent } from '../../../../shared/presentation/components/confirm-dialog/confirm-dialog.component';
 
-type DialogAction = 'pause' | 'activate' | 'finalize' | 'delete';
-type NotificationKey = 'pauseSuccess' | 'activateSuccess' | 'finalizeSuccess' | 'deleteSuccess';
+type DialogAction = 'finalize' | 'delete';
+type NotificationKey = 'finalizeSuccess' | 'deleteSuccess';
 
 /**
  * ResumenComponent
@@ -92,8 +92,6 @@ export class ResumenComponent implements OnInit {
     switch (status) {
       case 'ACTIVE':
         return '#4CAF50';
-      case 'PAUSED':
-        return '#FFC107';
       case 'FINALIZED':
         return '#9E9E9E';
       default:
@@ -123,28 +121,9 @@ export class ResumenComponent implements OnInit {
   }
 
   /**
-   * Toggle campaign active/paused status
+   * Finalize campaign (change status to FINALIZED)
    */
-  onToggleStatus(campaignId: number): void {
-    const campaign = this.findCampaign(campaignId);
-    if (!campaign) return;
-
-    const newStatus: CampaignStatus = campaign.status === 'ACTIVE' ? 'PAUSED' : 'ACTIVE';
-    const dialogKey: DialogAction = newStatus === 'ACTIVE' ? 'activate' : 'pause';
-    const notification: NotificationKey = newStatus === 'ACTIVE' ? 'activateSuccess' : 'pauseSuccess';
-
-    this.openCampaignDialog(dialogKey, campaign.name).afterClosed().subscribe(confirmed => {
-      if (confirmed) {
-        this.store.updateCampaign(campaignId, this.buildStatusUpdates(campaign, newStatus));
-        this.showNotification(notification);
-      }
-    });
-  }
-
-  /**
-   * Delete campaign with confirmation
-   */
-  onDelete(campaignId: number): void {
+  onFinalize(campaignId: number): void {
     const campaign = this.findCampaign(campaignId);
     if (!campaign) return;
 

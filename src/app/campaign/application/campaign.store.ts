@@ -73,13 +73,6 @@ export class CampaignStore {
   );
 
   /**
-   * Computed signal for paused campaigns
-   */
-  readonly pausedCampaigns = computed(() =>
-    this.campaigns().filter(c => c.status === 'PAUSED')
-  );
-
-  /**
    * Computed signal for finalized campaigns
    */
   readonly finalizedCampaigns = computed(() =>
