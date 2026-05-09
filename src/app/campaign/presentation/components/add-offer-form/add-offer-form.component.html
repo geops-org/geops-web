@@ -130,8 +130,22 @@
           [placeholder]="'campaign.addOfferForm.fields.imageUrl.placeholder' | translate"
         >
         <mat-icon matPrefix>image</mat-icon>
+        <mat-error *ngIf="offerForm.get('imageUrl')?.hasError('invalidUrl')">
+          {{ 'campaign.addOfferForm.fields.imageUrl.error' | translate }}
+        </mat-error>
       </mat-form-field>
     </div>
+
+    @if (imagePreviewUrl()) {
+      <div class="form-row image-preview-container">
+        <img
+          [src]="imagePreviewUrl()"
+          (error)="onImageError($event)"
+          alt="Preview"
+          class="image-preview"
+        >
+      </div>
+    }
 
     <div class="form-row">
       <mat-form-field appearance="outline" class="full-width">

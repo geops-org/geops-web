@@ -1,6 +1,6 @@
-import { Component, Input, Output, EventEmitter, OnInit, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -76,6 +76,7 @@ export class AddOfferFormComponent implements OnInit {
 
   offerForm: FormGroup;
   isEditMode: boolean = false;
+  readonly imagePreviewUrl = signal<string>('');
 
   constructor() {
     this.offerForm = this.fb.group({
@@ -88,7 +89,7 @@ export class AddOfferFormComponent implements OnInit {
       location: ['', Validators.required],
       latitude: [null],
       longitude: [null],
-      imageUrl: [''],
+      imageUrl: ['', [this.httpsUrlValidator()]],
       validUntil: [null, [Validators.required, this.dateWithinRangeValidator(this.minValidUntil, this.maxValidUntil)]]
     });
   }
@@ -99,6 +100,10 @@ export class AddOfferFormComponent implements OnInit {
     if (this.offer) {
       this.populateForm(this.offer);
     }
+
+    this.offerForm.get('imageUrl')!.valueChanges.subscribe((value: string) => {
+      this.imagePreviewUrl.set(value?.startsWith('https://') ? value : '');
+    });
   }
 
   populateForm(offer: CampaignOffer): void {
@@ -153,6 +158,11 @@ export class AddOfferFormComponent implements OnInit {
     this.resetForm();
   }
 
+  onImageError(event: Event): void {
+    (event.target as HTMLImageElement).src =
+      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='120'%3E%3Crect width='200' height='120' fill='%23f0f0f0'/%3E%3Ctext x='100' y='65' font-family='sans-serif' font-size='14' fill='%23999' text-anchor='middle'%3ESin imagen%3C/text%3E%3C/svg%3E";
+  }
+
   private normalizeDateInput(value: Date | string | null | undefined): string | null {
     if (!value) return null;
     if (value instanceof Date) {
@@ -176,6 +186,14 @@ export class AddOfferFormComponent implements OnInit {
       imageUrl: '',
       validUntil: null
     });
+  }
+
+  private httpsUrlValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value as string;
+      if (!value) return null;
+      return value.startsWith('https://') ? null : { invalidUrl: true };
+    };
   }
 
   private dateWithinRangeValidator(minDate: Date, maxDate: Date) {
@@ -225,6 +243,9 @@ export class AddOfferFormComponent implements OnInit {
     }
     if (control.hasError('dateOutOfRange')) {
       return this.translate.instant('campaign.addOfferForm.errors.dateOutOfRange');
+    }
+    if (control.hasError('invalidUrl')) {
+      return this.translate.instant('campaign.addOfferForm.fields.imageUrl.error');
     }
 
     return '';

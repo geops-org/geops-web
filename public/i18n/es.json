@@ -186,7 +186,8 @@
         },
         "imageUrl": {
           "label": "URL de la Imagen",
-          "placeholder": "https://ejemplo.com/imagen.jpg"
+          "placeholder": "https://ejemplo.com/imagen.jpg",
+          "error": "La URL debe comenzar con https://"
         },
         "validUntil": {
           "label": "Válido Hasta"

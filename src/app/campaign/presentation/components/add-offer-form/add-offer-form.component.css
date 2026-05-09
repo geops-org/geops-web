@@ -123,6 +123,18 @@ mat-form-field {
   color: #8B3CC7;
 }
 
+.image-preview-container {
+  justify-content: center;
+}
+
+.image-preview {
+  max-width: 100%;
+  max-height: 160px;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
 .currency-prefix {
   font-weight: 600;
   color: #555;
