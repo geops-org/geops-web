@@ -63,7 +63,6 @@ export class ReportesComponent implements OnInit {
         averageCTR,
         byStatus: {
           active: campaigns.filter(c => c.status === 'ACTIVE').length,
-          paused: campaigns.filter(c => c.status === 'PAUSED').length,
           finalized: campaigns.filter(c => c.status === 'FINALIZED').length
         }
       },

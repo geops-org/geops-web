@@ -121,9 +121,9 @@ export class ResumenComponent implements OnInit {
   }
 
   /**
-   * Finalize campaign (change status to FINALIZED)
+   * Delete campaign with confirmation
    */
-  onFinalize(campaignId: number): void {
+  onDelete(campaignId: number): void {
     const campaign = this.findCampaign(campaignId);
     if (!campaign) return;
 
