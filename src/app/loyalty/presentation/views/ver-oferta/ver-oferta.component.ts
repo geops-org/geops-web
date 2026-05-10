@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -10,7 +10,7 @@ import { Offer } from '../../../domain/model/offer.entity';
 @Component({
   selector: 'app-ver-oferta',
   standalone: true,
-  imports: [DecimalPipe, TranslateModule],
+  imports: [DatePipe, DecimalPipe, TranslateModule],
   templateUrl: './ver-oferta.component.html',
   styleUrls: ['./ver-oferta.component.css'],
 })
@@ -66,6 +66,8 @@ export class VerOfertaComponent implements OnInit {
       'Pueblo Libre',
       'San Isidro',
       'Tiendas seleccionadas',
+      'Lince',
+      'Barrio Chino',
     ];
     const locationParts = location.split(',').map((part) => part.trim());
     return locationParts.some((part) => districts.includes(part));

@@ -9,10 +9,6 @@
 
         <div class="partner">{{ o.partner }}</div>
 
-        <div class="rating">
-          <span class="star" *ngFor="let s of [1,2,3,4,5]"></span>
-          <span class="rate">{{ 'offersPage.hero.rating' | translate:{ value: '5.0' } }}</span>
-        </div>
 
         <div class="price">
           <span class="currency">{{ 'offersPage.card.currency' | translate }}</span>
@@ -126,10 +122,6 @@
           <h3 class="ttl">{{ o.title || (('offersData.titles.' + o.id) | translate) }}</h3>
           <div class="pname">{{ o.partner }}</div>
 
-          <div class="stars-row">
-            <span class="star" *ngFor="let s of [1,2,3,4,5]"></span>
-            <span class="score">{{ 'offersPage.card.rating' | translate:{ value: '5.0' } }}</span>
-          </div>
 
           <hr class="sep" />
 

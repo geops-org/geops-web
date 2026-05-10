@@ -1,4 +1,5 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import {Router, RouterLink, RouterOutlet, NavigationStart, NavigationEnd, NavigationCancel, NavigationError} from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -43,8 +44,10 @@ import { filter } from 'rxjs/operators';
   templateUrl: './layout.html',
   styleUrl: './layout.css'
 })
-export class Layout implements OnInit {
+export class Layout implements OnInit, OnDestroy {
   private readonly navigationLoadingService = inject(NavigationLoadingService);
+
+  private userSub?: Subscription;
 
   q = '';
   userName = 'Usuario';
@@ -78,15 +81,17 @@ export class Layout implements OnInit {
     });
   }
   ngOnInit(): void {
-    const user = this.authService.getCurrentUser();
-    if (user) {
-      this.userName = user.name;
-      this.userEmail = user.email || 'usuario@geops.com';
-      this.isOwner.set(user.role === 'OWNER');
-    } else {
-      console.warn('[Layout] No hay usuario autenticado');
-    }
-    // No need to subscribe - cartStore handles everything internally
+    this.userSub = this.authService.currentUser$.subscribe(user => {
+      if (user) {
+        this.userName = user.name;
+        this.userEmail = user.email || 'usuario@geops.com';
+        this.isOwner.set(user.role === 'OWNER');
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.userSub?.unsubscribe();
   }
 
   get userInitial() {
