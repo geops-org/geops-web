@@ -10,13 +10,14 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 
-fdescribe('RegisterBussinesComponent', () => {
+describe('RegisterBussinesComponent', () => {
   let component: RegisterBussinesComponent;
   let fixture: ComponentFixture<RegisterBussinesComponent>;
   let router: Router;
 
   beforeEach(async () => {
     const mockOwnerData = { name: 'Vanessa', email: 'v@test.com', role: 'OWNER' };
+    localStorage.clear();
     spyOn(localStorage, 'getItem').and.returnValue(JSON.stringify(mockOwnerData));
 
     await TestBed.configureTestingModule({

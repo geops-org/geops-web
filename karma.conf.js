@@ -12,8 +12,15 @@ module.exports = function (config) {
       jasmine: {
 
       },
-      clearContext: false 
+      clearContext: false,
+      captureConsole: true,
+      runInParent: false,
+      useIframe: true
     },
+    browserDisconnectTimeout: 10000,
+    browserDisconnectTolerance: 3,
+    browserNoActivityTimeout: 60000,
+
     jasmineHtmlReporter: {
       suppressAll: true 
     },

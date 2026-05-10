@@ -8,7 +8,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-fdescribe('RegisterComponent', () => {
+describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
   let authServiceSpy: jasmine.SpyObj<AuthService>;
@@ -39,20 +39,22 @@ fdescribe('RegisterComponent', () => {
   });
 
 
-  it('debe guardar en localStorage y navegar si el rol es OWNER', () => {
+  it('debe guardar en localStorage y navegar si el rol es OWNER', async () => {
     const navigateSpy = spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
 
     component.model = {
-        name: 'Vanessa Choy',
-        email: 'test@geops.com',
-        password: 'password123',
-        phone: '987654321',
-        role: 'OWNER',
-        plan: 'BASIC'
+      name: 'Vanessa Choy', 
+      email: 'test@geops.com',
+      password: 'password123',
+      phone: '987654321',
+      role: 'OWNER',
+      plan: 'BASIC'
     };
 
     component.onSubmit();
+    
+    await fixture.whenStable(); 
 
     expect(navigateSpy).toHaveBeenCalledWith(['/register-bussines']);
-    });
+  });
 });
