@@ -20,9 +20,6 @@
           <span>{{ 'offersData.locations.' + o.location | translate }}</span>
         }
 
-        <span class="dot">•</span>
-        <span class="rating">{{ o.rating | number:'1.1-1' }}</span>
-        <span class="stars">★★★★★</span>
       </div>
 
       <div class="price">
@@ -31,9 +28,10 @@
       </div>
 
       <ul class="bullets">
-        <li>{{ 'offerDetail.bullets.valid' | translate:{ partner: o.partner } }}</li>
-        <li>{{ 'offerDetail.bullets.business' | translate:{ partner: o.partner } }}</li>
-        <li>{{ 'offerDetail.bullets.redeem' | translate }}</li>
+        <li>{{ 'offerDetail.bullets.visit' | translate: { partner: o.partner } }}</li>
+        <li>{{ 'offerDetail.bullets.validUntil' | translate: { date: (o.validTo | date:'dd/MM/yyyy') } }}</li>
+        <li>{{ 'offerDetail.bullets.location' | translate: { location: o.location } }}</li>
+        <li>{{ 'offerDetail.bullets.category' | translate: { category: o.category } }}</li>
       </ul>
     </section>
   </div>
