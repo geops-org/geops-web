@@ -69,7 +69,7 @@ export class CrearCampaignComponent {
 
   constructor() {
     this.campaignForm = this.fb.group({
-      name: ['', [Validators.required, noWhitespace(), Validators.minLength(5), Validators.maxLength(100)]],
+      name: ['', [Validators.required, noWhitespace(), Validators.minLength(5), Validators.maxLength(50)]],
       description: ['', [Validators.required, Validators.minLength(10)]],
       startDate: ['', [Validators.required, startDateNotInPast()]],
       endDate: ['', [Validators.required, endDateAfterStart()]],
