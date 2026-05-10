@@ -129,14 +129,6 @@ export const routes: Routes = [
             (m) => m.ViewCampaignComponent
           ),
         title: 'GeoPs - Ver Campaña',
-      },
-      {
-        path: 'reportes',
-        loadComponent: () =>
-          import('./campaign/presentation/views/reportes/reportes.component').then(
-            (m) => m.ReportesComponent
-          ),
-        title: 'GeoPs - Reportes',
       }
     ],
   },
