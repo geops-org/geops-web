@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RegisterComponent } from './register.component';
 import { AuthService } from '../../../infrastructure/auth/auth.service';
-import { Router, provideRouter } from '@angular/router'; // <--- Importa provideRouter
+import { Router, provideRouter } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { provideHttpClient } from '@angular/common/http';
@@ -40,21 +40,18 @@ fdescribe('RegisterComponent', () => {
 
 
   it('debe guardar en localStorage y navegar si el rol es OWNER', () => {
-    const router = TestBed.inject(Router);
-    // Bloqueamos la navegación real devolviendo 'true' (simula éxito)
     const navigateSpy = spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
 
     component.model = {
-        name: 'Vanessa Choy', //
+        name: 'Vanessa Choy',
         email: 'test@geops.com',
         password: 'password123',
-        phone: '987654321', // Cumple con la regex /^9[0-9]{8}$/
+        phone: '987654321',
         role: 'OWNER',
         plan: 'BASIC'
     };
 
     component.onSubmit();
-    fixture.detectChanges();
 
     expect(navigateSpy).toHaveBeenCalledWith(['/register-bussines']);
     });

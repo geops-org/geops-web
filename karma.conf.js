@@ -10,12 +10,12 @@ module.exports = function (config) {
     ],
     client: {
       jasmine: {
-        // opciones de configuración para jasmine
+
       },
-      clearContext: false // dejar visible el resultado del Test Runner en el navegador
+      clearContext: false 
     },
     jasmineHtmlReporter: {
-      suppressAll: true // eliminar logs duplicados
+      suppressAll: true 
     },
     coverageReporter: {
       dir: require('path').join(__dirname, './coverage/geops-web'),
