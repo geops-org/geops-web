@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -20,6 +21,11 @@ import { CampaignOffer } from '../../../domain/model/offer.entity';
 import { CampaignOffersListComponent } from '../../components/campaign-offers-list/campaign-offers-list.component';
 import { AddOfferFormComponent } from '../../components/add-offer-form/add-offer-form.component';
 import { ConfirmDialogComponent } from '../../../../shared/presentation/components/confirm-dialog/confirm-dialog.component';
+import {
+  endDateAfterStart,
+  noWhitespace,
+  positiveNumber
+} from '../../../domain/utils/campaign-validators.util';
 
 /**
  * EditCampaignComponent
@@ -79,15 +85,27 @@ export class EditCampaignComponent implements OnInit {
     return this.showOfferForm && (this.isCampaignActive || !!this.editingOffer);
   }
 
+  get minEndDate(): Date | null {
+    const start = this.campaignForm?.get('startDate')?.value as Date | string | null;
+    if (!start) return null;
+    const d = start instanceof Date ? new Date(start) : new Date(start);
+    d.setDate(d.getDate() + 1);
+    return d;
+  }
+
   constructor() {
     this.campaignForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
+      name: ['', [Validators.required, noWhitespace(), Validators.minLength(5), Validators.maxLength(100)]],
       description: ['', [Validators.required, Validators.minLength(10)]],
       startDate: ['', Validators.required],
-      endDate: ['', Validators.required],
-      estimatedBudget: [0, [Validators.required, Validators.min(0)]],
+      endDate: ['', [Validators.required, endDateAfterStart()]],
+      estimatedBudget: [null, [Validators.required, positiveNumber()]],
       status: ['PAUSED', Validators.required]
     });
+
+    this.campaignForm.get('startDate')!.valueChanges
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => this.campaignForm.get('endDate')?.updateValueAndValidity());
 
     // Effect to populate form when campaign loads
     effect(() => {
@@ -127,10 +145,16 @@ export class EditCampaignComponent implements OnInit {
 
   onSubmit(): void {
     const campaign = this.campaign();
+
+    if (this.campaignForm.invalid) {
+      this.campaignForm.markAllAsTouched();
+      return;
+    }
+
     if (this.campaignForm.valid && campaign) {
       // Ensure all required fields are present for PATCH request
       const updates: Partial<Campaign> = {
-        name: this.campaignForm.value.name,
+        name: (this.campaignForm.value.name as string).trim(),
         description: this.campaignForm.value.description,
         startDate: this.campaignForm.value.startDate,
         endDate: this.campaignForm.value.endDate,
