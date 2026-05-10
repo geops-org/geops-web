@@ -35,7 +35,7 @@ export class CampaignAssembler implements BaseAssembler<Campaign, CampaignResour
       description: resource.description,
       startDate: resource.startDate,
       endDate: resource.endDate,
-      status: resource.status as 'ACTIVE' | 'PAUSED' | 'FINALIZED',
+      status: resource.status as 'ACTIVE' | 'FINALIZED',
       estimatedBudget: resource.estimatedBudget,
       totalImpressions,
       totalClicks,
@@ -89,7 +89,7 @@ export class CampaignAssembler implements BaseAssembler<Campaign, CampaignResour
       description: entity.description!,
       startDate: entity.startDate!,
       endDate: entity.endDate!,
-      status: entity.status || 'PAUSED',
+      status: entity.status || 'ACTIVE',
       estimatedBudget: entity.estimatedBudget || 0
     };
   }
