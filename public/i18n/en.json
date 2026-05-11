@@ -78,6 +78,10 @@
       "Entretenimiento": "Entertainment",
       "Belleza": "Beauty",
       "Gastronomía": "Dining",
+      "Comida China": "Chinese Food",
+      "Comida Coreana": "Korean Food",
+      "Comida Japonesa": "Japanese Food",
+      "Mangas": "Manga",
       "Gift Card": "Gift Card",
       "Educación": "Education",
       "Salud": "Health",
@@ -146,8 +150,7 @@
   "ownerToolbar": {
     "summary": "Overview",
     "campaigns": "Campaigns",
-    "create": "Create",
-    "reports": "Reports"
+    "create": "Create"
   },
   "campaign": {
     "addOfferForm": {
@@ -182,7 +185,8 @@
         },
         "imageUrl": {
           "label": "Image URL",
-          "placeholder": "https://example.com/image.jpg"
+          "placeholder": "https://example.com/image.jpg",
+          "error": "The URL must start with https://"
         },
         "validUntil": {
           "label": "Valid Until"
@@ -197,7 +201,9 @@
         "required": "This field is required",
         "minLength": "Must be at least {{value}} characters",
         "maxLength": "Must not exceed {{value}} characters",
-        "minValue": "Value must be greater than or equal to 0"
+        "minValue": "Value must be greater than or equal to 0",
+        "maxValue": "Maximum allowed value is {{value}}",
+        "dateOutOfRange": "Date must be between today and 1 month from now"
       }
     },
     "offersList": {
@@ -389,58 +395,26 @@
   },
   "settings": {
     "basicInfo": "Basic Information",
-    "plan": {
-      "label": "Plan",
-      "BASIC": "Basic",
-      "PREMIUM": "Premium"
-    },
     "save": "Save",
     "cancel": "Cancel",
     "name": "Name",
     "email": "Email",
     "phone": "Phone",
-    "locationPermission": {
-      "label": "Location Permission",
-      "ASK": "Ask",
-      "ALWAYS": "Always"
-    },
-    "home": "Home",
-    "work": "Work",
-    "security": "Security",
-    "passwordCurrent": "Current password",
-    "passwordNew": "New password",
-    "passwordConfirm": "Confirm new password",
-    "clear": "Clear",
-    "changePassword": "Change password",
     "updating": "Updating...",
-    "rights": "© 2025 All rights reserved",
-    "consumer": {
-      "title": "Consumer Details",
-      "locationPermission": "Allow location access",
-      "homeAddress": "Home address",
-      "workAddress": "Work address",
-      "universityAddress": "University address"
+    "readOnly": "This field cannot be modified",
+    "password": {
+      "label": "Password",
+      "change": "Change password?"
     },
-    "preferences": {
-      "title": "Preferences",
-      "locationPermission": "Allow location access",
-      "locationPermissionHelp": "Allow sharing your location to see nearby offers"
-    },
-    "savedAddresses": {
-      "title": "Saved Addresses",
-      "homeAddress": "Home address",
-      "workAddress": "Work address",
-      "universityAddress": "University address / Other"
+    "contact": {
+      "title": "Need to change this data?",
+      "message": "This data cannot be modified directly. If there is an error, contact us at soporte@geops.pe",
+      "button": "Got it"
     },
     "owner": {
       "title": "Business Details",
       "businessName": "Business name",
-      "businessType": "Business type",
-      "taxId": "Tax ID / RUC",
-      "website": "Website",
-      "description": "Business description",
-      "address": "Business address",
-      "hours": "Business hours"
+      "taxId": "Tax ID / RUC"
     }
   },
   "helpCenter": {
@@ -517,9 +491,10 @@
     "buy": "Buy",
     "addToCart": "Add to cart",
     "bullets": {
-      "valid": "Valid online and at {{partner}} physical stores.",
-      "business": "Business: {{partner}}.",
-      "redeem": "It can be redeemed as a means of payment up to the indicated amount."
+      "visit": "Visit the physical store of {{partner}} to redeem this offer.",
+      "validUntil": "Valid until: {{date}}.",
+      "location": "Location: {{location}}.",
+      "category": "Category: {{category}}."
     },
     "registerVisit": "Register Visit",
     "visitRegistered": "Visit Registered"
@@ -675,15 +650,6 @@
       "availableOffers": "Available Offers",
       "searchPlaceholder": "Search offers..."
     },
-    "reports": {
-      "title": "Campaign Reports",
-      "filterByStatus": "Filter by Status",
-      "allCampaigns": "All Campaigns",
-      "exportFormat": "Export Format",
-      "summary": "General Summary",
-      "byStatus": "By Status",
-      "preview": "Preview"
-    },
     "dashboard": {
       "title": "Dashboard - Campaign Summary",
       "subtitle": "Control Panel",
@@ -728,6 +694,10 @@
     "Gastronomía": "Buffets",
     "Belleza": "Beauty",
     "Gift Card": "Gift Card",
+    "Comida China": "Chinese Food",
+    "Comida Coreana": "Korean Food",
+    "Comida Japonesa": "Japanese Food",
+    "Mangas": "Manga",
     "title": "Categories",
     "Educación": "Education",
     "Salud": "Health",

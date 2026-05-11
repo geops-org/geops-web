@@ -137,7 +137,7 @@ export class OfertasComponent implements OnInit, OnDestroy {
     const districts = [
       'Surco', 'San Miguel', 'San Borja', 'Chorrillos', 'Santa Marina', 'Trujillo',
       'Arequipa', 'Ica', 'Ate', 'Breña', 'Comas', 'Barranco', 'Los Olivos', 'Magdalena',
-      'Miraflores', 'Pueblo Libre', 'San Isidro'
+      'Miraflores', 'Pueblo Libre', 'San Isidro', 'Lince', 'Barrio Chino'
     ];
     const locationParts = location.split(',').map(part => part.trim());
     return locationParts.some(part => districts.includes(part));

@@ -79,8 +79,6 @@ export class CampaignsComponent implements OnInit {
     switch (status.toUpperCase()) {
       case 'ACTIVE':
         return '#4CAF50';
-      case 'PAUSED':
-        return '#FFC107';
       case 'FINALIZED':
         return '#9E9E9E';
       default:

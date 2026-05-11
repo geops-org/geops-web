@@ -10,9 +10,11 @@
         <input
           matInput
           formControlName="title"
+          maxlength="40"
           [placeholder]="'campaign.addOfferForm.fields.title.placeholder' | translate"
         >
         <mat-icon matPrefix>local_offer</mat-icon>
+        <mat-hint align="end">{{ offerForm.get('title')?.value?.length || 0 }}/40</mat-hint>
         <mat-error *ngIf="offerForm.get('title')?.invalid">
           {{ getErrorMessage('title') }}
         </mat-error>
@@ -25,9 +27,11 @@
         <input
           matInput
           formControlName="partner"
+          maxlength="40"
           [placeholder]="'campaign.addOfferForm.fields.partner.placeholder' | translate"
         >
         <mat-icon matPrefix>store</mat-icon>
+        <mat-hint align="end">{{ offerForm.get('partner')?.value?.length || 0 }}/40</mat-hint>
         <mat-error *ngIf="offerForm.get('partner')?.invalid">
           {{ getErrorMessage('partner') }}
         </mat-error>
@@ -43,7 +47,7 @@
           formControlName="price"
           [placeholder]="'campaign.addOfferForm.fields.price.placeholder' | translate"
         >
-        <mat-icon matPrefix>attach_money</mat-icon>
+        <span matPrefix class="currency-prefix">S/</span>
         <mat-error *ngIf="offerForm.get('price')?.invalid">
           {{ getErrorMessage('price') }}
         </mat-error>
@@ -85,29 +89,19 @@
           {{ getErrorMessage('category') }}
         </mat-error>
       </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>{{ 'campaign.addOfferForm.fields.codePrefix.label' | translate }}</mat-label>
-        <input
-          matInput
-          formControlName="codePrefix"
-          [placeholder]="'campaign.addOfferForm.fields.codePrefix.placeholder' | translate"
-        >
-        <mat-icon matPrefix>confirmation_number</mat-icon>
-        <mat-error *ngIf="offerForm.get('codePrefix')?.invalid">
-          {{ getErrorMessage('codePrefix') }}
-        </mat-error>
-      </mat-form-field>
     </div>
 
     <div class="form-row">
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>{{ 'campaign.addOfferForm.fields.location.label' | translate }}</mat-label>
-        <input
-          matInput
-          formControlName="location"
-          [placeholder]="'campaign.addOfferForm.fields.location.placeholder' | translate"
-        >
+        <mat-select formControlName="location" (selectionChange)="onLocationChange($event.value)">
+          <mat-option value="" disabled>
+            {{ 'campaign.addOfferForm.fields.location.placeholder' | translate }}
+          </mat-option>
+          <mat-option *ngFor="let district of districtOptions" [value]="district.name">
+            {{ district.name }}
+          </mat-option>
+        </mat-select>
         <mat-icon matPrefix>location_on</mat-icon>
         <mat-error *ngIf="offerForm.get('location')?.invalid">
           {{ getErrorMessage('location') }}
@@ -136,13 +130,34 @@
           [placeholder]="'campaign.addOfferForm.fields.imageUrl.placeholder' | translate"
         >
         <mat-icon matPrefix>image</mat-icon>
+        <mat-error *ngIf="offerForm.get('imageUrl')?.hasError('invalidUrl')">
+          {{ 'campaign.addOfferForm.fields.imageUrl.error' | translate }}
+        </mat-error>
       </mat-form-field>
     </div>
+
+    @if (imagePreviewUrl()) {
+      <div class="form-row image-preview-container">
+        <img
+          [src]="imagePreviewUrl()"
+          (error)="onImageError($event)"
+          alt="Preview"
+          class="image-preview"
+        >
+      </div>
+    }
 
     <div class="form-row">
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>{{ 'campaign.addOfferForm.fields.validUntil.label' | translate }}</mat-label>
-        <input matInput [matDatepicker]="validityPicker" formControlName="validUntil">
+        <input
+          matInput
+          [matDatepicker]="validityPicker"
+          formControlName="validUntil"
+          [min]="minValidUntil"
+          [max]="maxValidUntil"
+          [matDatepickerFilter]="validUntilFilter"
+        >
         <mat-datepicker-toggle matIconSuffix [for]="validityPicker"></mat-datepicker-toggle>
         <mat-datepicker #validityPicker></mat-datepicker>
         <mat-error *ngIf="offerForm.get('validUntil')?.invalid">

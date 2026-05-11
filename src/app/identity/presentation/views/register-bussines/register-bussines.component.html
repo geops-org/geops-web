@@ -1,4 +1,4 @@
-<!--
+  <!--
   RegisterBussinesComponent Template
   Displays a business registration form for OWNER users.
   Includes language switcher, translated labels, and error feedback.
@@ -19,10 +19,14 @@
     <label class="register-label">{{ 'business.businessName' | translate }}</label>
     <input class="register-input" type="text" name="businessName" [(ngModel)]="business.businessName" required />
 
-    <!-- Business type input -->
+    <!-- Business type dropdown -->
     <label class="register-label">{{ 'business.businessType' | translate }}</label>
-    <input class="register-input" type="text" name="businessType" [(ngModel)]="business.businessType" required />
-
+    <select class="register-input" name="businessType" [(ngModel)]="business.businessType" required>
+      <option value="" disabled>Selecciona un tipo</option>
+      <option value="1">Instant Food</option>
+      <option value="2">Snacks &amp; Bebidas</option>
+    </select>
+      
     <!-- Tax ID input -->
     <label class="register-label">{{ 'business.taxId' | translate }}</label>
     <input class="register-input" type="text" name="taxId" [(ngModel)]="business.taxId" required />
@@ -36,5 +40,7 @@
   </form>
 
   <!-- Error message display -->
-  <div *ngIf="errorMessage" class="register-error">{{ errorMessage }}</div>
+  @if (errorMessage) {
+    <div class="register-error">{{ errorMessage }}</div>
+  }
 </div>

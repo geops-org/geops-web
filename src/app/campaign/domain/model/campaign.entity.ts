@@ -12,7 +12,7 @@ import { BaseEntity } from '../../../shared/infrastructure/base-entity';
  * @property description - Description of the campaign
  * @property startDate - Campaign start date (ISO string)
  * @property endDate - Campaign end date (ISO string)
- * @property status - Campaign status: 'ACTIVE', 'PAUSED', 'FINALIZED'
+ * @property status - Campaign status: 'ACTIVE', 'FINALIZED'
  * @property estimatedBudget - Estimated budget for the campaign
  * @property totalImpressions - Total number of impressions
  * @property totalClicks - Total number of clicks
@@ -38,4 +38,4 @@ export interface Campaign extends BaseEntity {
 /**
  * Campaign status enum
  */
-export type CampaignStatus = 'ACTIVE' | 'PAUSED' | 'FINALIZED';
+export type CampaignStatus = 'ACTIVE' | 'FINALIZED';

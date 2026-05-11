@@ -20,12 +20,23 @@ import {
   positiveNumber
 } from '../../../domain/utils/campaign-validators.util';
 
-/**
- * CreateCampaignComponent
- *
- * Form for creating new campaigns.
- * Includes validation and API integration.
- */
+function minDateValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    if (!control.value) return null;
+    const selected = new Date(control.value);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return selected < today ? { pastDate: true } : null;
+  };
+}
+
+function endDateAfterStartDate(group: AbstractControl): ValidationErrors | null {
+  const start = group.get('startDate')?.value;
+  const end = group.get('endDate')?.value;
+  if (!start || !end) return null;
+  return new Date(end) >= new Date(start) ? null : { endBeforeStart: true };
+}
+
 @Component({
   selector: 'app-crear-campaign',
   standalone: true,
@@ -55,6 +66,7 @@ export class CrearCampaignComponent {
   campaignForm: FormGroup;
   loading = this.store.loading;
   error = this.store.error;
+  readonly today = new Date();
 
 
   readonly minStartDate = new Date();
@@ -103,7 +115,6 @@ export class CrearCampaignComponent {
     };
 
     this.store.createCampaign(campaign);
-    // Navigate after a short delay to allow store to update
     setTimeout(() => this.router.navigate(['/campañas']), 500);
   }
 
