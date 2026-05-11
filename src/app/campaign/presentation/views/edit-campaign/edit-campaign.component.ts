@@ -76,6 +76,9 @@ export class EditCampaignComponent implements OnInit {
   offers = this.store.campaignOffers;
   showOfferForm: boolean = false;
   editingOffer: CampaignOffer | undefined = undefined;
+  formError: string | null = null;
+
+  private originalCampaign: Campaign | null = null;
 
   get isCampaignActive(): boolean {
     return this.campaignForm.get('status')?.value === 'ACTIVE';
@@ -100,7 +103,7 @@ export class EditCampaignComponent implements OnInit {
       startDate: ['', Validators.required],
       endDate: ['', [Validators.required, endDateAfterStart()]],
       estimatedBudget: [null, [Validators.required, positiveNumber()]],
-      status: ['PAUSED', Validators.required]
+      status: ['ACTIVE', Validators.required]
     });
 
     this.campaignForm.get('startDate')!.valueChanges
@@ -133,6 +136,7 @@ export class EditCampaignComponent implements OnInit {
   }
 
   populateForm(campaign: Campaign): void {
+    this.originalCampaign = campaign;
     this.campaignForm.patchValue({
       name: campaign.name,
       description: campaign.description,
@@ -145,14 +149,20 @@ export class EditCampaignComponent implements OnInit {
 
   onSubmit(): void {
     const campaign = this.campaign();
+    this.formError = null;
 
     if (this.campaignForm.invalid) {
       this.campaignForm.markAllAsTouched();
+      this.formError = 'Por favor completa todos los campos obligatorios';
       return;
     }
 
-    if (this.campaignForm.valid && campaign) {
-      // Ensure all required fields are present for PATCH request
+    if (!this.hasFormChanges()) {
+      this.snackBar.open('Sin cambios', 'Cerrar', { duration: 3000 });
+      return;
+    }
+
+    if (campaign) {
       const updates: Partial<Campaign> = {
         name: (this.campaignForm.value.name as string).trim(),
         description: this.campaignForm.value.description,
@@ -160,21 +170,39 @@ export class EditCampaignComponent implements OnInit {
         endDate: this.campaignForm.value.endDate,
         status: this.campaignForm.value.status,
         estimatedBudget: this.campaignForm.value.estimatedBudget,
-        // Include existing metrics if available
         totalImpressions: campaign.totalImpressions,
         totalClicks: campaign.totalClicks,
         CTR: campaign.CTR
       };
 
-      // Store's updateCampaign automatically handles cart cleanup when status changes
       this.store.updateCampaign(this.campaignId, updates);
 
-      // Wait for store update then navigate
       setTimeout(() => {
-        this.snackBar.open('Campaña actualizada exitosamente', 'Cerrar', { duration: 3000 });
+        this.snackBar.open('Campaña guardada exitosamente', 'Cerrar', { duration: 3000 });
         this.router.navigate(['/campañas']);
       }, 500);
     }
+  }
+
+  private hasFormChanges(): boolean {
+    if (!this.originalCampaign) return true;
+    const v = this.campaignForm.value;
+    const orig = this.originalCampaign;
+    return (
+      (v.name as string)?.trim() !== orig.name?.trim() ||
+      v.description !== orig.description ||
+      Number(v.estimatedBudget) !== Number(orig.estimatedBudget) ||
+      v.status !== orig.status ||
+      this.normalizeDateStr(v.startDate) !== this.normalizeDateStr(orig.startDate) ||
+      this.normalizeDateStr(v.endDate) !== this.normalizeDateStr(orig.endDate)
+    );
+  }
+
+  private normalizeDateStr(value: unknown): string {
+    if (!value) return '';
+    const d = value instanceof Date ? value : new Date(value as string);
+    if (isNaN(d.getTime())) return String(value);
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
   }
 
   onCancel(): void {

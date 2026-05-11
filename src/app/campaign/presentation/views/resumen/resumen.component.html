@@ -80,12 +80,12 @@
             {{ 'campaigns.actions.edit' | translate }}
           </button>
           <button
+            *ngIf="campaign.status !== 'ACTIVE'"
             mat-raised-button
-            (click)="onToggleStatus(campaign.id)"
-            [class.pause-btn]="campaign.status === 'ACTIVE'"
-            [class.activate-btn]="campaign.status !== 'ACTIVE'">
-            <mat-icon>{{ campaign.status === 'ACTIVE' ? 'pause' : 'play_arrow' }}</mat-icon>
-            {{ campaign.status === 'ACTIVE' ? ('campaigns.actions.pause' | translate) : ('campaigns.actions.activate' | translate) }}
+            (click)="onActivate(campaign.id)"
+            class="action-btn activate-btn">
+            <mat-icon>play_arrow</mat-icon>
+            {{ 'campaigns.actions.activate' | translate }}
           </button>
           <button
             mat-raised-button
