@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageSwitcher } from '../../../../shared/presentation/components/language-switcher/language-switcher';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { environment } from '../../../../../environments/environment';
 import { AuthService } from '../../../infrastructure/auth/auth.service';
 
@@ -17,7 +19,7 @@ import { AuthService } from '../../../infrastructure/auth/auth.service';
   selector: 'app-register-bussines',
   standalone: true,
   imports: [CommonModule, FormsModule, TranslateModule, LanguageSwitcher,
-    MatButtonToggleModule],
+    MatButtonToggleModule, MatSelectModule, MatFormFieldModule],
   templateUrl: './register-bussines.component.html',
   styleUrls: ['./register-bussines.component.css']
 })
@@ -84,14 +86,7 @@ export class RegisterBussinesComponent implements OnInit {
 
       // 2. Validación de Business Type
       if (!this.business.businessType) {
-        this.errorMessage = 'El tipo de empresa es requerido (1 Instant Food, 2 Snacks & Bebidas)';
-        return false;
-      }
-
-      // Validamos que sea exactamente "1" o "2"
-      const valoresPermitidos = ['1', '2'];
-      if (!valoresPermitidos.includes(this.business.businessType.toString().trim())) {
-        this.errorMessage = 'Tipo de empresa inválido. Ingrese 1 Instant Food o 2 Snacks & Bebidas';
+        this.errorMessage = 'El tipo de empresa es requerido';
         return false;
       }
 
