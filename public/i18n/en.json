@@ -150,8 +150,7 @@
   "ownerToolbar": {
     "summary": "Overview",
     "campaigns": "Campaigns",
-    "create": "Create",
-    "reports": "Reports"
+    "create": "Create"
   },
   "campaign": {
     "addOfferForm": {
@@ -645,15 +644,6 @@
       "selected": "{{count}} selected",
       "availableOffers": "Available Offers",
       "searchPlaceholder": "Search offers..."
-    },
-    "reports": {
-      "title": "Campaign Reports",
-      "filterByStatus": "Filter by Status",
-      "allCampaigns": "All Campaigns",
-      "exportFormat": "Export Format",
-      "summary": "General Summary",
-      "byStatus": "By Status",
-      "preview": "Preview"
     },
     "dashboard": {
       "title": "Dashboard - Campaign Summary",

@@ -150,8 +150,7 @@
   "ownerToolbar": {
     "summary": "Resumen",
     "campaigns": "Campañas",
-    "create": "Crear",
-    "reports": "Reportes"
+    "create": "Crear"
   },
   "campaign": {
     "addOfferForm": {
@@ -637,15 +636,6 @@
       "selected": "{{count}} seleccionadas",
       "availableOffers": "Ofertas Disponibles",
       "searchPlaceholder": "Buscar ofertas..."
-    },
-    "reports": {
-      "title": "Reportes de Campañas",
-      "filterByStatus": "Filtrar por Estado",
-      "allCampaigns": "Todas las Campañas",
-      "exportFormat": "Formato de Exportación",
-      "summary": "Resumen General",
-      "byStatus": "Por Estado",
-      "preview": "Vista Previa"
     },
     "dashboard": {
       "title": "Dashboard - Resumen de Campañas",
