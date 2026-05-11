@@ -24,7 +24,7 @@
     <select class="register-input" name="businessType" [(ngModel)]="business.businessType" required>
       <option value="" disabled>Selecciona un tipo</option>
       @for (type of businessTypes; track type.id) {
-        <option [value]="type.value">{{ type.label }}</option>
+        <option [value]="type.value">{{ type.labelKey | translate }}</option>
       }
     </select>
       

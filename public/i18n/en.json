@@ -390,7 +390,13 @@
     "businessName": "Business Name:",
     "businessType": "Business Type:",
     "taxId": "Tax ID:",
-    "button": "Save"
+    "button": "Save",
+    "types": {
+      "ASIAN_RESTAURANT": "Asian Restaurant",
+      "BEAUTY_PRODUCTS": "Beauty Products",
+      "MANGA_STORE": "Manga Store",
+      "OTHER": "Other"
+    }
   },
   "settings": {
     "basicInfo": "Basic Information",

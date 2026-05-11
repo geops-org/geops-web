@@ -25,10 +25,10 @@ import { AuthService } from '../../../infrastructure/auth/auth.service';
 })
 export class RegisterBussinesComponent implements OnInit {
   readonly businessTypes = [
-  { id: 1, value: 'RESTAURANTE_ASIATICO',       label: 'Restaurante Asiático' },
-  { id: 2, value: 'PRODUCTOS_BELLEZA',          label: 'Productos de Belleza' },
-  { id: 3, value: 'MANGAS',                     label: 'Mangas' },
-  { id: 4, value: 'OTRO',                       label: 'Otro' },
+    { id: 1, value: 'RESTAURANTE_ASIATICO', labelKey: 'business.types.ASIAN_RESTAURANT' },
+    { id: 2, value: 'PRODUCTOS_BELLEZA',    labelKey: 'business.types.BEAUTY_PRODUCTS' },
+    { id: 3, value: 'MANGAS',              labelKey: 'business.types.MANGA_STORE' },
+    { id: 4, value: 'OTRO',               labelKey: 'business.types.OTHER' },
   ];
 
   /** Model for business registration form fields */

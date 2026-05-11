@@ -390,7 +390,13 @@
     "businessName": "Nombre del negocio:",
     "businessType": "Tipo de negocio:",
     "taxId": "RUC:",
-    "button": "Guardar"
+    "button": "Guardar",
+    "types": {
+      "ASIAN_RESTAURANT": "Restaurante Asiático",
+      "BEAUTY_PRODUCTS": "Productos de Belleza",
+      "MANGA_STORE": "Tienda de Mangas",
+      "OTHER": "Otro"
+    }
   },
   "settings": {
     "basicInfo": "Información básica",
