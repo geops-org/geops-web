@@ -23,8 +23,9 @@
     <label class="register-label">{{ 'business.businessType' | translate }}</label>
     <select class="register-input" name="businessType" [(ngModel)]="business.businessType" required>
       <option value="" disabled>Selecciona un tipo</option>
-      <option value="1">Instant Food</option>
-      <option value="2">Snacks &amp; Bebidas</option>
+      @for (type of businessTypes; track type.id) {
+        <option [value]="type.value">{{ type.label }}</option>
+      }
     </select>
       
     <!-- Tax ID input -->
