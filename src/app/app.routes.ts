@@ -15,13 +15,6 @@ export const routes: Routes = [
         (m) => m.RegisterComponent
       ),
   },
-  {
-    path: 'register-bussines',
-    loadComponent: () =>
-      import('./identity/presentation/views/register-bussines/register-bussines.component').then(
-        (m) => m.RegisterBussinesComponent
-      ),
-  },
 
   {
     path: '',

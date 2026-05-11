@@ -119,35 +119,18 @@ export class RegisterComponent {
     this.registering = true;
     this.errorMessage = '';
 
-    // Para OWNER: guardar datos en localStorage sin crear el usuario aún
-    if (this.model.role === 'OWNER') {
-      const ownerData = {
-        name: this.model.name,
-        email: this.model.email,
-        phone: this.model.phone,
-        password: this.model.password,
-        role: this.model.role,
-        plan: this.model.plan
-      };
-
-      localStorage.setItem('register-owner-data', JSON.stringify(ownerData));
-
-      this.router.navigate(['/register-bussines']);
-      this.registering = false;
-      return;
-    }
-
-    // Para CONSUMER: crear el usuario inmediatamente
     const payload = {
       name: this.model.name,
       email: this.model.email,
       phone: this.model.phone,
       password: this.model.password,
-      role: 'CONSUMER'
+      role: this.model.role, 
+      plan: this.model.role === 'OWNER' ? this.model.plan : 'BASIC'
     };
 
     this.authService.register(payload).subscribe({
       next: (user: any) => {
+        console.log('[Register] ✅ Registro exitoso:', user);
         this.router.navigate(['/home']);
         this.registering = false;
       },
