@@ -22,7 +22,7 @@
     <!-- Business type dropdown -->
     <label class="register-label">{{ 'business.businessType' | translate }}</label>
     <select class="register-input" name="businessType" [(ngModel)]="business.businessType" required>
-      <option value="" disabled>Selecciona un tipo</option>
+      <option value="" disabled>{{ 'BUSINESS_TYPES.SELECT_PLACEHOLDER' | translate }}</option>
       @for (type of businessTypes; track type.id) {
         <option [value]="type.value">{{ type.labelKey | translate }}</option>
       }

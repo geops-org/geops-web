@@ -630,6 +630,9 @@
     "made-with": "Made with",
     "in-peru": "in Peru"
   },
+  "BUSINESS_TYPES": {
+    "SELECT_PLACEHOLDER": "Select a type"
+  },
   "categorias": {
     "Entretenimiento": "Entertainment",
     "Gastronomía": "Buffets",

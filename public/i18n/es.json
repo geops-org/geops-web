@@ -622,6 +622,9 @@
     "made-with": "Hecho con",
     "in-peru": "en Perú"
   },
+  "BUSINESS_TYPES": {
+    "SELECT_PLACEHOLDER": "Selecciona un tipo"
+  },
   "categorias": {
     "Entretenimiento": "Entretenimiento",
     "Gastronomía": "Gastronomía",
