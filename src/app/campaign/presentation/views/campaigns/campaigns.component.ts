@@ -12,14 +12,14 @@ import { Campaign } from '../../../domain/model/campaign.entity';
 import { AuthService } from '../../../../identity/infrastructure/auth/auth.service';
 import { ConfirmDialogComponent } from '../../../../shared/presentation/components/confirm-dialog/confirm-dialog.component';
 
-type DialogAction = 'finalize' | 'delete';
-type NotificationKey = 'finalizeSuccess' | 'deleteSuccess';
+type DialogAction = 'activate' | 'finalize' | 'delete';
+type NotificationKey = 'activateSuccess' | 'finalizeSuccess' | 'deleteSuccess';
 
 /**
  * CampaignsComponent
  *
  * Main view for managing campaigns (Owner role).
- * Displays campaigns grouped by status: Active, Finished
+ * Displays campaigns grouped by status: Active, Finalized
  * Integrates with Campaign API for real-time data.
  */
 @Component({
@@ -105,6 +105,21 @@ export class CampaignsComponent implements OnInit {
    */
   onEdit(campaignId: number): void {
     this.router.navigate(['/editar-campaña', campaignId]);
+  }
+
+  /**
+   * Activate campaign (change status to ACTIVE)
+   */
+  onActivate(campaignId: number): void {
+    const campaign = this.findCampaign(campaignId);
+    if (!campaign) return;
+
+    this.openCampaignDialog('activate', campaign.name).afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+        this.store.updateCampaign(campaignId, this.buildStatusUpdates(campaign, 'ACTIVE'));
+        this.showNotification('activateSuccess');
+      }
+    });
   }
 
   /**

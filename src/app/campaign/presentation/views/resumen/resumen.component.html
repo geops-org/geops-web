@@ -80,6 +80,14 @@
             {{ 'campaigns.actions.edit' | translate }}
           </button>
           <button
+            *ngIf="campaign.status !== 'ACTIVE'"
+            mat-raised-button
+            (click)="onActivate(campaign.id)"
+            class="action-btn activate-btn">
+            <mat-icon>play_arrow</mat-icon>
+            {{ 'campaigns.actions.activate' | translate }}
+          </button>
+          <button
             mat-raised-button
             (click)="onFinalize(campaign.id)"
             class="action-btn finalize-btn">

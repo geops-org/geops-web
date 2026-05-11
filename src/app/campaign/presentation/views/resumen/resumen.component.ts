@@ -13,8 +13,8 @@ import { calculateCtr } from '../../../domain/utils/campaign-metrics.util';
 import { AuthService } from '../../../../identity/infrastructure/auth/auth.service';
 import { ConfirmDialogComponent } from '../../../../shared/presentation/components/confirm-dialog/confirm-dialog.component';
 
-type DialogAction = 'finalize' | 'delete';
-type NotificationKey = 'finalizeSuccess' | 'deleteSuccess';
+type DialogAction = 'activate' | 'finalize' | 'delete';
+type NotificationKey = 'activateSuccess' | 'finalizeSuccess' | 'deleteSuccess';
 
 /**
  * ResumenComponent
@@ -118,6 +118,21 @@ export class ResumenComponent implements OnInit {
    */
   onEdit(campaignId: number): void {
     this.router.navigate(['/editar-campaña', campaignId]);
+  }
+
+  /**
+   * Activate campaign (change status to ACTIVE)
+   */
+  onActivate(campaignId: number): void {
+    const campaign = this.findCampaign(campaignId);
+    if (!campaign) return;
+
+    this.openCampaignDialog('activate', campaign.name).afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+        this.store.updateCampaign(campaignId, this.buildStatusUpdates(campaign, 'ACTIVE'));
+        this.showNotification('activateSuccess');
+      }
+    });
   }
 
   /**
