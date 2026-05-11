@@ -12,14 +12,14 @@ import { Campaign } from '../../../domain/model/campaign.entity';
 import { AuthService } from '../../../../identity/infrastructure/auth/auth.service';
 import { ConfirmDialogComponent } from '../../../../shared/presentation/components/confirm-dialog/confirm-dialog.component';
 
-type DialogAction = 'pause' | 'activate' | 'finalize' | 'delete';
-type NotificationKey = 'pauseSuccess' | 'activateSuccess' | 'finalizeSuccess' | 'deleteSuccess';
+type DialogAction = 'activate' | 'finalize' | 'delete';
+type NotificationKey = 'activateSuccess' | 'finalizeSuccess' | 'deleteSuccess';
 
 /**
  * CampaignsComponent
  *
  * Main view for managing campaigns (Owner role).
- * Displays campaigns grouped by status: Active, Paused, Finished
+ * Displays campaigns grouped by status: Active, Finalized
  * Integrates with Campaign API for real-time data.
  */
 @Component({
@@ -56,10 +56,6 @@ export class CampaignsComponent implements OnInit {
     return this.campaigns().filter(c => c.status === 'ACTIVE');
   }
 
-  get pausedCampaigns(): Campaign[] {
-    return this.campaigns().filter(c => c.status === 'PAUSED');
-  }
-
   get finishedCampaigns(): Campaign[] {
     return this.campaigns().filter(c => c.status === 'FINALIZED');
   }
@@ -83,8 +79,6 @@ export class CampaignsComponent implements OnInit {
     switch (status.toUpperCase()) {
       case 'ACTIVE':
         return '#4CAF50';
-      case 'PAUSED':
-        return '#FFC107';
       case 'FINALIZED':
         return '#9E9E9E';
       default:
@@ -100,8 +94,6 @@ export class CampaignsComponent implements OnInit {
       case 0:
         return this.activeCampaigns;
       case 1:
-        return this.pausedCampaigns;
-      case 2:
         return this.finishedCampaigns;
       default:
         return [];
@@ -113,21 +105,6 @@ export class CampaignsComponent implements OnInit {
    */
   onEdit(campaignId: number): void {
     this.router.navigate(['/editar-campaña', campaignId]);
-  }
-
-  /**
-   * Pause campaign (change status to PAUSED)
-   */
-  onPause(campaignId: number): void {
-    const campaign = this.findCampaign(campaignId);
-    if (!campaign) return;
-
-    this.openCampaignDialog('pause', campaign.name).afterClosed().subscribe(confirmed => {
-      if (confirmed) {
-        this.store.updateCampaign(campaignId, this.buildStatusUpdates(campaign, 'PAUSED'));
-        this.showNotification('pauseSuccess');
-      }
-    });
   }
 
   /**
@@ -158,13 +135,6 @@ export class CampaignsComponent implements OnInit {
         this.showNotification('finalizeSuccess');
       }
     });
-  }
-
-  /**
-   * Resume/Edit campaign (change status to ACTIVE) - For paused campaigns
-   */
-  onResumeEdit(campaignId: number): void {
-    this.onActivate(campaignId);
   }
 
   /**

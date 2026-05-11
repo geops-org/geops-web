@@ -4,7 +4,6 @@
     "search": {
       "placeholder": "Buscar y encuentra las mejores ofertas"
     },
-    "help": "Ayuda",
     "cart": "Carrito",
     "profile": {
       "menu": {
@@ -150,8 +149,7 @@
   "ownerToolbar": {
     "summary": "Resumen",
     "campaigns": "Campañas",
-    "create": "Crear",
-    "reports": "Reportes"
+    "create": "Crear"
   },
   "campaign": {
     "addOfferForm": {
@@ -396,122 +394,27 @@
   },
   "settings": {
     "basicInfo": "Información básica",
-    "plan": {
-      "label": "Plan",
-      "BASIC": "Básico",
-      "PREMIUM": "Premium"
-    },
     "save": "Guardar",
     "cancel": "Cancelar",
     "name": "Nombre",
     "email": "Correo electrónico",
     "phone": "Teléfono",
-    "locationPermission": {
-      "label": "Permiso de ubicación",
-      "ASK": "Preguntar",
-      "ALWAYS": "Siempre"
-    },
-    "home": "Casa",
-    "work": "Trabajo",
-    "security": "Seguridad",
-    "passwordCurrent": "Contraseña actual",
-    "passwordNew": "Nueva contraseña",
-    "passwordConfirm": "Confirmar nueva contraseña",
-    "clear": "Limpiar",
-    "changePassword": "Cambiar contraseña",
     "updating": "Actualizando...",
-    "rights": "© 2025 Todos los derechos reservados",
-    "consumer": {
-      "title": "Detalles de Consumidor",
-      "locationPermission": "Permitir acceso a ubicación",
-      "homeAddress": "Dirección de casa",
-      "workAddress": "Dirección de trabajo",
-      "universityAddress": "Dirección de universidad"
+    "readOnly": "Este campo no se puede modificar",
+    "password": {
+      "label": "Contraseña",
+      "change": "¿Cambiar contraseña?"
     },
-    "preferences": {
-      "title": "Preferencias",
-      "locationPermission": "Permitir acceso a ubicación",
-      "locationPermissionHelp": "Permite compartir tu ubicación para ver ofertas cercanas"
-    },
-    "savedAddresses": {
-      "title": "Direcciones Guardadas",
-      "homeAddress": "Dirección de casa",
-      "workAddress": "Dirección de trabajo",
-      "universityAddress": "Dirección de universidad / Otra"
+    "contact": {
+      "title": "¿Necesitas cambiar estos datos?",
+      "message": "Estos datos no pueden modificarse directamente. Si hay un error, contáctanos en soporte@geops.pe",
+      "button": "Entendido"
     },
     "owner": {
       "title": "Detalles de Negocio",
       "businessName": "Nombre del negocio",
-      "businessType": "Tipo de negocio",
-      "taxId": "RUC / Tax ID",
-      "website": "Sitio web",
-      "description": "Descripción del negocio",
-      "address": "Dirección del negocio",
-      "hours": "Horario de atención"
+      "taxId": "RUC / Tax ID"
     }
-  },
-  "helpCenter": {
-    "title": "Centro de ayuda",
-
-    "registerQuestion": "¿Cómo me registro como cliente?",
-    "registerWord": "Registrarse",
-    "registerStepsBefore": "Ve a",
-    "registerStepsAfter": ", ingresa tu correo, contraseña, confirma y verifica tu correo.",
-    "registerStepsLabel": "Pasos:",
-    "registerStep1Before": "Haz clic en",
-    "registerStep1After": "(en el encabezado o landing).",
-    "registerStep2": "Ingresa tu correo y una contraseña segura (8+ caracteres, 1 mayúscula, 1 número, 1 símbolo).",
-    "registerStep3": "Revisa tu correo y verifica tu cuenta.",
-    "registerStep4": "Regresa e inicia sesión.",
-
-    "couponQuestion": "¿Cómo canjeo un cupón en la tienda?",
-    "couponStepsBefore": "Muestra tu cupón desde",
-    "couponStepsAfter": "y el negocio lo valida con un código/QR.",
-    "couponStepsLabel": "Pasos:",
-    "couponStep1Before": "Compra la oferta y ve a",
-    "couponStep1Middle": "→",
-    "couponStep1After": ".",
-    "couponStep2Before": "Abre el cupón y toca",
-    "couponStep2After": ".",
-    "couponStep3Before": "El negocio escanea/ingresa el",
-    "couponStep3After": "y listo.",
-    "couponNoteBefore": "Nota: Necesitas conexión a internet para validar. Si tu cupón aparece como 'canjeado' por error, contáctanos con el",
-    "couponNoteAfter": ".",
-    "myCoupons": "Mis cupones",
-    "profile": "Perfil",
-    "showToRedeem": "Mostrar para canjear",
-    "uniqueCode": "código único",
-    "couponId": "ID del cupón",
-
-    "locationQuestion": "¿Por qué pedimos tu ubicación y cómo activarla?",
-    "locationStepsBefore": "Para mostrarte",
-    "locationStepsMiddle": "y ordenarlas por",
-    "locationStepsAfter": ".",
-    "locationStepsLabel": "Pasos:",
-    "locationStep1Before": "En la barra \"Cerca de ti\", toca",
-    "locationStep1After": ".",
-    "locationStep2": "Si denegaste permisos:",
-    "locationStep2aBefore": "",
-    "locationStep2aMiddle1": ": Permisos de ubicación →",
-    "locationStep2aMiddle2": "→ Recargar",
-    "locationStep3": "Ajusta el radio (ej. 1–10 km) con el selector para ver más o menos resultados.",
-    "nearbyOffers": "ofertas cercanas",
-    "distance": "distancia",
-    "allowLocation": "Permitir ubicación",
-    "allow": "Permitir"
-  },
-  "helpCenterProvider": {
-    "title": "Centro de ayuda",
-    "createCampaignQuestion": "¿Cómo creo una campaña?",
-    "createCampaignBefore": "Ve a",
-    "createCampaignWord": "Crear campaña",
-    "createCampaignAfter": ", completa título, presupuesto, fechas y segmentación (ubicación o radio), y publica.",
-    "pauseReactivateQuestion": "¿Cómo pauso o reactivo?",
-    "pauseReactivateBefore": "En Campañas, usa los botones",
-    "pauseReactivateAfter": "según el estado.",
-    "pauseReactivate": "Pausar / Reactivar",
-    "metricsQuestion": "¿Por qué no veo métricas?",
-    "metricsAnswer": "Si la campaña es nueva o está pausada, las métricas pueden tardar. Revisa más tarde o verifica el presupuesto."
   },
   "common": {
     "currency": "s/",
@@ -524,9 +427,10 @@
     "buy": "Comprar",
     "addToCart": "Agregar al carrito",
     "bullets": {
-      "valid": "Válido online y en tiendas físicas de {{partner}}.",
-      "business": "Negocio: {{partner}}.",
-      "redeem": "Se puede canjear como medio de pago hasta el monto indicado."
+      "visit": "Visita el local físico de {{partner}} para canjear esta oferta.",
+      "validUntil": "Válido hasta: {{date}}.",
+      "location": "Ubicación: {{location}}.",
+      "category": "Categoría: {{category}}."
     },
     "registerVisit": "Registrar Visita",
     "visitRegistered": "Visita Registrada"
@@ -615,20 +519,25 @@
       "editTitle": "Editar Campaña",
       "name": "Nombre de la Campaña",
       "namePlaceholder": "Ej: Promoción Verano 2025",
-      "nameRequired": "El nombre es requerido",
-      "nameMinLength": "El nombre debe tener al menos 3 caracteres",
+      "nameRequired": "El nombre es obligatorio",
+      "nameWhitespace": "El nombre no puede comenzar ni terminar con espacios",
+      "nameMinLength": "El nombre debe tener entre 5 y 50 caracteres",
+      "nameMaxLength": "El nombre no debe exceder los 50 caracteres",
       "description": "Descripción",
       "descriptionPlaceholder": "Describe tu campaña...",
-      "descriptionRequired": "La descripción es requerida",
+      "descriptionRequired": "La descripción es obligatoria",
       "descriptionMinLength": "La descripción debe tener al menos 10 caracteres",
       "startDate": "Fecha de Inicio",
-      "startDateRequired": "La fecha de inicio es requerida",
+      "startDateRequired": "La fecha de inicio es obligatoria",
+      "startDatePast": "La fecha de inicio no puede ser anterior al día de hoy",
       "endDate": "Fecha de Fin",
-      "endDateRequired": "La fecha de fin es requerida",
+      "endDateRequired": "La fecha de fin es obligatoria",
+      "endDateBeforeStart": "La fecha de fin debe ser posterior a la fecha de inicio",
+      "dateInvalid": "Ingresa una fecha válida (dd/mm/aaaa)",
       "budget": "Presupuesto Estimado (S/.)",
       "budgetPlaceholder": "0.00",
       "budgetRequired": "El presupuesto es requerido",
-      "budgetMin": "El presupuesto debe ser mayor o igual a 0",
+      "budgetNotPositive": "El presupuesto debe ser un número positivo mayor a cero",
       "status": "Estado",
       "initialStatus": "Estado Inicial",
       "statusRequired": "El estado es requerido",
@@ -669,15 +578,6 @@
       "availableOffers": "Ofertas Disponibles",
       "searchPlaceholder": "Buscar ofertas..."
     },
-    "reports": {
-      "title": "Reportes de Campañas",
-      "filterByStatus": "Filtrar por Estado",
-      "allCampaigns": "Todas las Campañas",
-      "exportFormat": "Formato de Exportación",
-      "summary": "Resumen General",
-      "byStatus": "Por Estado",
-      "preview": "Vista Previa"
-    },
     "dashboard": {
       "title": "Dashboard - Resumen de Campañas",
       "subtitle": "Panel de Control",
@@ -706,7 +606,6 @@
     "offers": "Ofertas",
     "subscriptions": "Suscripciones",
     "coupons": "Cupones",
-    "help": "Ayuda",
     "support": "Soporte",
     "faq": "Preguntas Frecuentes",
     "contact": "Contacto",

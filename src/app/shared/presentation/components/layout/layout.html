@@ -39,10 +39,6 @@
 
     <!-- Desktop Actions -->
     <div class="desktop-actions">
-      <a mat-raised-button class="action-btn help" [routerLink]="isOwner() ? '/help/help-center-provider' : '/help/help-center'">
-        {{ 'header.help' | translate }}
-      </a>
-
       <button
         mat-button
         class="action-btn profile"
@@ -64,10 +60,6 @@
           </div>
         </div>
         <mat-divider></mat-divider>
-        <button mat-menu-item [routerLink]="'/profile'">
-          <mat-icon>person</mat-icon>
-          <span>{{ 'header.profile.menu.myProfile' | translate }}</span>
-        </button>
         <button mat-menu-item [routerLink]="'/settings'">
           <mat-icon>settings</mat-icon>
           <span>{{ 'header.profile.menu.settings' | translate }}</span>
@@ -97,22 +89,14 @@
     <div class="avatar-large">{{ userInitial }}</div>
     <div class="profile-info">
       <p class="profile-name">{{ userName }}</p>
-      <p class="profile-email">{{ authService.getCurrentUser()?.email || 'usuario@geops.com' }}</p>
+      <p class="profile-email">{{ userEmail }}</p>
     </div>
   </div>
 
   <nav class="mobile-menu-nav">
-    <a routerLink="/profile" class="mobile-menu-item" (click)="closeMobileMenu()">
-      <mat-icon>person</mat-icon>
-      <span>{{ 'header.profile.menu.myProfile' | translate }}</span>
-    </a>
     <a routerLink="/settings" class="mobile-menu-item" (click)="closeMobileMenu()">
       <mat-icon>settings</mat-icon>
       <span>{{ 'header.profile.menu.settings' | translate }}</span>
-    </a>
-    <a [routerLink]="isOwner() ? '/help/help-center-provider' : '/help/help-center'" class="mobile-menu-item" (click)="closeMobileMenu()">
-      <mat-icon>help</mat-icon>
-      <span>{{ 'header.help' | translate }}</span>
     </a>
   </nav>
 
@@ -125,8 +109,12 @@
   </div>
 </div>
 
-<app-consumer-toolbar *ngIf="!isOwner()"></app-consumer-toolbar>
-<app-owner-toolbar *ngIf="isOwner()"></app-owner-toolbar>
+@if (!isOwner()) {
+  <app-consumer-toolbar></app-consumer-toolbar>
+}
+@if (isOwner()) {
+  <app-owner-toolbar></app-owner-toolbar>
+}
 
 <main class="layout-content">
   <router-outlet></router-outlet>

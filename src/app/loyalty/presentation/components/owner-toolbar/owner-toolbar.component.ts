@@ -7,7 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
  * OwnerToolbarComponent
  *
  * Barra de navegación específica para usuarios con rol OWNER.
- * Muestra las opciones: Resumen, Campañas, Crear, Reportes, Comentarios
+ * Muestra las opciones: Resumen, Campañas, Crear, Comentarios
  */
 @Component({
   selector: 'app-owner-toolbar',
@@ -22,7 +22,6 @@ export class OwnerToolbarComponent {
     { labelKey: 'ownerToolbar.summary', route: '/resumen', icon: 'dashboard' },
     { labelKey: 'ownerToolbar.campaigns', route: '/campañas', icon: 'campaign' },
     { labelKey: 'ownerToolbar.create', route: '/crear-campañas', icon: 'add_circle' },
-    { labelKey: 'ownerToolbar.reports', route: '/reportes', icon: 'assessment' },
   ];
 
   activeRoute = '/owner-dashboard';

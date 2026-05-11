@@ -31,22 +31,6 @@ export const routes: Routes = [
     canActivateChild: [authGuard],
     children: [
       {
-        path: 'help/help-center',
-        loadComponent: () =>
-          import('./help/presentation/views/help-center/help-center.component').then(
-            (m) => m.HelpCenterComponent
-          ),
-        title: 'GeoPs - Help Center',
-      },
-      {
-        path: 'help/help-center-provider',
-        loadComponent: () =>
-          import(
-            './help/presentation/views/help-center-provider/help-center-provider.component'
-          ).then((m) => m.HelpCenterProviderComponent),
-        title: 'GeoPs - Help Center Provider',
-      },
-      {
         path: 'home',
         loadComponent: () => import('./shared/presentation/views/home/home').then((m) => m.Home),
         title: 'GeoPs - Home',
@@ -129,14 +113,6 @@ export const routes: Routes = [
             (m) => m.ViewCampaignComponent
           ),
         title: 'GeoPs - Ver Campaña',
-      },
-      {
-        path: 'reportes',
-        loadComponent: () =>
-          import('./campaign/presentation/views/reportes/reportes.component').then(
-            (m) => m.ReportesComponent
-          ),
-        title: 'GeoPs - Reportes',
       }
     ],
   },
