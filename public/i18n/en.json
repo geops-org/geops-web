@@ -4,7 +4,6 @@
     "search": {
       "placeholder": "Search and find the best offers"
     },
-    "help": "Help",
     "cart": "Cart",
     "profile": {
       "menu": {
@@ -417,69 +416,6 @@
       "taxId": "Tax ID / RUC"
     }
   },
-  "helpCenter": {
-    "title": "Help Center",
-
-    "registerQuestion": "How do I register as a customer?",
-    "registerWord": "Register",
-    "registerStepsBefore": "Go to",
-    "registerStepsAfter": ", enter your email, password, confirm and verify your email.",
-    "registerStepsLabel": "Steps:",
-    "registerStep1Before": "Click on",
-    "registerStep1After": "(header or landing).",
-    "registerStep2": "Enter your email and a secure password (8+ characters, 1 uppercase, 1 number, 1 symbol).",
-    "registerStep3": "Check your email and verify your account.",
-    "registerStep4": "Return and log in.",
-
-    "couponQuestion": "How do I redeem a coupon at the store?",
-    "couponStepsBefore": "Show your coupon from",
-    "couponStepsAfter": "and the business validates it with a code/QR.",
-    "couponStepsLabel": "Steps:",
-    "couponStep1Before": "Buy the offer and go to",
-    "couponStep1Middle": "→",
-    "couponStep1After": ".",
-    "couponStep2Before": "Open the coupon and tap",
-    "couponStep2After": ".",
-    "couponStep3Before": "The business scans/enters the",
-    "couponStep3After": "and that's it.",
-    "couponNoteBefore": "Note: You need an internet connection to validate. If your coupon is marked as 'redeemed' by mistake, contact us with the",
-    "couponNoteAfter": ".",
-    "myCoupons": "My coupons",
-    "profile": "Profile",
-    "showToRedeem": "Show to redeem",
-    "uniqueCode": "unique code",
-    "couponId": "coupon ID",
-
-    "locationQuestion": "Why do we ask for your location and how to enable it?",
-    "locationStepsBefore": "To show you",
-    "locationStepsMiddle": "and sort them by",
-    "locationStepsAfter": ".",
-    "locationStepsLabel": "Steps:",
-    "locationStep1Before": "In the \"Near you\" bar, tap",
-    "locationStep1After": ".",
-    "locationStep2": "If you denied permissions:",
-    "locationStep2aBefore": "",
-    "locationStep2aMiddle1": ": Location permissions →",
-    "locationStep2aMiddle2": "→ Reload",
-    "locationStep3": "Adjust the radius (e.g. 1–10 km) with the selector to see more/fewer results.",
-    "nearbyOffers": "nearby offers",
-    "distance": "distance",
-    "allowLocation": "Allow location",
-    "allow": "Allow"
-  },
-  "helpCenterProvider": {
-    "title": "Help Center",
-    "createCampaignQuestion": "How do I create a campaign?",
-    "createCampaignBefore": "Go to",
-    "createCampaignWord": "Create campaign",
-    "createCampaignAfter": ", complete title, budget, dates and segmentation (location or radius), and publish.",
-    "pauseReactivateQuestion": "How do I pause or reactivate?",
-    "pauseReactivateBefore": "In Campaigns, use the buttons",
-    "pauseReactivateAfter": "according to the status.",
-    "pauseReactivate": "Pause / Reactivate",
-    "metricsQuestion": "Why don't I see metrics?",
-    "metricsAnswer": "If the campaign is new or paused, metrics may take time. Check back later or verify the budget."
-  },
   "common": {
     "currency": "s/",
     "confirm": "Confirm",
@@ -678,7 +614,6 @@
     "offers": "Offers",
     "subscriptions": "Subscriptions",
     "coupons": "Coupons",
-    "help": "Help",
     "support": "Support",
     "faq": "Frequent Questions",
     "contact": "Contact",

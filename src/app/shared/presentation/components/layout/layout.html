@@ -39,10 +39,6 @@
 
     <!-- Desktop Actions -->
     <div class="desktop-actions">
-      <a mat-raised-button class="action-btn help" [routerLink]="isOwner() ? '/help/help-center-provider' : '/help/help-center'">
-        {{ 'header.help' | translate }}
-      </a>
-
       <button
         mat-button
         class="action-btn profile"
@@ -101,10 +97,6 @@
     <a routerLink="/settings" class="mobile-menu-item" (click)="closeMobileMenu()">
       <mat-icon>settings</mat-icon>
       <span>{{ 'header.profile.menu.settings' | translate }}</span>
-    </a>
-    <a [routerLink]="isOwner() ? '/help/help-center-provider' : '/help/help-center'" class="mobile-menu-item" (click)="closeMobileMenu()">
-      <mat-icon>help</mat-icon>
-      <span>{{ 'header.help' | translate }}</span>
     </a>
   </nav>
 
