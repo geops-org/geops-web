@@ -1,0 +1,46 @@
+  <!--
+  RegisterBussinesComponent Template
+  Displays a business registration form for OWNER users.
+  Includes language switcher, translated labels, and error feedback.
+-->
+
+<div class="register-container">
+  <!-- Language switcher for multilingual support -->
+  <div class="register-language-switch">
+    <app-language-switcher />
+  </div>
+
+  <!-- Form title, translated -->
+  <h2 class="register-title">{{ 'business.title' | translate }}</h2>
+
+  <!-- Business registration form -->
+  <form class="register-form" (ngSubmit)="onSubmit()" #businessForm="ngForm">
+    <!-- Business name input -->
+    <label class="register-label">{{ 'business.businessName' | translate }}</label>
+    <input class="register-input" type="text" name="businessName" [(ngModel)]="business.businessName" required />
+
+    <!-- Business type dropdown -->
+    <label class="register-label">{{ 'business.businessType' | translate }}</label>
+    <select class="register-input" name="businessType" [(ngModel)]="business.businessType" required>
+      <option value="" disabled>Selecciona un tipo</option>
+      <option value="1">Instant Food</option>
+      <option value="2">Snacks &amp; Bebidas</option>
+    </select>
+      
+    <!-- Tax ID input -->
+    <label class="register-label">{{ 'business.taxId' | translate }}</label>
+    <input class="register-input" type="text" name="taxId" [(ngModel)]="business.taxId" required />
+
+    <!-- Add more fields here if needed -->
+
+    <!-- Submit button, disabled if submitting or form is invalid -->
+    <button class="register-btn" type="submit" [disabled]="submitting || !businessForm.form.valid">
+      {{ 'business.button' | translate }}
+    </button>
+  </form>
+
+  <!-- Error message display -->
+  @if (errorMessage) {
+    <div class="register-error">{{ errorMessage }}</div>
+  }
+</div>
