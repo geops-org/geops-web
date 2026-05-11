@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, effect } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -60,7 +60,7 @@ import {
   templateUrl: './edit-campaign.component.html',
   styleUrls: ['./edit-campaign.component.css']
 })
-export class EditCampaignComponent implements OnInit {
+export class EditCampaignComponent implements OnInit, OnDestroy {
   private readonly fb = inject(FormBuilder);
   private readonly store = inject(CampaignStore);
   private readonly router = inject(Router);
@@ -79,6 +79,7 @@ export class EditCampaignComponent implements OnInit {
   formError: string | null = null;
 
   private originalCampaign: Campaign | null = null;
+  private submitTimer: ReturnType<typeof setTimeout> | null = null;
 
   get isCampaignActive(): boolean {
     return this.campaignForm.get('status')?.value === 'ACTIVE';
@@ -177,7 +178,7 @@ export class EditCampaignComponent implements OnInit {
 
       this.store.updateCampaign(this.campaignId, updates);
 
-      setTimeout(() => {
+      this.submitTimer = setTimeout(() => {
         this.snackBar.open('Campaña guardada exitosamente', 'Cerrar', { duration: 3000 });
         this.router.navigate(['/campañas']);
       }, 500);
@@ -203,6 +204,10 @@ export class EditCampaignComponent implements OnInit {
     const d = value instanceof Date ? value : new Date(value as string);
     if (isNaN(d.getTime())) return String(value);
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  }
+
+  ngOnDestroy(): void {
+    if (this.submitTimer) clearTimeout(this.submitTimer);
   }
 
   onCancel(): void {

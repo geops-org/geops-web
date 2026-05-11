@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -12,17 +12,16 @@ describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let authSpy: jasmine.SpyObj<AuthService>;
-  let routerSpy: jasmine.SpyObj<Router>;
+  let routerSpy: jasmine.Spy;
 
   beforeEach(async () => {
     authSpy = jasmine.createSpyObj('AuthService', ['login']);
-    routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
     await TestBed.configureTestingModule({
       imports: [LoginComponent, FormsModule, TranslateModule.forRoot()],
       providers: [
-        { provide: AuthService, useValue: authSpy },
-        { provide: Router, useValue: routerSpy }
+        provideRouter([]),
+        { provide: AuthService, useValue: authSpy }
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })
@@ -35,6 +34,7 @@ describe('LoginComponent', () => {
 
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
+    routerSpy = spyOn(TestBed.inject(Router), 'navigate');
     fixture.detectChanges();
   });
 
@@ -165,20 +165,20 @@ describe('LoginComponent', () => {
     it('debe navegar a /resumen cuando el rol es OWNER', () => {
       authSpy.login.and.returnValue(of({ role: 'OWNER' } as any));
       component.onSubmit();
-      expect(routerSpy.navigate).toHaveBeenCalledWith(['/resumen']);
+      expect(routerSpy).toHaveBeenCalledWith(['/resumen']);
     });
 
     it('debe navegar a /home cuando el rol es CONSUMER', () => {
       authSpy.login.and.returnValue(of({ role: 'CONSUMER' } as any));
       component.onSubmit();
-      expect(routerSpy.navigate).toHaveBeenCalledWith(['/home']);
+      expect(routerSpy).toHaveBeenCalledWith(['/home']);
     });
 
     it('debe setear errorMessage cuando la respuesta del login es null', () => {
       authSpy.login.and.returnValue(of(null));
       component.onSubmit();
       expect(component.errorMessage).toBeTruthy();
-      expect(routerSpy.navigate).not.toHaveBeenCalled();
+      expect(routerSpy).not.toHaveBeenCalled();
     });
 
     it('debe setear loading en false tras login exitoso', () => {
@@ -221,7 +221,7 @@ describe('LoginComponent', () => {
       authSpy.login.and.returnValue(throwError(() => ({ status: 503 })));
       component.onSubmit();
       expect(component.errorMessage).toBeTruthy();
-      expect(routerSpy.navigate).not.toHaveBeenCalled();
+      expect(routerSpy).not.toHaveBeenCalled();
     });
   });
 });

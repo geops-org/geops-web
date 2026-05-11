@@ -84,7 +84,12 @@ describe('EditCampaignComponent', () => {
 
     fixture = TestBed.createComponent(EditCampaignComponent);
     component = fixture.componentInstance;
+    selectedCampaignSignal.set(null);
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    fixture.destroy();
   });
 
   it('debe crearse correctamente', () => {
@@ -205,11 +210,6 @@ describe('EditCampaignComponent', () => {
       expect(component.isCampaignActive).toBeTrue();
     });
 
-    it('debe retornar false cuando status es PAUSED', () => {
-      component.campaignForm.get('status')!.setValue('PAUSED');
-      expect(component.isCampaignActive).toBeFalse();
-    });
-
     it('debe retornar false cuando status es FINALIZED', () => {
       component.campaignForm.get('status')!.setValue('FINALIZED');
       expect(component.isCampaignActive).toBeFalse();
@@ -229,15 +229,15 @@ describe('EditCampaignComponent', () => {
       expect(component.canDisplayOfferForm).toBeTrue();
     });
 
-    it('debe retornar false cuando campaña PAUSED y no hay oferta en edición', () => {
-      component.campaignForm.get('status')!.setValue('PAUSED');
+    it('debe retornar false cuando campaña FINALIZED y no hay oferta en edición', () => {
+      component.campaignForm.get('status')!.setValue('FINALIZED');
       component.showOfferForm = true;
       component.editingOffer = undefined;
       expect(component.canDisplayOfferForm).toBeFalse();
     });
 
-    it('debe retornar true cuando campaña PAUSED pero hay oferta en edición', () => {
-      component.campaignForm.get('status')!.setValue('PAUSED');
+    it('debe retornar true cuando campaña FINALIZED pero hay oferta en edición', () => {
+      component.campaignForm.get('status')!.setValue('FINALIZED');
       component.showOfferForm = true;
       component.editingOffer = { id: 99 } as CampaignOffer;
       expect(component.canDisplayOfferForm).toBeTrue();
@@ -246,11 +246,11 @@ describe('EditCampaignComponent', () => {
 
   describe('populateForm()', () => {
     it('debe rellenar el formulario con los datos de la campaña', () => {
-      const campaign = makeCampaign({ name: 'Campaña Test', status: 'PAUSED', estimatedBudget: 750 });
+      const campaign = makeCampaign({ name: 'Campaña Test', status: 'FINALIZED', estimatedBudget: 750 });
       component.populateForm(campaign);
 
       expect(component.campaignForm.get('name')!.value).toBe('Campaña Test');
-      expect(component.campaignForm.get('status')!.value).toBe('PAUSED');
+      expect(component.campaignForm.get('status')!.value).toBe('FINALIZED');
       expect(component.campaignForm.get('estimatedBudget')!.value).toBe(750);
     });
   });
@@ -321,8 +321,8 @@ describe('EditCampaignComponent', () => {
       expect(component.showOfferForm).toBeTrue();
     });
 
-    it('no debe mostrar el formulario si la campaña está PAUSED', () => {
-      component.campaignForm.get('status')!.setValue('PAUSED');
+    it('no debe mostrar el formulario si la campaña está FINALIZED', () => {
+      component.campaignForm.get('status')!.setValue('FINALIZED');
       component.onShowOfferForm();
       expect(component.showOfferForm).toBeFalse();
     });
