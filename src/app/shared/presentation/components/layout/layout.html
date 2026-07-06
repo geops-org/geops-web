@@ -40,6 +40,17 @@
     <!-- Desktop Actions -->
     <div class="desktop-actions">
       <button
+        *ngIf="!isOwner()"
+        mat-icon-button
+        class="theme-toggle"
+        type="button"
+        (click)="toggleDarkMode()"
+        [attr.aria-label]="(isDarkMode() ? 'header.theme.light' : 'header.theme.dark') | translate"
+        [attr.title]="(isDarkMode() ? 'header.theme.light' : 'header.theme.dark') | translate">
+        <mat-icon>{{ isDarkMode() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+      </button>
+
+      <button
         mat-button
         class="action-btn profile"
         [matMenuTriggerFor]="profileMenu"
@@ -94,6 +105,10 @@
   </div>
 
   <nav class="mobile-menu-nav">
+    <button *ngIf="!isOwner()" type="button" class="mobile-menu-item theme-mobile" (click)="toggleDarkMode()">
+      <mat-icon>{{ isDarkMode() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+      <span>{{ (isDarkMode() ? 'header.theme.light' : 'header.theme.dark') | translate }}</span>
+    </button>
     <a routerLink="/settings" class="mobile-menu-item" (click)="closeMobileMenu()">
       <mat-icon>settings</mat-icon>
       <span>{{ 'header.profile.menu.settings' | translate }}</span>

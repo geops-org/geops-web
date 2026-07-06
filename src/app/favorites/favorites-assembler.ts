@@ -1,4 +1,4 @@
-import { Favorite } from '../../domain/model/favorite.entity';
+import { Favorite } from './favorite.entity';
 import { FavoriteResource, FavoritesResponse } from './favorites-response';
 
 /**

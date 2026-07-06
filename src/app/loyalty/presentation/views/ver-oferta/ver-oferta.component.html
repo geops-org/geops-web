@@ -27,6 +27,17 @@
         <span class="amount">{{ o.price | number:'1.2-2' }}</span>
       </div>
 
+      @if (isConsumer) {
+        <div class="actions">
+          <button class="btn-fav" type="button" (click)="toggleFavorite()"
+                  [class.active]="isFavorite"
+                  [attr.aria-label]="(isFavorite ? 'favoritesPage.remove' : 'favoritesPage.add') | translate">
+            <span class="material-icons">{{ isFavorite ? 'favorite' : 'favorite_border' }}</span>
+          </button>
+          <span>{{ (isFavorite ? 'offerDetail.saved' : 'offerDetail.save') | translate }}</span>
+        </div>
+      }
+
       <ul class="bullets">
         <li>{{ 'offerDetail.bullets.visit' | translate: { partner: o.partner } }}</li>
         <li>{{ 'offerDetail.bullets.validUntil' | translate: { date: (o.validTo | date:'dd/MM/yyyy') } }}</li>
@@ -35,6 +46,46 @@
       </ul>
     </section>
   </div>
+  }
+
+  @if (offer; as o) {
+    <section class="reviews-section">
+      <h2>{{ 'offerDetail.reviews.title' | translate }}</h2>
+
+      @if (isConsumer) {
+        <form class="review-form" (ngSubmit)="submitReview()">
+          <label>{{ 'offerDetail.reviews.rating' | translate }}</label>
+          <div class="rate-stars">
+            @for (star of stars; track star) {
+              <button type="button" (click)="reviewRating = star" [class.active]="star <= reviewRating">★</button>
+            }
+          </div>
+          <textarea [(ngModel)]="reviewComment" name="comment" maxlength="500"
+                    [placeholder]="'offerDetail.reviews.placeholder' | translate"></textarea>
+          <button class="btn-publish" type="submit" [disabled]="reviewRating < 1 || reviewSubmitting">
+            {{ 'offerDetail.reviews.publish' | translate }}
+          </button>
+        </form>
+      }
+
+      @if (reviewErrorKey) {
+        <p class="review-error">{{ reviewErrorKey | translate }}</p>
+      }
+
+      <div class="reviews-list">
+        @for (review of reviews; track review.id) {
+          <article class="review-card">
+            <div class="review-head">
+              <strong>{{ reviewAuthorNames.get(review.userId) || ('offerDetail.reviews.unknownUser' | translate) }}</strong>
+              <span class="inline-stars">{{ '★'.repeat(review.rating) }}{{ '☆'.repeat(5 - review.rating) }}</span>
+            </div>
+            <p>{{ review.comment || ('offerDetail.reviews.noComment' | translate) }}</p>
+          </article>
+        } @empty {
+          <p class="no-reviews">{{ 'offerDetail.reviews.empty' | translate }}</p>
+        }
+      </div>
+    </section>
   }
 
 </div>

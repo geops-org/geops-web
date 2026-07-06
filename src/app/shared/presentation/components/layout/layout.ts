@@ -55,6 +55,7 @@ export class Layout implements OnInit, OnDestroy {
   isMobileMenuOpen = signal(false);
   isSearchFocused = signal(false);
   isOwner = signal(false);
+  isDarkMode = signal(false);
 
   constructor(
     public authService: AuthService,
@@ -81,11 +82,20 @@ export class Layout implements OnInit, OnDestroy {
     });
   }
   ngOnInit(): void {
+    const savedTheme = localStorage.getItem('geops-theme');
+    const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false;
+    this.isDarkMode.set(savedTheme ? savedTheme === 'dark' : prefersDark);
+    this.applyTheme();
+
     this.userSub = this.authService.currentUser$.subscribe(user => {
       if (user) {
         this.userName = user.name;
         this.userEmail = user.email || 'usuario@geops.com';
         this.isOwner.set(user.role === 'OWNER');
+        if (user.role === 'OWNER') {
+          this.isDarkMode.set(false);
+          this.applyTheme();
+        }
       }
     });
   }
@@ -132,6 +142,16 @@ export class Layout implements OnInit, OnDestroy {
   onLogout() {
     this.authService.logout();
     this.router.navigate(['/login']);
+  }
+
+  toggleDarkMode(): void {
+    this.isDarkMode.update(value => !value);
+    localStorage.setItem('geops-theme', this.isDarkMode() ? 'dark' : 'light');
+    this.applyTheme();
+  }
+
+  private applyTheme(): void {
+    document.documentElement.classList.toggle('dark-theme', this.isDarkMode());
   }
 }
 

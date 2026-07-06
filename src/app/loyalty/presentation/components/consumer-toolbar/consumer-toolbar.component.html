@@ -24,6 +24,14 @@
       {{ 'option.categorias' | translate }}
     </a>
 
+    <a
+      class="toolbar-item"
+      routerLink="/favoritos"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }">
+      {{ 'option.favorites' | translate }}
+    </a>
+
   </div>
 </nav>
 

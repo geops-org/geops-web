@@ -6,6 +6,7 @@ import { OffersApiEndpoint } from '../../../infrastructure/offers/offers-api-end
 import { TranslateModule } from '@ngx-translate/core';
 import {AuthService} from '../../../../identity/infrastructure/auth/auth.service';
 import { Offer } from '../../../domain/model/offer.entity';
+import { FavoritesApiEndpoint } from '../../../../favorites/favorites-api-endpoint';
 
 @Component({
   selector: 'app-ofertas',
@@ -31,6 +32,8 @@ export class OfertasComponent implements OnInit, OnDestroy {
   idx = 0;
   timer?: any;
   userId = 0;
+  isConsumer = false;
+  favoriteOfferIds = new Set<number>();
 
   // Dropdown states
   categoryOpen = false;
@@ -63,7 +66,8 @@ export class OfertasComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private offersApi: OffersApiEndpoint,
-    private authService: AuthService
+    private authService: AuthService,
+    private favoritesApi: FavoritesApiEndpoint
   ) {}
 
   /**
@@ -72,7 +76,15 @@ export class OfertasComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     const user = this.authService.getCurrentUser();
+    this.isConsumer = user?.role === 'CONSUMER';
     this.currentUserId = this.authService.getCurrentUserId();
+
+    if (this.isConsumer && this.currentUserId) {
+      this.favoritesApi.getByUserId(this.currentUserId).subscribe({
+        next: favorites => this.favoriteOfferIds = new Set(favorites.map(favorite => favorite.offerId)),
+        error: err => console.error('[Ofertas] Error loading favorites:', err),
+      });
+    }
     this.userId = user ? (user.id) : 0;
     if (user) {
       this.userId = (user.id);
@@ -306,6 +318,28 @@ export class OfertasComponent implements OnInit, OnDestroy {
 
   onViewOffer(o: Offer) {
     this.offersApi.recordCampaignClick(o.campaignId);
+  }
+
+  toggleFavorite(event: Event, offerId: number): void {
+    event.stopPropagation();
+    if (!this.currentUserId || !this.isConsumer) return;
+
+    if (this.favoriteOfferIds.has(offerId)) {
+      this.favoritesApi.delete(this.currentUserId, offerId).subscribe({
+        next: () => {
+          this.favoriteOfferIds.delete(offerId);
+          this.favoriteOfferIds = new Set(this.favoriteOfferIds);
+        },
+      });
+      return;
+    }
+
+    this.favoritesApi.create(this.currentUserId, offerId).subscribe({
+      next: () => {
+        this.favoriteOfferIds.add(offerId);
+        this.favoriteOfferIds = new Set(this.favoriteOfferIds);
+      },
+    });
   }
 
   private trackInitialImpressions(offers: Offer[]): void {

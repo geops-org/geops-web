@@ -5,6 +5,10 @@
       "placeholder": "Buscar y encuentra las mejores ofertas"
     },
     "cart": "Carrito",
+    "theme": {
+      "dark": "Modo oscuro",
+      "light": "Modo claro"
+    },
     "profile": {
       "menu": {
         "myProfile": "Mi perfil",
@@ -17,6 +21,7 @@
     "home": "Inicio",
     "offers": "Ofertas",
     "categorias": "Categorías",
+    "favorites": "Favoritos",
     "coupons": "Mis cupones"
   },
   "offersPage": {
@@ -45,6 +50,17 @@
       "add": "Agregar",
       "locationPin": "Ubicación"
     }
+  },
+  "favoritesPage": {
+    "title": "Mis favoritos",
+    "loading": "Cargando favoritos...",
+    "error": "No se pudieron cargar los favoritos.",
+    "emptyTitle": "Aún no tienes favoritos",
+    "emptyText": "Guarda ofertas para encontrarlas rápidamente aquí.",
+    "explore": "Explorar ofertas",
+    "view": "Ver oferta",
+    "add": "Guardar como favorito",
+    "remove": "Quitar de favoritos"
   },
   "offersData": {
     "titles": {
@@ -426,6 +442,20 @@
     "back": "Volver",
     "buy": "Comprar",
     "addToCart": "Agregar al carrito",
+    "save": "Guardar como favorito",
+    "saved": "Guardado en favoritos",
+    "reviews": {
+      "title": "Reseñas",
+      "rating": "Tu calificación",
+      "placeholder": "Cuéntanos tu experiencia",
+      "publish": "Publicar reseña",
+      "user": "Usuario",
+      "unknownUser": "Cuenta no disponible",
+      "empty": "Esta oferta todavía no tiene reseñas.",
+      "noComment": "Sin comentario",
+      "duplicate": "Ya publicaste una reseña para esta oferta.",
+      "loadError": "No se pudieron cargar las reseñas."
+    },
     "bullets": {
       "visit": "Visita el local físico de {{partner}} para canjear esta oferta.",
       "validUntil": "Válido hasta: {{date}}.",

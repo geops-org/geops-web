@@ -1,0 +1,39 @@
+<main class="favorites-page">
+  <h1>{{ 'favoritesPage.title' | translate }}</h1>
+
+  @if (loading) {
+    <p class="state">{{ 'favoritesPage.loading' | translate }}</p>
+  } @else if (error) {
+    <p class="state error">{{ 'favoritesPage.error' | translate }}</p>
+  } @else if (!offers.length) {
+    <section class="empty">
+      <span class="material-icons">favorite_border</span>
+      <h2>{{ 'favoritesPage.emptyTitle' | translate }}</h2>
+      <p>{{ 'favoritesPage.emptyText' | translate }}</p>
+      <a routerLink="/ofertas">{{ 'favoritesPage.explore' | translate }}</a>
+    </section>
+  } @else {
+    <section class="favorites-grid">
+      @for (offer of offers; track offer.id) {
+        <article class="favorite-card">
+          <img [src]="imgFor(offer)" [alt]="offer.title">
+          <button class="remove" type="button" (click)="remove(offer.id)"
+                  [attr.aria-label]="'favoritesPage.remove' | translate">
+            <span class="material-icons">favorite</span>
+          </button>
+          <div class="body">
+            <h2>{{ offer.title }}</h2>
+            <p class="partner">{{ offer.partner }}</p>
+            <div class="meta">
+              <span>{{ offer.location }}</span>
+              <strong>S/ {{ offer.price | number:'1.2-2' }}</strong>
+            </div>
+            <a [routerLink]="['/ofertas', offer.id]" [queryParams]="{ from: 'favorites' }">
+              {{ 'favoritesPage.view' | translate }}
+            </a>
+          </div>
+        </article>
+      }
+    </section>
+  }
+</main>

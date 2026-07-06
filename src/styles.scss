@@ -18,3 +18,152 @@ html, body { font-family:
   sans-serif;
 }
 
+html.dark-theme {
+  color-scheme: dark;
+}
+
+html.dark-theme body,
+html.dark-theme .layout-content,
+html.dark-theme .layout,
+html.dark-theme .offer-page,
+html.dark-theme .favorites-page,
+html.dark-theme .profile-wrapper {
+  background: #121318 !important;
+  color: #f4f4f5 !important;
+}
+
+html.dark-theme .consumer-toolbar,
+html.dark-theme .owner-toolbar,
+html.dark-theme .card,
+html.dark-theme .offer-card,
+html.dark-theme .favorite-card,
+html.dark-theme .reviews-section,
+html.dark-theme .review-card,
+html.dark-theme .review-form,
+html.dark-theme .profile-card,
+html.dark-theme .settings-card,
+html.dark-theme .map-container,
+html.dark-theme .map-categories,
+html.dark-theme .info-card,
+html.dark-theme .offer-loc-item,
+html.dark-theme .filters-bar,
+html.dark-theme .mobile-menu,
+html.dark-theme .mobile-menu-footer,
+html.dark-theme .mat-mdc-menu-panel,
+html.dark-theme .mat-mdc-menu-content {
+  background: #1d1f26 !important;
+  color: #f4f4f5 !important;
+  border-color: #343741 !important;
+}
+
+html.dark-theme h1,
+html.dark-theme h2,
+html.dark-theme h3,
+html.dark-theme h4,
+html.dark-theme .title,
+html.dark-theme .ttl,
+html.dark-theme .amount,
+html.dark-theme .amt,
+html.dark-theme .offer-loc-title,
+html.dark-theme .offer-loc-amount,
+html.dark-theme .toolbar-item,
+html.dark-theme .mobile-menu-item,
+html.dark-theme .mat-mdc-menu-item {
+  color: #f4f4f5 !important;
+}
+
+html.dark-theme .consumer-toolbar .toolbar-item:hover,
+html.dark-theme .consumer-toolbar .toolbar-item.active,
+html.dark-theme .owner-toolbar .toolbar-item:hover,
+html.dark-theme .owner-toolbar .toolbar-item.active {
+  background: #292c35 !important;
+  color: #fff !important;
+  border-bottom-color: #c77dff !important;
+}
+
+html.dark-theme input,
+html.dark-theme textarea,
+html.dark-theme select,
+html.dark-theme .flt,
+html.dark-theme .custom-select,
+html.dark-theme .options,
+html.dark-theme .option {
+  background: #252832 !important;
+  color: #f4f4f5 !important;
+  border-color: #444854 !important;
+}
+
+html.dark-theme .option:hover,
+html.dark-theme .option.selected {
+  background: #a751d4 !important;
+}
+
+html.dark-theme .sep,
+html.dark-theme hr {
+  border-color: #3a3d47 !important;
+}
+
+html.dark-theme .back-btn,
+html.dark-theme .btn-add,
+html.dark-theme .remove,
+html.dark-theme .fav,
+html.dark-theme .btn-fav {
+  background: #292c35 !important;
+  color: #f4f4f5 !important;
+  border-color: #444854 !important;
+}
+
+html.dark-theme .leaflet-control-zoom a {
+  background: #252832 !important;
+  color: #fff !important;
+}
+
+body,
+.layout-content,
+.consumer-toolbar,
+.owner-toolbar,
+.offer-card,
+.favorite-card,
+.reviews-section {
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+
+/* Keep the primary and consumer navigation visually unchanged in dark mode. */
+html.dark-theme .consumer-toolbar,
+html.dark-theme .owner-toolbar {
+  background: #fff !important;
+  color: #000 !important;
+}
+
+html.dark-theme .consumer-toolbar .toolbar-item,
+html.dark-theme .owner-toolbar .toolbar-item {
+  color: #666 !important;
+}
+
+html.dark-theme .consumer-toolbar .toolbar-item:hover,
+html.dark-theme .owner-toolbar .toolbar-item:hover {
+  background: #f5f5f5 !important;
+  color: #000 !important;
+}
+
+html.dark-theme .consumer-toolbar .toolbar-item.active,
+html.dark-theme .owner-toolbar .toolbar-item.active {
+  background: #f8f9ff !important;
+  color: #000 !important;
+  border-bottom-color: #000 !important;
+}
+
+html.dark-theme .search-field input {
+  background: transparent !important;
+  color: #fff !important;
+  border: 0 !important;
+}
+
+html.dark-theme .map-cat,
+html.dark-theme .map-cat:hover,
+html.dark-theme .map-cat.active {
+  background: #191b21 !important;
+  color: #fff !important;
+  border-color: #3d414c !important;
+}
+

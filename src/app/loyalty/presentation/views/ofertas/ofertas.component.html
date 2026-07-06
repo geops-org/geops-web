@@ -107,6 +107,15 @@
           <img [src]="imgFor(o)" [alt]="o.title || (('offersData.titles.' + o.id) | translate)" />
           <span class="scrim" aria-hidden="true"></span>
 
+          <button *ngIf="isConsumer"
+                  class="fav"
+                  [class.active]="favoriteOfferIds.has(o.id)"
+                  type="button"
+                  (click)="toggleFavorite($event, o.id)"
+                  [attr.aria-label]="(favoriteOfferIds.has(o.id) ? 'favoritesPage.remove' : 'favoritesPage.add') | translate">
+            <span class="material-icons heart">{{ favoriteOfferIds.has(o.id) ? 'favorite' : 'favorite_border' }}</span>
+          </button>
+
           <button
             class="view-offer"
             (click)="onViewOffer(o)"

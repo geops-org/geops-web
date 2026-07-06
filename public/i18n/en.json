@@ -5,6 +5,10 @@
       "placeholder": "Search and find the best offers"
     },
     "cart": "Cart",
+    "theme": {
+      "dark": "Dark mode",
+      "light": "Light mode"
+    },
     "profile": {
       "menu": {
         "myProfile": "My Profile",
@@ -17,6 +21,7 @@
     "home": "Home",
     "offers": "Offers",
     "categorias": "Categories",
+    "favorites": "Favorites",
     "coupons": "My Coupons"
   },
   "offersPage": {
@@ -45,6 +50,17 @@
       "add": "Add",
       "locationPin": "Location"
     }
+  },
+  "favoritesPage": {
+    "title": "My favorites",
+    "loading": "Loading favorites...",
+    "error": "Favorites could not be loaded.",
+    "emptyTitle": "You have no favorites yet",
+    "emptyText": "Save offers to find them quickly here.",
+    "explore": "Explore offers",
+    "view": "View offer",
+    "add": "Save as favorite",
+    "remove": "Remove from favorites"
   },
   "offersData": {
     "titles": {
@@ -426,6 +442,20 @@
     "back": "Back",
     "buy": "Buy",
     "addToCart": "Add to cart",
+    "save": "Save as favorite",
+    "saved": "Saved in favorites",
+    "reviews": {
+      "title": "Reviews",
+      "rating": "Your rating",
+      "placeholder": "Tell us about your experience",
+      "publish": "Publish review",
+      "user": "User",
+      "unknownUser": "Unavailable account",
+      "empty": "There are no reviews for this offer yet.",
+      "noComment": "No comment",
+      "duplicate": "You have already reviewed this offer.",
+      "loadError": "Reviews could not be loaded."
+    },
     "bullets": {
       "visit": "Visit the physical store of {{partner}} to redeem this offer.",
       "validUntil": "Valid until: {{date}}.",

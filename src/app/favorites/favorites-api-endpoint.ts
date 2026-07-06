@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { environment } from '../../../../environments/environment';
-import { Favorite } from '../../domain/model/favorite.entity';
+import { environment } from '../../environments/environment';
+import { Favorite } from './favorite.entity';
 import { FavoriteResource, FavoritesResponse } from './favorites-response';
 import { FavoritesAssembler } from './favorites-assembler';
 
