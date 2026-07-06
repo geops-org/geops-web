@@ -16,4 +16,8 @@ h1 { margin: 0 0 30px; font-size: 32px; }
 .empty h2 { margin: 12px 0 5px; }
 .empty p { margin: 0 0 22px; color: #667085; }
 .error { color: #b42318; }
+:host-context(.dark-theme) .meta,
+:host-context(.dark-theme) .meta strong {
+  color: #fff;
+}
 @media (max-width: 640px) { .favorites-page { padding: 28px 16px 50px; } }
